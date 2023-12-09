@@ -9,4 +9,9 @@ class ControleurUtilisateur extends ControleurGenerique
         // TODO: Modifier la redirection quand il y aura les connexions utilisateurs
         ControleurGeneral::afficherVue("connexion.html");
     }
+
+    public static function afficherPageInscription()
+    {
+        ControleurGeneral::afficherVue("inscription.html");
+    }
 }

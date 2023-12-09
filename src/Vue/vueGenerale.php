@@ -16,7 +16,7 @@
             <!-- Container wrapper -->
             <div class="container-fluid">
                 <!-- Navbar brand -->
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="?">
                     <img src="../assets/images/logo.png" height="30" alt="" loading="lazy" />
                 </a>
 
@@ -30,7 +30,7 @@
                     <!-- Left links -->
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                            <a class="nav-link active" aria-current="page" href="?">Accueil</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Covoiturage</a>
@@ -46,7 +46,7 @@
                                 </svg>
                             </a>
                         </li>
-                        <!-- Navbar dropdown -->
+                        <!-- Navbar dropdown (profile) -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                                aria-expanded="false">
@@ -58,6 +58,7 @@
                             <!-- Dropdown menu -->
                             <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">Paramètres</a></li>
+                                <li><a class="dropdown-item" href="?controleur=utilisateur">Se connecter</a></li>
                                 <li><a class="dropdown-item" href="#">Se déconnecter</a></li>
                             </ul>
                         </li>
