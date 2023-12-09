@@ -43,6 +43,6 @@ class ControleurGeneral extends ControleurGenerique
 
     public static function afficherDefaultPage()
     {
-        self::afficherVue("pageNotFound.html");
+        self::afficherVue("vueGenerale.php", ["cheminVueBody" => "evenements.html"]);
     }
 }
