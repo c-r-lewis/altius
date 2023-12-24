@@ -1,3 +1,6 @@
+const fileInput = document.getElementById("newImage");
+fileInput.addEventListener('change', addDescriptionToEvent);
+
 function like() {
     document.querySelectorAll(".heart-btn").forEach(heartBtn => {
         if (heartBtn.children[0].getAttribute("class") === "bi bi-heart-fill") {
@@ -29,5 +32,66 @@ function clearHeart(heartSVG) {
 
 function focusOnInput(inputID) {
     document.getElementById(inputID).focus();
+}
+
+function addDescriptionToEvent() {
+    if (fileInput.files.length > 0) {
+        const container = document.getElementById("createContainer");
+
+        const row = document.createElement('div');
+        row.classList.add('row');
+        row.classList.add('gx-0');
+
+        const imgContainer = document.createElement("div");
+        imgContainer.classList.add("col-6");
+        imgContainer.classList.add("d-flex");
+        imgContainer.classList.add("justify-content-center");
+
+        const textContainer = document.createElement("div");
+        textContainer.classList.add("col-6");
+        textContainer.classList.add("d-flex");
+        textContainer.classList.add("flex-column");
+
+
+        const text = document.createElement('input');
+        text.placeholder = 'Ajouter une description...';
+        text.type = 'text';
+        text.classList.add("border-0");
+        text.classList.add("container-fluid");
+        text.classList.add("flex-grow");
+        text.classList.add("no-outline-focus");
+
+        const location = document.createElement('input');
+        location.placeholder = "Ajouter un lieu";
+        location.classList.add("border-0");
+        location.classList.add("pb-3");
+        location.classList.add("no-outline-focus");
+
+        textContainer.append(text, location);
+
+        row.append(imgContainer, textContainer);
+
+        // Display the selected image
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+
+            const img = document.createElement('img');
+            img.src = e.target.result.toString();
+
+            img.alt = 'Image sélectionnée';
+            img.width = 200;
+            img.height = 200;
+            img.classList.add("img-fluid");
+
+            imgContainer.appendChild(img);
+
+            container.innerHTML = '';
+            container.appendChild(row);
+        };
+
+        reader.readAsDataURL(fileInput.files[0]);
+    }
+
 
 }

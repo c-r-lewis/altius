@@ -20,7 +20,12 @@ main {
     padding: 0.5rem;
 }
 
-#commentInput:focus {
+
+.no-outline-focus:focus {
     outline: none;
     box-shadow: none;
+}
+
+.flex-grow {
+    flex: 1;
 }
