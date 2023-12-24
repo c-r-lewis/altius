@@ -12,6 +12,18 @@ class ControleurGeneral extends ControleurGenerique
         require __DIR__ . "/../Vue/$cheminVue";
     }
 
+    // TODO : Fonction de test, donc à supprimer
+    public static function showv()
+    {
+        $vue = $_GET["vue"];
+        $chemin = $_GET["chemin"];
+
+        if (!isset($chemin)) {
+            $chemin = "pageNotFound.html";
+        }
+        ControleurGeneral::afficherVue("$vue", ["cheminVueBody" => $chemin]);
+    }
+
     /*
     public static function afficherMessageFlash(string $messageErreur, string $type){
         MessageFlash::ajouter($type, $messageErreur);
