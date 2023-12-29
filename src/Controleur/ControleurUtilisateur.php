@@ -14,4 +14,6 @@ class ControleurUtilisateur extends ControleurGenerique
     {
         ControleurGeneral::afficherVue("inscription.html");
     }
+
+
 }

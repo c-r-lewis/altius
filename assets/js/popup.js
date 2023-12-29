@@ -38,60 +38,32 @@ function addDescriptionToEvent() {
     if (fileInput.files.length > 0) {
         const container = document.getElementById("createContainer");
 
-        const row = document.createElement('div');
-        row.classList.add('row');
-        row.classList.add('gx-0');
+        // Fetch the content of the PHP file
+        fetch('../src/Vue/createPublication.php')
+            .then(response => response.text())
+            .then(htmlContent => {
+                // Replace the content of the container with the fetched HTML
+                container.innerHTML = htmlContent;
 
-        const imgContainer = document.createElement("div");
-        imgContainer.classList.add("col-6");
-        imgContainer.classList.add("d-flex");
-        imgContainer.classList.add("justify-content-center");
+                // Display the selected image
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result.toString();
+                    img.alt = 'Image sélectionnée';
+                    img.width = 200;
+                    img.height = 200;
+                    img.classList.add("img-fluid");
 
-        const textContainer = document.createElement("div");
-        textContainer.classList.add("col-6");
-        textContainer.classList.add("d-flex");
-        textContainer.classList.add("flex-column");
-
-
-        const text = document.createElement('input');
-        text.placeholder = 'Ajouter une description...';
-        text.type = 'text';
-        text.classList.add("border-0");
-        text.classList.add("container-fluid");
-        text.classList.add("flex-grow");
-        text.classList.add("no-outline-focus");
-
-        const location = document.createElement('input');
-        location.placeholder = "Ajouter un lieu";
-        location.classList.add("border-0");
-        location.classList.add("pb-3");
-        location.classList.add("no-outline-focus");
-
-        textContainer.append(text, location);
-
-        row.append(imgContainer, textContainer);
-
-        // Display the selected image
-        const reader = new FileReader();
-
-        reader.onload = function (e) {
-
-            const img = document.createElement('img');
-            img.src = e.target.result.toString();
-
-            img.alt = 'Image sélectionnée';
-            img.width = 200;
-            img.height = 200;
-            img.classList.add("img-fluid");
-
-            imgContainer.appendChild(img);
-
-            container.innerHTML = '';
-            container.appendChild(row);
-        };
-
-        reader.readAsDataURL(fileInput.files[0]);
+                    // Add the image to the image container
+                    const imgContainer = container.querySelector(".col-6.d-flex.justify-content-center");
+                    imgContainer.innerHTML = ''; // Clear previous content
+                    imgContainer.appendChild(img);
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            })
+            .catch(error => {
+                console.error('Error fetching PHP file:', error);
+            });
     }
-
-
 }
