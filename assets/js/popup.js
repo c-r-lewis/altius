@@ -38,6 +38,13 @@ function addDescriptionToEvent() {
     if (fileInput.files.length > 0) {
         const container = document.getElementById("createContainer");
 
+        const title = document.getElementById("newPublicationTitle");
+
+        const submitButton = document.createElement("input");
+        submitButton.type = 'submit';
+        submitButton.value = "Créer";
+
+        title.appendChild(submitButton);
         // Fetch the content of the PHP file
         fetch('../src/Vue/createPublication.php')
             .then(response => response.text())
@@ -57,7 +64,7 @@ function addDescriptionToEvent() {
 
                     // Add the image to the image container
                     const imgContainer = container.querySelector(".col-6.d-flex.justify-content-center");
-                    imgContainer.innerHTML = ''; // Clear previous content
+                    imgContainer.innerHTML = '';
                     imgContainer.appendChild(img);
                 };
                 reader.readAsDataURL(fileInput.files[0]);

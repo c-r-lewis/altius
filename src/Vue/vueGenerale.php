@@ -68,7 +68,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header" id="newPublicationTitle">
                             Créer une nouvelle publication
                         </div>
                         <div id="createContainer">
