@@ -2,6 +2,8 @@
 
 namespace App\Altius\Controleur;
 
+use App\Altius\Modele\DataObject\Publication;
+
 class ControleurPublication extends ControleurGenerique
 {
 
@@ -11,6 +13,7 @@ class ControleurPublication extends ControleurGenerique
     }
 
     static function createPublication() {
+        $newPublication = new Publication($_REQUEST["datePosted"], $_REQUEST["eventDate"]);
 
     }
 }

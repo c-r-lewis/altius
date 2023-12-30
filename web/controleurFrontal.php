@@ -7,11 +7,7 @@ $loader->register();
 // enregistrement d'une association "espace de nom" → "dossier"
 $loader->addNamespace('App\Altius', __DIR__ . '/../src');
 
-if(isset($_REQUEST['controleur'])) {
-    $controleur = $_REQUEST['controleur'];
-} else {
-    $controleur = "general";
-}
+$controleur = $_REQUEST['controleur'] ?? "general";
 
 if(isset($_REQUEST['action'])) {
     $action = $_REQUEST["action"];
@@ -31,5 +27,5 @@ if(class_exists($nomDeClasseControleur)) {
 }
 
 $nomDeClasseControleur::$action();
-?>
+
 

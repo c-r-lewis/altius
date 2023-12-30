@@ -43,6 +43,10 @@ function addDescriptionToEvent() {
         const submitButton = document.createElement("input");
         submitButton.type = 'submit';
         submitButton.value = "Créer";
+        submitButton.addEventListener('click', function() {
+            const form = document.getElementById("createPublicationForm");
+            form.submit();
+        });
 
         title.appendChild(submitButton);
         // Fetch the content of the PHP file

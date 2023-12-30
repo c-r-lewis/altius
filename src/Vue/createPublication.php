@@ -1,4 +1,4 @@
-<form method="get" action="../../web/controleurFrontal.php">
+<form method="get" action="../web/controleurFrontal.php" id="createPublicationForm">
     <div class="row gx-0">
         <div class="col-6 d-flex justify-content-center">
             <!-- Image container will be added here dynamically -->
@@ -8,7 +8,7 @@
             <input type="text" placeholder="Ajouter un lieu" class="border-0 pb-3 no-outline-focus">
             <input type="date" class="border-0 no-outline-focus pb-3">
         </div>
+        <input type="hidden" name="controleur" value="publication">
         <input type="hidden" name="action" value="createPublication">
-        <input type="hidden" name="controller" value="publication">
     </div>
 </form>

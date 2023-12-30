@@ -9,6 +9,11 @@ class Publication extends AbstractDataObject
     private $datePosted;
     private $eventDate;
 
+    public function __construct($datePosted, $eventDate) {
+        $this->eventDate = $eventDate;
+        $this->datePosted = $datePosted;
+    }
+
 
     public function formatTableau(): array
     {
