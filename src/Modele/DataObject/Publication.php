@@ -9,9 +9,12 @@ class Publication extends AbstractDataObject
     private $datePosted;
     private $eventDate;
 
-    public function __construct($datePosted, $eventDate) {
+    private String $description;
+
+    public function __construct($datePosted, $eventDate, $description) {
         $this->eventDate = $eventDate;
         $this->datePosted = $datePosted;
+        $this->description = $description;
     }
 
 
