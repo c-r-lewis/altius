@@ -48,6 +48,11 @@ function loadCreatePublicationContent() {
             container.innerHTML = htmlContent;
             fileInput = document.getElementById("newImage");
             fileInput.addEventListener('change', addDescriptionToEvent);
+
+            const btn = document.getElementById("submitBtn");
+            if (btn !== null) {
+                btn.parentNode.removeChild(btn);
+            }
         })
         .catch(error => {
             console.error('Error fetching PHP file:', error);
@@ -61,6 +66,7 @@ function addDescriptionToEvent() {
         const title = document.getElementById("newPublicationTitle");
 
         const submitButton = document.createElement("input");
+        submitButton.id='submitBtn';
         submitButton.type = 'submit';
         submitButton.value = "Créer";
         submitButton.addEventListener('click', function() {
