@@ -1,5 +1,8 @@
-const fileInput = document.getElementById("newImage");
-fileInput.addEventListener('change', addDescriptionToEvent);
+document.getElementById('popupCreate').addEventListener('show.bs.modal', function () {
+    loadCreatePublicationContent();
+});
+
+let fileInput;
 
 function like() {
     document.querySelectorAll(".heart-btn").forEach(heartBtn => {
@@ -32,6 +35,23 @@ function clearHeart(heartSVG) {
 
 function focusOnInput(inputID) {
     document.getElementById(inputID).focus();
+}
+
+function loadCreatePublicationContent() {
+    const container = document.getElementById("createContainer");
+
+    // Fetch the content of the PHP file
+    fetch('../src/Vue/uploadImage.php')
+        .then(response => response.text())
+        .then(htmlContent => {
+            // Replace the content of the container with the fetched HTML
+            container.innerHTML = htmlContent;
+            fileInput = document.getElementById("newImage");
+            fileInput.addEventListener('change', addDescriptionToEvent);
+        })
+        .catch(error => {
+            console.error('Error fetching PHP file:', error);
+        });
 }
 
 function addDescriptionToEvent() {
