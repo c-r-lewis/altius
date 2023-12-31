@@ -29,13 +29,8 @@ abstract class AbstractRepository
         $pdoStatement->execute($object->formatTableau());
     }
 
-    public function getAll(AbstractDataObject $object) {
-        $sql = 'SELECT ';
-        $columns = $this->getNomsColonnes();
-        for ($i=0; $i < sizeof($columns)-1; $i++) {
-            $sql .= $columns[$i].', ';
-        }
-        $sql .= $columns[sizeof($columns)-1].' FROM '.$this->getNomTable();
+    public function getAll() {
+        $sql = $this->createSelectStatement();
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         $objets = [];
         foreach ($pdoStatement as $objetFormatTableau) {
@@ -43,5 +38,25 @@ abstract class AbstractRepository
         }
         return $objets;
     }
+
+    private function createSelectStatement(): String {
+        $sql = 'SELECT ';
+        $columns = $this->getNomsColonnes();
+        for ($i=0; $i < sizeof($columns)-1; $i++) {
+            $sql .= $columns[$i].', ';
+        }
+        return $columns[sizeof($columns)-1].' FROM '.$this->getNomTable();
+    }
+
+    public function getByID($id) : AbstractDataObject{
+        $sql = $this->createSelectStatement();
+        $sql .= ' WHERE '.$this->getClePrimaire().' = :'.$id."Tag";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $values = array($this->getClePrimaire().'Tag' => $id);
+        $pdoStatement->execute($values);
+        return $this->construireDepuisTableau($pdoStatement->fetch());
+    }
+
+
 
 }

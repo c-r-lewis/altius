@@ -3,6 +3,8 @@
 namespace App\Altius\Controleur;
 
 
+use App\Altius\Modele\Repository\PublicationRepository;
+
 class ControleurGeneral extends ControleurGenerique
 {
 
@@ -56,5 +58,11 @@ class ControleurGeneral extends ControleurGenerique
     public static function afficherDefaultPage()
     {
         self::afficherVue("vueGenerale.php", ["cheminVueBody" => "evenements.html"]);
+    }
+
+    public static function afficherAccueil()
+    {
+        $publications = (new PublicationRepository())->getAll();
+
     }
 }

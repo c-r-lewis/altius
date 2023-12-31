@@ -27,4 +27,6 @@ class PublicationRepository extends AbstractRepository
     {
         return new Publication($objetFormatTableau["datePosted"], $objetFormatTableau["eventDate"], $objetFormatTableau["description"]);
     }
+
+
 }

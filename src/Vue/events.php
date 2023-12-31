@@ -1,11 +1,14 @@
+<?php
+/** @var array $publications */
+
+foreach ($publications as $publication)?>
 <!-- Conteneur des posts -->
 <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
     <!-- Les posts -->
     <article class="card mb-3" style="max-width: 25rem;">
         <img src="../assets/images/logo.png" class="card-img-top" alt="logo">
         <div class="card-body">
-            <h5 class="card-title">Titre évènement</h5>
-            <p class="card-text">Détail de l'évènement</p>
+            <p class="card-text"><?=$publication->getDescription()?></p>
             <p class="card-text">1000 J'aime</p>
         </div>
         <div class="card-footer bg-transparent d-flex align-items-center">
