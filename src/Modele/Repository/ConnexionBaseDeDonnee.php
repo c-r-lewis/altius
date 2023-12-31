@@ -1,8 +1,9 @@
 <?php
-// require_once __DIR__ . '/../Configuration/Configuration.php';
+
 namespace App\Altius\Modele\Repository;
 
-use App\gestionSA\Configuration\Configuration as Configuration;
+use App\Altius\Configuration\Configuration;
+
 use PDO;
 
 class ConnexionBaseDeDonnee {
@@ -41,5 +42,3 @@ class ConnexionBaseDeDonnee {
         return ConnexionBaseDeDonnee::$instance;
     }
 }
-
-?>

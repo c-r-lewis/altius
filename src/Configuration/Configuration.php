@@ -1,5 +1,5 @@
 <?php
-namespace App\gestionSA\Configuration;
+namespace App\Altius\Configuration;
 class Configuration {
 
     static private array $databaseConfiguration = array(
@@ -8,7 +8,7 @@ class Configuration {
         // Nom de la base de données
         'database' => 'u604190744_test',
         // Port par défaut : 3306
-        'port' => '3316',
+        'port' => '3306',
 
         'login' => 'u604190744_dev',
         // Le mdp est le même quelque soit l'utilisateur
@@ -40,4 +40,3 @@ class Configuration {
     }
 
 }
-?>

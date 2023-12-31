@@ -4,8 +4,6 @@ namespace App\Altius\Modele\DataObject;
 
 class Publication extends AbstractDataObject
 {
-
-    private String $id;
     private $datePosted;
     private $eventDate;
 
@@ -20,8 +18,9 @@ class Publication extends AbstractDataObject
 
     public function formatTableau(): array
     {
-        return ["publicationIDTag" => $this->id,
-            "datePostedTag"=>$this->datePosted,
+        return [
+            "descriptionTag"=>$this->description,
+            "postedDateTag"=>$this->datePosted,
             "eventDateTag"=>$this->eventDate];
     }
 }

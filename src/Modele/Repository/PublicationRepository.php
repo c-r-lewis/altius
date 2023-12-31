@@ -12,7 +12,7 @@ class PublicationRepository extends AbstractRepository
 
     protected function getNomsColonnes(): array
     {
-        return array("id", "description", "postedDate", "eventDate");
+        return array("description", "postedDate", "eventDate");
     }
 
     protected function getClePrimaire(): String
