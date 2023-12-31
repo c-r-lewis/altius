@@ -11,25 +11,39 @@ abstract class AbstractRepository
 
     abstract protected function getNomsColonnes(): array;
 
-    abstract protected function getClePrimaire(): String;
+    abstract protected function getClePrimaire(): array;
 
     abstract protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject;
 
-    public function create(AbstractDataObject $object) {
+    public function create(AbstractDataObject $object): void {
         $columns = $this->getNomsColonnes();
+        $primaryKeyColumns = $this->getClePrimaire();
+
         $sql = 'INSERT INTO '.$this->getNomTable().' (';
         $sqlTag = '(';
-        for ($i=0; $i < sizeof($columns)-1; $i++) {
-            $sql .= $columns[$i].', ';
-            $sqlTag .= ':'.$columns[$i].'Tag, ';
+
+        // Loop through regular columns
+        foreach ($columns as $column) {
+            $sql .= $column.', ';
+            $sqlTag .= ':'.$column.'Tag, ';
         }
-        $sqlTag .= ':'.$columns[sizeof($columns)-1].'Tag)';
-        $sql .= $columns[sizeof($columns)-1].') VALUES '.$sqlTag;
+
+        // Loop through composite key columns
+        foreach ($primaryKeyColumns as $column) {
+            $sql .= $column.', ';
+            $sqlTag .= ':'.$column.'Tag, ';
+        }
+
+        $sqlTag = rtrim($sqlTag, ', '); // Remove the trailing comma
+        $sql .= rtrim($sql, ', ').') VALUES '.$sqlTag;
+
+        // Prepare and execute the query
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement->execute($object->formatTableau());
     }
 
-    public function getAll() {
+
+    public function getAll(): array {
         $sql = $this->createSelectStatement();
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         $objets = [];
@@ -42,20 +56,45 @@ abstract class AbstractRepository
     private function createSelectStatement(): String {
         $sql = 'SELECT ';
         $columns = $this->getNomsColonnes();
-        for ($i=0; $i < sizeof($columns)-1; $i++) {
-            $sql .= $columns[$i].', ';
+        $primaryKeyColumns = $this->getClePrimaire();
+
+        // Loop through regular columns
+        foreach ($columns as $column) {
+            $sql .= $column.', ';
         }
-        return $columns[sizeof($columns)-1].' FROM '.$this->getNomTable();
+
+        // Loop through composite key columns
+        foreach ($primaryKeyColumns as $column) {
+            $sql .= $column.', ';
+        }
+
+        return rtrim($sql, ', '). ' FROM '.$this->getNomTable();
     }
 
-    public function getByID($id) : AbstractDataObject{
+
+    public function getByID(array $id) : AbstractDataObject {
         $sql = $this->createSelectStatement();
-        $sql .= ' WHERE '.$this->getClePrimaire().' = :'.$id."Tag";
+        $sql .= ' WHERE ';
+
+        // Loop through composite key columns
+        foreach ($this->getClePrimaire() as $column) {
+            $sql .= $column.' = :'.$column."Tag AND ";
+        }
+
+        $sql = rtrim($sql, 'AND '); // Remove the trailing AND
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $values = array($this->getClePrimaire().'Tag' => $id);
+
+        // Bind values for composite key
+        $values = [];
+        foreach ($id as $column => $value) {
+            $values[$column.'Tag'] = $value;
+        }
+
         $pdoStatement->execute($values);
+
         return $this->construireDepuisTableau($pdoStatement->fetch());
     }
+
 
 
 

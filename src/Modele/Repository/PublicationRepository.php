@@ -18,9 +18,9 @@ class PublicationRepository extends AbstractRepository
         return array("description", "postedDate", "eventDate");
     }
 
-    protected function getClePrimaire(): String
+    protected function getClePrimaire(): array
     {
-        return "id";
+        return array("id");
     }
 
     protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject
