@@ -10,7 +10,7 @@ class PublicationRepository extends AbstractRepository
 
     protected function getNomTable(): string
     {
-        return "PUBLICATIONS";
+        return "Publications";
     }
 
     protected function getNomsColonnes(): array
@@ -25,8 +25,22 @@ class PublicationRepository extends AbstractRepository
 
     protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject
     {
-        return new Publication($objetFormatTableau["datePosted"], $objetFormatTableau["eventDate"], $objetFormatTableau["description"]);
+        return Publication::publicationWithID($objetFormatTableau["id"], $objetFormatTableau["datePosted"], $objetFormatTableau["eventDate"], $objetFormatTableau["description"]);
     }
+
+    public function getPublicationsLikedBy($userID) : array {
+        $sql = 'SELECT * FROM PUBLICATIONS P 
+        JOIN LIKES L ON L.publicationID = P.publicationID
+        WHERE L.userID = :userIDTag';
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute(array ('userIDTag'=>$userID));
+        $likes = [];
+        foreach ($pdoStatement as $objectFormatTableau) {
+            $likes[] = $this->construireDepuisTableau($objectFormatTableau);
+        }
+        return $likes;
+    }
+
 
 
 }

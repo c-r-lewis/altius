@@ -4,8 +4,9 @@ namespace App\Altius\Modele\DataObject;
 
 class Publication extends AbstractDataObject
 {
-    private $datePosted;
-    private $eventDate;
+    private int $id;
+    private string $datePosted;
+    private string $eventDate;
 
     private String $description;
 
@@ -14,6 +15,14 @@ class Publication extends AbstractDataObject
         $this->datePosted = $datePosted;
         $this->description = $description;
     }
+
+    public static function publicationWithID($id, $datePosted, $eventDate, $description) : Publication {
+        $publication = new self($datePosted, $eventDate, $description);
+        $publication->id = $id;
+        return $publication;
+    }
+
+
 
 
     public function formatTableau(): array
@@ -24,18 +33,13 @@ class Publication extends AbstractDataObject
             "eventDateTag"=>$this->eventDate];
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDatePosted()
+    public function getDatePosted() : string
     {
         return $this->datePosted;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEventDate()
+
+    public function getEventDate() : string
     {
         return $this->eventDate;
     }
@@ -44,6 +48,13 @@ class Publication extends AbstractDataObject
     {
         return $this->description;
     }
+
+    public function getID(): int
+    {
+        return $this->id;
+    }
+
+
 
 
 }

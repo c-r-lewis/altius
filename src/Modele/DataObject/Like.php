@@ -2,23 +2,23 @@
 
 namespace App\Altius\Modele\DataObject;
 
-class Like
+class Like extends AbstractDataObject
 {
 
-    private $idPublication;
-    private $idUser;
+    private int $publicationID;
+    private string $userID;
 
-    /**
-     * @param $idPublication
-     * @param $idUser
-     */
+
     public function __construct($idPublication, $idUser)
     {
-        $this->idPublication = $idPublication;
-        $this->idUser = $idUser;
+        $this->publicationID = $idPublication;
+        $this->userID = $idUser;
     }
 
 
-
-
+    public function formatTableau(): array
+    {
+        return array ("publicationIDTag" => $this->publicationID,
+            "userIDTag" => $this->userID);
+    }
 }

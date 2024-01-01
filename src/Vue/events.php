@@ -1,15 +1,17 @@
 <?php
 /** @var array $publications */
-
-foreach ($publications as $publication)?>
+/** @var array $nbLikes */
+/** @var array $publicationsLikedByConnectedUser */
+?>
 <!-- Conteneur des posts -->
 <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
     <!-- Les posts -->
+    <?php foreach ($publications as $publication) :?>
     <article class="card mb-3" style="max-width: 25rem;">
         <img src="../assets/images/logo.png" class="card-img-top" alt="logo">
         <div class="card-body">
             <p class="card-text"><?=$publication->getDescription()?></p>
-            <p class="card-text">1000 J'aime</p>
+            <p class="card-text"><?=$nbLikes[$publication->getID()]?> J'aime</p>
         </div>
         <div class="card-footer bg-transparent d-flex align-items-center">
             <button class="btn heart-btn" onclick="like()">
@@ -29,4 +31,5 @@ foreach ($publications as $publication)?>
             </button>
         </div>
     </article>
+    <?php endforeach;?>
 </div>

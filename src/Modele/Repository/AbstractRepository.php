@@ -44,7 +44,7 @@ abstract class AbstractRepository
 
 
     public function getAll(): array {
-        $sql = $this->createSelectStatement();
+        $sql = 'SELECT * FROM '.$this->getNomTable();
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         $objets = [];
         foreach ($pdoStatement as $objetFormatTableau) {
@@ -53,7 +53,7 @@ abstract class AbstractRepository
         return $objets;
     }
 
-    private function createSelectStatement(): String {
+    protected function createSelectStatement(): String {
         $sql = 'SELECT ';
         $columns = $this->getNomsColonnes();
         $primaryKeyColumns = $this->getClePrimaire();
