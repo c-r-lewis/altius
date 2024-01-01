@@ -5,6 +5,6 @@
     </svg>
     <label class="btn btn-primary">
         Sélectionner sur l'ordinateur
-        <input type="file" name="image" accept="image/*" class="btn btn-primary" id="newImage" style="display: none">
+        <input type="file" name="newImage" accept="image/*" class="btn btn-primary" id="newImage" style="display: none">
     </label>
 </div>

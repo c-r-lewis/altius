@@ -8,16 +8,18 @@ class Publication extends AbstractDataObject
     private string $datePosted;
     private string $eventDate;
 
-    private String $description;
+    private string $description;
+    private string $pathToImage;
 
-    public function __construct($datePosted, $eventDate, $description) {
+    public function __construct($datePosted, $eventDate, $description, $pathToImage="") {
         $this->eventDate = $eventDate;
         $this->datePosted = $datePosted;
         $this->description = $description;
+        $this->pathToImage = $pathToImage;
     }
 
-    public static function publicationWithID($id, $datePosted, $eventDate, $description) : Publication {
-        $publication = new self($datePosted, $eventDate, $description);
+    public static function publicationWithID($id, $datePosted, $eventDate, $description, $pathToImage="") : Publication {
+        $publication = new self($datePosted, $eventDate, $description, $pathToImage);
         $publication->id = $id;
         return $publication;
     }
@@ -30,7 +32,8 @@ class Publication extends AbstractDataObject
         return [
             "descriptionTag"=>$this->description,
             "postedDateTag"=>$this->datePosted,
-            "eventDateTag"=>$this->eventDate];
+            "eventDateTag"=>$this->eventDate,
+            "pathToImageTag"=>$this->pathToImage];
     }
 
     public function getDatePosted() : string

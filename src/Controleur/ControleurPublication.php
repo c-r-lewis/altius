@@ -9,12 +9,17 @@ use App\Altius\Modele\Repository\PublicationRepository;
 class ControleurPublication extends ControleurGeneral
 {
     static function createPublication() {
+        $targetPath = "";
+        if(isset($_FILES["newImage"])) {
+            $targetPath = '../assets/uploads/'.uniqid().'-'.$_FILES["newImage"]["name"];
+            move_uploaded_file($_FILES["newImage"]["tmp_name"], $targetPath);
+        }
         $datePosted = date('Y-m-d H:i:s');
-        $newPublication = new Publication($datePosted, $_REQUEST["eventDate"], $_REQUEST["description"]);
+        $newPublication = new Publication($datePosted, $_REQUEST["eventDate"], $_REQUEST["description"], $targetPath);
         (new PublicationRepository())->create($newPublication);
     }
 
-    static function loadPublications() {
+    static function loadHomePage() {
         //TODO : get connected user
         $userID = 'test';
         $publicationRepository = new PublicationRepository();
@@ -25,7 +30,7 @@ class ControleurPublication extends ControleurGeneral
             $nbLikes[$publication->getID()] = $likeRepository->countLikesOnPublication($publication->getID());
         }
         $publicationsLikedByConnectedUser = $publicationRepository->getPublicationsLikedBy($userID);
-        self::afficherVue("vueGenerale.php", array("publications"=>$publications,
+        self::afficherVue("vueGenerale.php", array("cheminVueBody"=>"events.php","publications"=>$publications,
             "nbLikes"=>$nbLikes,
             "publicationsLikedByConnectedUser"=>$publicationsLikedByConnectedUser));
     }

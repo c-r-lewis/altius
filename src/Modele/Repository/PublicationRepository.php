@@ -10,12 +10,12 @@ class PublicationRepository extends AbstractRepository
 
     protected function getNomTable(): string
     {
-        return "Publications";
+        return "PUBLICATIONS";
     }
 
     protected function getNomsColonnes(): array
     {
-        return array("description", "postedDate", "eventDate");
+        return array("description", "postedDate", "eventDate", "pathToImage");
     }
 
     protected function getClePrimaire(): array

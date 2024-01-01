@@ -17,8 +17,6 @@ abstract class AbstractRepository
 
     public function create(AbstractDataObject $object): void {
         $columns = $this->getNomsColonnes();
-        $primaryKeyColumns = $this->getClePrimaire();
-
         $sql = 'INSERT INTO '.$this->getNomTable().' (';
         $sqlTag = '(';
 
@@ -28,15 +26,8 @@ abstract class AbstractRepository
             $sqlTag .= ':'.$column.'Tag, ';
         }
 
-        // Loop through composite key columns
-        foreach ($primaryKeyColumns as $column) {
-            $sql .= $column.', ';
-            $sqlTag .= ':'.$column.'Tag, ';
-        }
-
         $sqlTag = rtrim($sqlTag, ', '); // Remove the trailing comma
-        $sql .= rtrim($sql, ', ').') VALUES '.$sqlTag;
-
+        $sql = rtrim($sql, ', ').') VALUES '.$sqlTag.')';
         // Prepare and execute the query
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement->execute($object->formatTableau());

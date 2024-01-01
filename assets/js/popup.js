@@ -96,6 +96,13 @@ function addDescriptionToEvent() {
                     const imgContainer = container.querySelector(".col-6.d-flex.justify-content-center");
                     imgContainer.innerHTML = '';
                     imgContainer.appendChild(img);
+
+                    // Create a hidden field to store the image name
+                    const imageNameInput = document.createElement("input");
+                    imageNameInput.type = "hidden";
+                    imageNameInput.name = "newImage";
+                    imageNameInput.value = fileInput.files[0].name;
+                    imgContainer.appendChild(imageNameInput);
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             })
