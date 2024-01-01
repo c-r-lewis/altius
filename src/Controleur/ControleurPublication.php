@@ -11,6 +11,7 @@ class ControleurPublication extends ControleurGeneral
     static function createPublication() {
         $targetPath = "";
         if(isset($_FILES["newImage"])) {
+            echo "File loaded";
             $targetPath = '../assets/uploads/'.uniqid().'-'.$_FILES["newImage"]["name"];
             move_uploaded_file($_FILES["newImage"]["tmp_name"], $targetPath);
         }

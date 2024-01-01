@@ -57,6 +57,13 @@ class Publication extends AbstractDataObject
         return $this->id;
     }
 
+    public function getPathToImage(): string
+    {
+        return $this->pathToImage;
+    }
+
+
+
 
 
 

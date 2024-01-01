@@ -4,6 +4,7 @@ namespace App\Altius\Modele\Repository;
 
 use App\Altius\Modele\DataObject\AbstractDataObject;
 use App\Altius\Modele\DataObject\Like;
+use PDO;
 
 class LikeRepository extends AbstractRepository
 {
@@ -29,10 +30,15 @@ class LikeRepository extends AbstractRepository
     }
 
     public function countLikesOnPublication($publicationID) : int {
-        $sql = 'COUNT(userID) FROM LIKES WHERE publicationID = :publicationIDTag';
+        $sql = 'SELECT COUNT(userID) AS likeCount FROM LIKES WHERE publicationID = :publicationIDTag';
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $pdoStatement->execute(array("publicationIDTag"=>$publicationID));
-        return $pdoStatement->fetch();
+        $pdoStatement->execute(array("publicationIDTag" => $publicationID));
+
+        // Fetch the result as an associative array
+        $result = $pdoStatement->fetch(PDO::FETCH_ASSOC);
+
+        // Return the count
+        return $result['likeCount'];
     }
 
 }
