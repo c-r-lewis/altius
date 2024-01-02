@@ -69,21 +69,33 @@ abstract class AbstractRepository
 
         // Loop through composite key columns
         foreach ($this->getClePrimaire() as $column) {
-            $sql .= $column.' = :'.$column."Tag AND ";
+            $sql .= $column.' = :'.$column.'Tag AND ';
         }
 
         $sql = rtrim($sql, 'AND '); // Remove the trailing AND
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
 
-        // Bind values for composite key
+        $pdoStatement->execute($this->bindValuesForCompositeKey($id));
+
+        return $this->construireDepuisTableau($pdoStatement->fetch());
+    }
+
+    private function bindValuesForCompositeKey(array $id): array {
         $values = [];
         foreach ($id as $column => $value) {
             $values[$column.'Tag'] = $value;
         }
+        return $values;
+    }
 
-        $pdoStatement->execute($values);
-
-        return $this->construireDepuisTableau($pdoStatement->fetch());
+    public function deleteByID(array $id): void {
+        $sql = 'DELETE FROM '.$this->getNomTable().' WHERE ';
+        foreach ($this->getClePrimaire() as $column) {
+            $sql .= $column.' =:'.$column.'Tag AND ';
+        }
+        $sql = rtrim($sql, 'AND ');
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement -> execute($this->bindValuesForCompositeKey($id));
     }
 
 
