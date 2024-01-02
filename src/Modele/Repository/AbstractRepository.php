@@ -44,43 +44,6 @@ abstract class AbstractRepository
         return $objets;
     }
 
-    protected function createSelectStatement(): String {
-        $sql = 'SELECT ';
-        $columns = $this->getNomsColonnes();
-        $primaryKeyColumns = $this->getClePrimaire();
-
-        // Loop through regular columns
-        foreach ($columns as $column) {
-            $sql .= $column.', ';
-        }
-
-        // Loop through composite key columns
-        foreach ($primaryKeyColumns as $column) {
-            $sql .= $column.', ';
-        }
-
-        return rtrim($sql, ', '). ' FROM '.$this->getNomTable();
-    }
-
-
-    public function getByID(array $id) : AbstractDataObject {
-        $sql = $this->createSelectStatement();
-        $sql .= ' WHERE ';
-        $sqlTag = [];
-
-        // Loop through composite key columns
-        foreach ($this->getClePrimaire() as $column) {
-            $sql .= $column.' = :'.$column.'Tag AND ';
-        }
-
-        $sql = rtrim($sql, 'AND '); // Remove the trailing AND
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-
-        $pdoStatement->execute($this->bindValuesForCompositeKey($id));
-
-        return $this->construireDepuisTableau($pdoStatement->fetch());
-    }
-
     private function bindValuesForCompositeKey(array $idValues): array {
         $tags = [];
         for ($i=0; $i < sizeof($idValues); $i++) {
