@@ -46,11 +46,9 @@
                                     <h1 class="modal-title fs-3" id="popupLabel">Commentaires</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
+                                <div class="modal-body" id="commentsContainer">
                                     <?php foreach($comments[$publication->getID()] as $comment):?>
-                                    <div class="card-text">
-                                        <?=$comment->getComment();?>
-                                    </div>
+                                        <div class="comment" data-comment="<?=htmlentities(json_encode($comment->loadCommentFormat()));?>"></div>
                                     <?php endforeach;?>
                                 </div>
                                 <div class="justify-content-start border-top">
@@ -70,8 +68,19 @@
                                             </svg>
                                         </span>
                                 </div>
+                                <p><?=$nbLikes[$publication->getID()]?> J'aime</p>
                                 <div class="justify-content-start text-secondary border-top">
-                                    <input type="text" id="commentInput" class="form-control rounded-0 border-0 no-outline-focus">
+                                    <form action="../web/controleurFrontal.php" method="post" id="commentForm">
+                                        <div class="input-group">
+                                            <input name="comment" type="text" id="commentInput" class="form-control rounded-0 border-0 no-outline-focus">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="submit">Publier</button>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="controleur" value="commentaire">
+                                        <input type="hidden" name="action" value="addComment">
+                                        <input type="hidden" name="publicationID" value="<?=$publication->getID()?>">
+                                    </form>
                                 </div>
                             </div>
                         </div>

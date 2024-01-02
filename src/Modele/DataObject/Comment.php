@@ -31,6 +31,17 @@ class Comment extends AbstractDataObject
         return $comment;
     }
 
+    public function getComment(): string
+    {
+        return $this->comment;
+    }
+
+    public function getDatePosted(): string
+    {
+        return $this->datePosted;
+    }
+
+
 
     public function formatTableau(): array
     {
@@ -39,5 +50,14 @@ class Comment extends AbstractDataObject
             "commentTag" => $this->comment,
             "datePostedTag" => $this->datePosted
         ];
+    }
+
+    public function loadCommentFormat(): array
+    {
+        return ["publicationID"=>$this->publicationID,
+            "comment"=>$this->comment,
+            "datePosted"=>$this->datePosted,
+            "controleur"=>"commentaire",
+            "action"=>"loadComment"];
     }
 }

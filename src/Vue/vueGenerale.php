@@ -87,7 +87,8 @@
             ?>
         </main>
 
-        <script defer src="../assets/js/popup.js"></script>
+        <script defer src="../assets/js/createPublicationPopup.js"></script>
         <script src="../assets/js/bootstrap.bundle.js"></script>
+        <script src="../assets/js/publicationInfoPopup.js"></script>
     </body>
 </html>
