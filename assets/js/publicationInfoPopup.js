@@ -1,5 +1,9 @@
-// Listener on heart buttons
-document.getElementById('publicationsContainer').addEventListener('click', function(event) {
+// Listener on heart buttons for publications
+document.getElementById('publicationsContainer').addEventListener('click', event => onHeartButtonClicked(event));
+// Listener on heart buttons for publication popups
+document.getElementById('commentsContainer').addEventListener('click', event=> onHeartButtonClicked(event));
+
+function onHeartButtonClicked(event) {
     // Check if the clicked element is a button with data-publication-id attribute
     const svgPath = event.target.closest('button[data-publication-id]');
 
@@ -10,7 +14,7 @@ document.getElementById('publicationsContainer').addEventListener('click', funct
 
         like(heartBtn, publicationID);
     }
-});
+}
 
 // Dynamically load comments
 document.addEventListener('DOMContentLoaded', updateComments);
@@ -32,22 +36,21 @@ document.getElementById('commentForm').addEventListener('submit', function (even
 })
 
 
-function like(heartBtn, publicationID) {
-    let content = "publicationID=" + encodeURIComponent(publicationID) + "&controleur=like&action=";
+function like(publicationID) {
+
+    let content = "publicationID=" + encodeURIComponent(publicationID.dataset.publicationId) + "&controleur=like&action=";
 
     // Find the svg element inside the clicked button
-    const svgElement = heartBtn.querySelector('svg');
-
-    const nbLikes = document.getElementById("nbLikes"+publicationID);
+    const svgElement = document.querySelector('.heart'+publicationID.dataset.publicationId);
 
     if (svgElement.classList.contains("bi-heart-fill")) {
-        clearHeart(svgElement);
+        clearHeart(publicationID.dataset.publicationId);
+        updateLikeCounter(-1, publicationID.dataset.publicationId);
         content += "unlike";
-        nbLikes.textContent = (parseInt(nbLikes.textContent, 10) - 1).toString() + " J'aime";
     } else {
-        fillHeart(svgElement);
+        fillHeart(publicationID.dataset.publicationId);
         content += "like";
-        nbLikes.textContent = (parseInt(nbLikes.textContent, 10) + 1).toString() + " J'aime";
+        updateLikeCounter(1, publicationID.dataset.publicationId);
     }
 
     // Update database
@@ -61,20 +64,32 @@ function like(heartBtn, publicationID) {
 }
 
 
-function fillHeart(heartSVG) {
-    heartSVG.setAttribute("class", "bi bi-heart-fill");
+function fillHeart(publicationID) {
+    console.log( document.querySelectorAll('.heart'+publicationID));
+    document.querySelectorAll('.heart'+publicationID).forEach(heartSVG=>{
+        heartSVG.setAttribute("class", "bi bi-heart-fill heart"+publicationID);
 
-    const path = heartSVG.querySelector("path");
+        const path = heartSVG.querySelector("path");
 
-    path.setAttribute("fill-rule", "evenodd");
-    path.setAttribute("d", "M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314");
+        path.setAttribute("fill-rule", "evenodd");
+        path.setAttribute("d", "M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314");
+    });
 }
 
-function clearHeart(heartSVG) {
-    heartSVG.setAttribute("class", "bi bi-heart");
-    const path = heartSVG.querySelector("path");
-    path.removeAttribute("fill-rule");
-    path.setAttribute("d", "m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15");
+function updateLikeCounter(nb, publicationID) {
+    document.querySelectorAll(".nbLikes" + publicationID).forEach(likeCounter => {
+        likeCounter.textContent = (parseInt(likeCounter.textContent, 10) + nb).toString() + " J'aime";
+    });
+}
+
+function clearHeart(publicationID) {
+    console.log( document.querySelectorAll('.heart'+publicationID));
+    document.querySelectorAll('.heart'+publicationID).forEach(heartSVG=>{
+        heartSVG.setAttribute("class", "bi bi-heart heart"+publicationID);
+        const path = heartSVG.querySelector("path");
+        path.removeAttribute("fill-rule");
+        path.setAttribute("d", "m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15");
+    });
 }
 
 function focusOnInput(inputID) {
