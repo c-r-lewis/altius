@@ -3,6 +3,7 @@
 namespace App\Altius\Controleur;
 
 use App\Altius\Modele\DataObject\Publication;
+use App\Altius\Modele\Repository\CommentRepository;
 use App\Altius\Modele\Repository\LikeRepository;
 use App\Altius\Modele\Repository\PublicationRepository;
 
@@ -24,14 +25,18 @@ class ControleurPublication extends ControleurGeneral
         $userID = 'test';
         $publicationRepository = new PublicationRepository();
         $likeRepository = new LikeRepository();
+        $commentRepository = new CommentRepository();
+        $comments = [];
         $publications = $publicationRepository->getAll();
         $nbLikes = [];
         foreach($publications as $publication) {
             $nbLikes[$publication->getID()] = $likeRepository->countLikesOnPublication($publication->getID());
+            $comments[$publication->getID()] = $commentRepository->getCommentsFor($publication->getID());
         }
         $publicationsLikedByConnectedUser = $publicationRepository->getPublicationsLikedBy($userID);
         self::afficherVue("vueGenerale.php", array("cheminVueBody"=>"events.php","publications"=>$publications,
             "nbLikes"=>$nbLikes,
-            "publicationsLikedByConnectedUser"=>$publicationsLikedByConnectedUser));
+            "publicationsLikedByConnectedUser"=>$publicationsLikedByConnectedUser,
+            "comments"=>$comments));
     }
 }
