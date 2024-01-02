@@ -1,22 +1,50 @@
+// Listener on create event popup
 document.getElementById('popupCreate').addEventListener('show.bs.modal', function () {
     loadCreatePublicationContent();
 });
 
 let fileInput;
 
-function like() {
-    document.querySelectorAll(".heart-btn").forEach(heartBtn => {
-        if (heartBtn.children[0].getAttribute("class") === "bi bi-heart-fill") {
-            clearHeart(heartBtn.children[0]);
-        }
-        else {
-            fillHeart(heartBtn.children[0]);
-        }
+// Listener on heart buttons
+document.getElementById('publicationsContainer').addEventListener('click', function(event) {
+    // Check if the clicked element is a button with data-publication-id attribute
+    const svgPath = event.target.closest('button[data-publication-id]');
+
+    if (svgPath) {
+        // Pass the clicked button directly to the like function
+        const heartBtn = svgPath.closest('button[data-publication-id]');
+        const publicationID = heartBtn.getAttribute('data-publication-id');
+
+        like(heartBtn, publicationID);
+    }
+});
+
+function like(heartBtn, publicationID) {
+    let content = "publicationID=" + encodeURIComponent(publicationID) + "&controleur=like&action=";
+
+    // Find the svg element inside the clicked button
+    const svgElement = heartBtn.querySelector('svg');
+
+    if (svgElement.classList.contains("bi-heart-fill")) {
+        clearHeart(svgElement);
+        content += "unlike";
+    } else {
+        fillHeart(svgElement);
+        content += "like";
+    }
+
+    // Update database
+    fetch('controleurFrontal.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: content,
     });
 }
 
-function fillHeart(heartSVG) {
 
+function fillHeart(heartSVG) {
     heartSVG.setAttribute("class", "bi bi-heart-fill");
 
     const path = heartSVG.querySelector("path");
@@ -29,7 +57,6 @@ function clearHeart(heartSVG) {
     heartSVG.setAttribute("class", "bi bi-heart");
     const path = heartSVG.querySelector("path");
     path.removeAttribute("fill-rule");
-
     path.setAttribute("d", "m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15");
 }
 
