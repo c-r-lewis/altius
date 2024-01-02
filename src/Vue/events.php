@@ -32,7 +32,13 @@
         </div>
     </article>
     <?php if (in_array($publication, $publicationsLikedByConnectedUser)) :?>
-    <script>fillHeart(document.getElementById("heart<?=$publication->getID()?>"))</script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                if (typeof fillHeart === 'function') {
+                    fillHeart(document.getElementById("heart<?=$publication->getID()?>"));
+                }
+            });
+        </script>
     <?php endif;
     endforeach;?>
 </div>

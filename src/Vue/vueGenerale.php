@@ -137,7 +137,7 @@
             ?>
         </main>
 
-        <script src="../assets/js/popup.js"></script>
+        <script defer src="../assets/js/popup.js"></script>
         <script src="../assets/js/bootstrap.bundle.js"></script>
     </body>
 </html>

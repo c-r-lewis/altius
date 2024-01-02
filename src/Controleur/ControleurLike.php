@@ -17,7 +17,9 @@ class ControleurLike
     }
 
     public static function unlike() {
-
+        //TODO: userID should be connected user
+        $userID = "test";
+        (new LikeRepository())->deleteByID(array ($_REQUEST["publicationID"], $userID));
     }
 
 }

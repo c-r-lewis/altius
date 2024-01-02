@@ -66,6 +66,7 @@ abstract class AbstractRepository
     public function getByID(array $id) : AbstractDataObject {
         $sql = $this->createSelectStatement();
         $sql .= ' WHERE ';
+        $sqlTag = [];
 
         // Loop through composite key columns
         foreach ($this->getClePrimaire() as $column) {
@@ -80,12 +81,12 @@ abstract class AbstractRepository
         return $this->construireDepuisTableau($pdoStatement->fetch());
     }
 
-    private function bindValuesForCompositeKey(array $id): array {
-        $values = [];
-        foreach ($id as $column => $value) {
-            $values[$column.'Tag'] = $value;
+    private function bindValuesForCompositeKey(array $idValues): array {
+        $tags = [];
+        for ($i=0; $i < sizeof($idValues); $i++) {
+            $tags[$this->getClePrimaire()[$i].'Tag'] = $idValues[$i];
         }
-        return $values;
+        return $tags;
     }
 
     public function deleteByID(array $id): void {
@@ -94,6 +95,7 @@ abstract class AbstractRepository
             $sql .= $column.' =:'.$column.'Tag AND ';
         }
         $sql = rtrim($sql, 'AND ');
+        echo $sql;
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement -> execute($this->bindValuesForCompositeKey($id));
     }
