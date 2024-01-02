@@ -71,6 +71,7 @@
                         <div class="card-header" id="newPublicationTitle">
                             Créer une nouvelle publication
                         </div>
+                        <input type="submit" id="submitBtn" value="Créer" style="display: none;">
                         <div id="createContainer">
 
                         </div>

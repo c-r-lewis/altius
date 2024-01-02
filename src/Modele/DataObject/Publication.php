@@ -11,14 +11,14 @@ class Publication extends AbstractDataObject
     private string $description;
     private string $pathToImage;
 
-    public function __construct($datePosted, $eventDate, $description, $pathToImage="") {
+    public function __construct($datePosted, $eventDate, $description, $pathToImage) {
         $this->eventDate = $eventDate;
         $this->datePosted = $datePosted;
         $this->description = $description;
         $this->pathToImage = $pathToImage;
     }
 
-    public static function publicationWithID($id, $datePosted, $eventDate, $description, $pathToImage="") : Publication {
+    public static function publicationWithID($id, $datePosted, $eventDate, $description, $pathToImage) : Publication {
         $publication = new self($datePosted, $eventDate, $description, $pathToImage);
         $publication->id = $id;
         return $publication;

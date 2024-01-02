@@ -25,7 +25,7 @@ class PublicationRepository extends AbstractRepository
 
     protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject
     {
-        return Publication::publicationWithID($objetFormatTableau["publicationID"], $objetFormatTableau["postedDate"], $objetFormatTableau["eventDate"], $objetFormatTableau["description"]);
+        return Publication::publicationWithID($objetFormatTableau["publicationID"], $objetFormatTableau["postedDate"], $objetFormatTableau["eventDate"], $objetFormatTableau["description"], $objetFormatTableau["pathToImage"]);
     }
 
     public function getPublicationsLikedBy($userID) : array {

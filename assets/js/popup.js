@@ -48,11 +48,6 @@ function loadCreatePublicationContent() {
             container.innerHTML = htmlContent;
             fileInput = document.getElementById("newImage");
             fileInput.addEventListener('change', addDescriptionToEvent);
-
-            const btn = document.getElementById("submitBtn");
-            if (btn !== null) {
-                btn.parentNode.removeChild(btn);
-            }
         })
         .catch(error => {
             console.error('Error fetching PHP file:', error);
@@ -65,10 +60,8 @@ function addDescriptionToEvent() {
 
         const title = document.getElementById("newPublicationTitle");
 
-        const submitButton = document.createElement("input");
-        submitButton.id='submitBtn';
-        submitButton.type = 'submit';
-        submitButton.value = "Créer";
+        const submitButton = document.getElementById("submitBtn");
+        submitButton.style.display = 'inline-block';
         submitButton.addEventListener('click', function() {
             const form = document.getElementById("createPublicationForm");
             form.submit();
@@ -93,16 +86,13 @@ function addDescriptionToEvent() {
                     img.classList.add("img-fluid");
 
                     // Add the image to the image container
-                    const imgContainer = container.querySelector(".col-6.d-flex.justify-content-center");
+                    const imgContainer = document.getElementById("imgContainer");
                     imgContainer.innerHTML = '';
                     imgContainer.appendChild(img);
 
-                    // Create a hidden field to store the image name
-                    const imageNameInput = document.createElement("input");
-                    imageNameInput.type = "hidden";
-                    imageNameInput.name = "newImage";
-                    imageNameInput.value = fileInput.files[0].name;
-                    imgContainer.appendChild(imageNameInput);
+                    const fileInputContainer = document.getElementById("fileInputContainer");
+                    fileInputContainer.appendChild(fileInput);
+
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             })
