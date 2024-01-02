@@ -25,12 +25,16 @@ function like(heartBtn, publicationID) {
     // Find the svg element inside the clicked button
     const svgElement = heartBtn.querySelector('svg');
 
+    const nbLikes = document.getElementById("nbLikes"+publicationID);
+
     if (svgElement.classList.contains("bi-heart-fill")) {
         clearHeart(svgElement);
         content += "unlike";
+        nbLikes.textContent = (parseInt(nbLikes.textContent, 10) - 1).toString() + " J'aime";
     } else {
         fillHeart(svgElement);
         content += "like";
+        nbLikes.textContent = (parseInt(nbLikes.textContent, 10) + 1).toString() + " J'aime";
     }
 
     // Update database

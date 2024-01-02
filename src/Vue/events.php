@@ -11,7 +11,7 @@
         <img src="<?=$publication->getPathToImage()?>" class="card-img-top" alt="logo">
         <div class="card-body">
             <p class="card-text"><?=$publication->getDescription()?></p>
-            <p class="card-text"><?=$nbLikes[$publication->getID()]?> J'aime</p>
+            <p class="card-text" id="nbLikes<?=$publication->getID()?>"><?=$nbLikes[$publication->getID()]?> J'aime</p>
         </div>
         <div class="card-footer bg-transparent d-flex align-items-center">
             <button class="btn heart-btn" data-publication-id="<?=$publication->getID()?>">
