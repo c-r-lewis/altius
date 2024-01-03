@@ -21,11 +21,22 @@ main {
 }
 
 
-.no-outline-focus:focus {
-    outline: none;
-    box-shadow: none;
+.no-outline-focus:focus,
+.no-outline-focus:hover {
+    outline: none !important;
+    box-shadow: none !important;
+    border: none;
 }
 
 .flex-grow {
     flex: 1;
+}
+
+.moderately-bold {
+    font-weight: 520;
+}
+
+.fs-small {
+    font-size: 0.8rem;
+    color: #757575;
 }

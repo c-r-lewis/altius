@@ -117,5 +117,9 @@ function updateComments() {
                 commentElement.innerHTML = data;
             });
     });
+}
 
+function replyToComment(replyToUser) {
+    const input = document.getElementById("commentInput");
+    input.value = '@'+replyToUser;
 }
