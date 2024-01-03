@@ -57,12 +57,16 @@ class ControleurGeneral extends ControleurGenerique
 
     public static function afficherDefaultPage()
     {
-        self::afficherVue("connexion.html");
+        self::afficherVue("connexion.php");
     }
 
     public static function afficherAccueil()
     {
         $publications = (new PublicationRepository())->getAll();
 
+    }
+
+    public static function afficherVueErreur($message="Page Not Found"){
+        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"vueErreur","message"=>$message]);
     }
 }

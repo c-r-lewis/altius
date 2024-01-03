@@ -1,10 +1,12 @@
-CREATE TABLE Post(
-   idPost INT AUTO_INCREMENT,
-   titre VARCHAR(50) NOT NULL,
-   description VARCHAR(200),
-   nbJaime INT NOT NULL,
-   lienImage VARCHAR(100) NOT NULL,
-   imageData LONGBLOB NOT NULL,
-   PRIMARY KEY(idPost)
+DROP TABLE User;
+CREATE TABLE User(
+    login VARCHAR(50),
+    email VARCHAR (50),
+    region VARCHAR(70),
+    motDePasse VARCHAR(256),
+    statut VARCHAR(50),
+    ville VARCHAR(80),
+    numeroTelephone VARCHAR(50),
+    PRIMARY KEY (login)
 );
 

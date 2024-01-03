@@ -33,6 +33,30 @@ abstract class AbstractRepository
         $pdoStatement->execute($object->formatTableau());
     }
 
+    public function recupererParClePrimaire(string $valeurClePrimaire): ?AbstractDataObject
+    {
+        $sql = "SELECT * FROM " . $this->getNomTable() . " WHERE ";
+        $clesPrimaires = $this->getClePrimaire();
+        foreach ($clesPrimaires as $clePrimaire) {
+            $sql .= "$clePrimaire AND ";
+        }
+        $sql = substr($sql, 0, -4);
+
+        $sql .= "= :clePrimaireTag;";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $values = array(
+            "clePrimaireTag" => $valeurClePrimaire
+        );
+        $pdoStatement->execute($values);
+        $objetFormatTableau = $pdoStatement->fetch();
+        if ($objetFormatTableau == null) {
+            return null;
+        }
+
+        return $this->construireDepuisTableau($objetFormatTableau);
+    }
+
 
     public function getAll(): array {
         $sql = 'SELECT * FROM '.$this->getNomTable();
