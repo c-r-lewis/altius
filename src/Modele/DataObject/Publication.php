@@ -9,17 +9,19 @@ class Publication extends AbstractDataObjectWithTime
 
     private string $description;
     private string $pathToImage;
+    private string $userID;
 
-    public function __construct($datePosted, $eventDate, $description, $pathToImage) {
+    public function __construct(string $datePosted, string $eventDate, string $description, string $pathToImage, string $userID) {
         parent::__construct($datePosted);
         $this->eventDate = $eventDate;
         $this->datePosted = $datePosted;
         $this->description = $description;
         $this->pathToImage = $pathToImage;
+        $this->userID = $userID;
     }
 
-    public static function publicationWithID($id, $datePosted, $eventDate, $description, $pathToImage) : Publication {
-        $publication = new self($datePosted, $eventDate, $description, $pathToImage);
+    public static function publicationWithID(int $id, string $datePosted, string $eventDate, string $description, string $pathToImage, string $userID) : Publication {
+        $publication = new self($datePosted, $eventDate, $description, $pathToImage, $userID);
         $publication->id = $id;
         return $publication;
     }
@@ -33,7 +35,8 @@ class Publication extends AbstractDataObjectWithTime
             "descriptionTag"=>$this->description,
             "postedDateTag"=>$this->datePosted,
             "eventDateTag"=>$this->eventDate,
-            "pathToImageTag"=>$this->pathToImage];
+            "pathToImageTag"=>$this->pathToImage,
+            "userIDTag"=>$this->userID];
     }
 
     public function getDatePosted() : string
@@ -61,6 +64,13 @@ class Publication extends AbstractDataObjectWithTime
     {
         return $this->pathToImage;
     }
+
+    public function getUserID(): string
+    {
+        return $this->userID;
+    }
+
+
 
 
 

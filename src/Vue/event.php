@@ -9,6 +9,9 @@
     <!-- Les posts -->
     <?php foreach ($publications as $publication) :?>
     <article class="card mb-3" style="max-width: 25rem;">
+        <div class="card-header">
+            <?=$publication->getUserID()?>
+        </div>
         <img src="<?=$publication->getPathToImage()?>" class="card-img-top" alt="Image évènement">
         <div class="card-body">
             <p class="card-text"><?=$publication->getDescription()?></p>

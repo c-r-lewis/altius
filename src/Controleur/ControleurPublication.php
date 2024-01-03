@@ -10,13 +10,15 @@ use App\Altius\Modele\Repository\PublicationRepository;
 class ControleurPublication extends ControleurGeneral
 {
     static function createPublication() {
+        //TODO : userID should correspond with connected user
+        $userID = "test";
         $targetPath = "";
         if(isset($_FILES["newImage"])) {
             $targetPath = '../assets/uploads/'.uniqid().'-'.$_FILES["newImage"]["name"];
             move_uploaded_file($_FILES["newImage"]["tmp_name"], $targetPath);
         }
         $datePosted = date('Y-m-d H:i:s');
-        $newPublication = new Publication($datePosted, $_REQUEST["eventDate"], $_REQUEST["description"], $targetPath);
+        $newPublication = new Publication($datePosted, $_REQUEST["eventDate"], $_REQUEST["description"], $targetPath, $userID);
         (new PublicationRepository())->create($newPublication);
     }
 
@@ -34,7 +36,7 @@ class ControleurPublication extends ControleurGeneral
             $comments[$publication->getID()] = $commentRepository->getCommentsFor($publication->getID());
         }
         $publicationsLikedByConnectedUser = $publicationRepository->getPublicationsLikedBy($userID);
-        self::afficherVue("vueGenerale.php", array("cheminVueBody"=>"events.php","publications"=>$publications,
+        self::afficherVue("vueGenerale.php", array("cheminVueBody"=>"event.php","publications"=>$publications,
             "nbLikes"=>$nbLikes,
             "publicationsLikedByConnectedUser"=>$publicationsLikedByConnectedUser,
             "comments"=>$comments));
