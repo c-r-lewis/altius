@@ -2,16 +2,16 @@
 
 namespace App\Altius\Modele\DataObject;
 
-class Publication extends AbstractDataObject
+class Publication extends AbstractDataObjectWithTime
 {
     private int $id;
-    private string $datePosted;
     private string $eventDate;
 
     private string $description;
     private string $pathToImage;
 
     public function __construct($datePosted, $eventDate, $description, $pathToImage) {
+        parent::__construct($datePosted);
         $this->eventDate = $eventDate;
         $this->datePosted = $datePosted;
         $this->description = $description;

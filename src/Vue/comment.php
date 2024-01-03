@@ -4,17 +4,19 @@ use App\Altius\Modele\DataObject\Comment;
 ?>
 <div>
     <div class="card-text">
-        <p>
+        <div class="fs-5">
+            <strong><?=$comment->getUserID();?></strong>
             <?=$comment->getComment();?>
-        </p>
+        </div>
         <div>
             <!-- Like button -->
         </div>
     </div>
     <div>
-        <p>
-            <?=$comment->getDatePosted();?>
-        </p>
+        <div class="d-flex fs-6">
+            <?=$comment->calculateTime()?>
+            <button class="btn p-0">Répondre</button>
+        </div>
         <p><!-- Number of likes --></p>
     </div>
 </div>

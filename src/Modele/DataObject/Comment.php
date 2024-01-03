@@ -2,12 +2,12 @@
 
 namespace App\Altius\Modele\DataObject;
 
-class Comment extends AbstractDataObject
+class Comment extends AbstractDataObjectWithTime
 {
     private String $userID;
     private String $comment;
-    private string $datePosted;
     private int $publicationID;
+    private ?int $replyToCommentID;
 
     private int $commentID;
 
@@ -17,16 +17,17 @@ class Comment extends AbstractDataObject
      * @param string $datePosted
      * @param int $publicationID
      */
-    public function __construct(string $userID, string $comment, string $datePosted, int $publicationID)
+    public function __construct(string $userID, string $comment, string $datePosted, int $publicationID, ?int $replyToComment)
     {
+        parent::__construct($datePosted);
         $this->userID = $userID;
         $this->comment = $comment;
-        $this->datePosted = $datePosted;
         $this->publicationID = $publicationID;
+        $this->replyToCommentID = $replyToComment;
     }
 
-    public static function createCommentWithID(int $commentID, string $userID, string $comment, string $datePosted, int $publicationID): Comment {
-        $comment = new self($userID, $comment, $datePosted, $publicationID);
+    public static function createCommentWithID(int $commentID, string $userID, string $comment, string $datePosted, int $publicationID, ?int $replyToComment): Comment {
+        $comment = new self($userID, $comment, $datePosted, $publicationID, $replyToComment);
         $comment->commentID = $commentID;
         return $comment;
     }
@@ -48,7 +49,8 @@ class Comment extends AbstractDataObject
         return ["userIDTag" => $this->userID,
             "publicationIDTag" => $this->publicationID,
             "commentTag" => $this->comment,
-            "datePostedTag" => $this->datePosted
+            "datePostedTag" => $this->datePosted,
+            "replyToCommentIDTag" => $this->replyToCommentID
         ];
     }
 
@@ -57,7 +59,15 @@ class Comment extends AbstractDataObject
         return ["publicationID"=>$this->publicationID,
             "comment"=>$this->comment,
             "datePosted"=>$this->datePosted,
+            "replyToCommentID"=>$this->replyToCommentID,
             "controleur"=>"commentaire",
             "action"=>"loadComment"];
     }
+
+    public function getUserID(): string
+    {
+        return $this->userID;
+    }
+
+
 }

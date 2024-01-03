@@ -63,6 +63,6 @@ class ControleurGeneral extends ControleurGenerique
     public static function afficherAccueil()
     {
         $publications = (new PublicationRepository())->getAll();
-
     }
+
 }

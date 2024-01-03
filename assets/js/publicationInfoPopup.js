@@ -65,7 +65,6 @@ function like(publicationID) {
 
 
 function fillHeart(publicationID) {
-    console.log( document.querySelectorAll('.heart'+publicationID));
     document.querySelectorAll('.heart'+publicationID).forEach(heartSVG=>{
         heartSVG.setAttribute("class", "bi bi-heart-fill heart"+publicationID);
 
@@ -83,7 +82,6 @@ function updateLikeCounter(nb, publicationID) {
 }
 
 function clearHeart(publicationID) {
-    console.log( document.querySelectorAll('.heart'+publicationID));
     document.querySelectorAll('.heart'+publicationID).forEach(heartSVG=>{
         heartSVG.setAttribute("class", "bi bi-heart heart"+publicationID);
         const path = heartSVG.querySelector("path");

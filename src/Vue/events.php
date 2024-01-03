@@ -72,7 +72,7 @@
                                 <div class="justify-content-start text-secondary border-top">
                                     <form action="../web/controleurFrontal.php" method="post" id="commentForm">
                                         <div class="input-group">
-                                            <input name="comment" type="text" id="commentInput" class="form-control rounded-0 border-0 no-outline-focus">
+                                            <input name="comment" placeholder="Ajouter un commentaire..." type="text" id="commentInput" class="form-control rounded-0 border-0 no-outline-focus">
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" type="submit">Publier</button>
                                             </div>
