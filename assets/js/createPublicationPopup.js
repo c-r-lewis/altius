@@ -7,6 +7,10 @@ let fileInput;
 
 function loadCreatePublicationContent() {
     const container = document.getElementById("createContainer");
+    document.getElementById("submitBtn").style.display = 'none';
+    const title = document.getElementById("newPublicationTitle");
+    title.classList.remove('justify-content-between');
+    title.classList.add('justify-content-center');
 
     // Fetch the content of the PHP file
     fetch('../src/Vue/uploadImage.php')
@@ -27,6 +31,8 @@ function addDescriptionToEvent() {
         const container = document.getElementById("createContainer");
 
         const title = document.getElementById("newPublicationTitle");
+        title.classList.remove('justify-content-center');
+        title.classList.add('justify-content-between');
 
         const submitButton = document.getElementById("submitBtn");
         submitButton.style.display = 'inline-block';

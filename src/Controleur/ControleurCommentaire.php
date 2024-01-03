@@ -16,8 +16,8 @@ class ControleurCommentaire extends ControleurGeneral
     private static function createComment(): Comment {
         //TODO: userID should be connected user
         $userID = "test";
-        $date = $_POST["datePosted"] == 'null' ? date('Y-m-d H:i:s') : $_POST["datePosted"];
-        $replyToCommentID = $_POST["replyToCommentID"] == 'null' ? null : (int)$_POST["replyToCommentID"];
+        $date = $_POST["datePosted"] ?? date('Y-m-d H:i:s');
+        $replyToCommentID = isset($_POST["replyToCommentID"]) ? (int)$_POST["replyToCommentID"] : null;
         return new Comment($userID, $_POST["comment"], $date, $_POST["publicationID"], $replyToCommentID);
     }
 

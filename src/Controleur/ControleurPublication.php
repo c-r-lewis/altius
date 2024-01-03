@@ -9,7 +9,7 @@ use App\Altius\Modele\Repository\PublicationRepository;
 
 class ControleurPublication extends ControleurGeneral
 {
-    static function createPublication() {
+    static function createPublication(): void {
         //TODO : userID should correspond with connected user
         $userID = "test";
         $targetPath = "";
@@ -20,9 +20,10 @@ class ControleurPublication extends ControleurGeneral
         $datePosted = date('Y-m-d H:i:s');
         $newPublication = new Publication($datePosted, $_REQUEST["eventDate"], $_REQUEST["description"], $targetPath, $userID);
         (new PublicationRepository())->create($newPublication);
+        self::loadHomePage();
     }
 
-    static function loadHomePage() {
+    static function loadHomePage(): void {
         //TODO : get connected user
         $userID = 'test';
         $publicationRepository = new PublicationRepository();
@@ -31,14 +32,19 @@ class ControleurPublication extends ControleurGeneral
         $comments = [];
         $publications = $publicationRepository->getAll();
         $nbLikes = [];
+        $answers = [];
         foreach($publications as $publication) {
             $nbLikes[$publication->getID()] = $likeRepository->countLikesOnPublication($publication->getID());
-            $comments[$publication->getID()] = $commentRepository->getCommentsFor($publication->getID());
+            $comments[$publication->getID()] = $commentRepository->getParentCommentsFor($publication->getID());
+        }
+        foreach ($commentRepository->getParentComments() as $parentComment) {
+            $answers[$parentComment->getCommentID()] = $commentRepository->getRepliesFor($parentComment->getCommentID());
         }
         $publicationsLikedByConnectedUser = $publicationRepository->getPublicationsLikedBy($userID);
         self::afficherVue("vueGenerale.php", array("cheminVueBody"=>"event.php","publications"=>$publications,
             "nbLikes"=>$nbLikes,
             "publicationsLikedByConnectedUser"=>$publicationsLikedByConnectedUser,
-            "comments"=>$comments));
+            "comments"=>$comments,
+            "answers"=>$answers));
     }
 }

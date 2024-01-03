@@ -11,12 +11,7 @@ class Comment extends AbstractDataObjectWithTime
 
     private int $commentID;
 
-    /**
-     * @param String $userID
-     * @param String $comment
-     * @param string $datePosted
-     * @param int $publicationID
-     */
+
     public function __construct(string $userID, string $comment, string $datePosted, int $publicationID, ?int $replyToComment)
     {
         parent::__construct($datePosted);
@@ -68,6 +63,13 @@ class Comment extends AbstractDataObjectWithTime
     {
         return $this->userID;
     }
+
+    public function getCommentID(): int
+    {
+        return $this->commentID;
+    }
+
+
 
 
 }

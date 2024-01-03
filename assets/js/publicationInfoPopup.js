@@ -4,12 +4,12 @@ document.getElementById('publicationsContainer').addEventListener('click', event
 document.getElementById('commentsContainer').addEventListener('click', event=> onHeartButtonClicked(event));
 
 function onHeartButtonClicked(event) {
-    // Check if the clicked element is a button with data-publication-id attribute
-    const svgPath = event.target.closest('button[data-publication-id]');
+    // Check if the clicked element is a div with data-publication-id attribute
+    const svgPath = event.target.closest('div[data-publication-id]');
 
     if (svgPath) {
         // Pass the clicked button directly to the like function
-        const heartBtn = svgPath.closest('button[data-publication-id]');
+        const heartBtn = svgPath.closest('div[data-publication-id]');
         const publicationID = heartBtn.getAttribute('data-publication-id');
 
         like(heartBtn, publicationID);

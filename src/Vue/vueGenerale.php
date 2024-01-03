@@ -68,10 +68,10 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="card">
-                        <div class="card-header" id="newPublicationTitle">
+                        <div class="card-header d-flex justify-content-center" id="newPublicationTitle">
                             Créer une nouvelle publication
                         </div>
-                        <input type="submit" id="submitBtn" value="Créer" style="display: none;">
+                        <input class="link-primary btn p-0" type="submit" id="submitBtn" value="Créer" style="display: none;">
                         <div id="createContainer">
 
                         </div>

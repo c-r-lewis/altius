@@ -15,7 +15,7 @@ class CommentRepository extends AbstractRepository
 
     protected function getNomsColonnes(): array
     {
-        return array("userID", "publicationID", "comment", "datePosted");
+        return array("userID", "publicationID", "comment", "datePosted", "replyToCommentID");
     }
 
     protected function getClePrimaire(): array
@@ -28,12 +28,33 @@ class CommentRepository extends AbstractRepository
         return Comment::createCommentWithID($objetFormatTableau["commentID"], $objetFormatTableau["userID"], $objetFormatTableau["comment"], $objetFormatTableau["datePosted"], $objetFormatTableau["publicationID"], $objetFormatTableau["replyToCommentID"]);
     }
 
-    public function getCommentsFor(int $publicationID): array {
-        $sql = 'SELECT * FROM COMMENTS WHERE publicationID=:publicationIDTag';
-        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $pdoStatment->execute(array("publicationIDTag"=>$publicationID));
+    public function getParentCommentsFor(int $publicationID): array {
+        $sql = 'SELECT * FROM COMMENTS WHERE publicationID=:publicationIDTag AND replyToCommentID IS NULL';
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute(array("publicationIDTag"=>$publicationID));
         $comments = [];
-        foreach ($pdoStatment as $objectFormatTableau) {
+        foreach ($pdoStatement as $objectFormatTableau) {
+            $comments[] = $this->construireDepuisTableau($objectFormatTableau);
+        }
+        return $comments;
+    }
+
+    public function getParentComments(): array {
+        $sql = 'SELECT * FROM COMMENTS WHERE replyToCommentID IS NULL';
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+        $comments = [];
+        foreach ($pdoStatement as $objectFormatTableau) {
+            $comments[] = $this->construireDepuisTableau($objectFormatTableau);
+        }
+        return $comments;
+    }
+
+    public function getRepliesFor(int $commentID): array {
+        $sql = 'SELECT * FROM COMMENTS WHERE replyToCommentID=:replyToCommentIDTag';
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute(array("replyToCommentIDTag"=>$commentID));
+        $comments = [];
+        foreach ($pdoStatement as $objectFormatTableau) {
             $comments[] = $this->construireDepuisTableau($objectFormatTableau);
         }
         return $comments;
