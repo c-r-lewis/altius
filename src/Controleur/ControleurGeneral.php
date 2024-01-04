@@ -67,6 +67,6 @@ class ControleurGeneral extends ControleurGenerique
     }
 
     public static function afficherVueErreur($message="Page Not Found"){
-        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"vueErreur","message"=>$message]);
+        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"vueErreur.php","message"=>$message]);
     }
 }
