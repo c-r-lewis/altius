@@ -14,6 +14,7 @@ class Utilisateur extends AbstractDataObject
     private string $statut;
     private string $ville;
     private string $numeroTelephone;
+    private string $nonce;
 
     /**
      * @param string $login
@@ -23,8 +24,9 @@ class Utilisateur extends AbstractDataObject
      * @param string $statut
      * @param string $ville
      * @param string $numeroTelephone
+     * @param string $nonce
      */
-    public function __construct(string $login, string $email, string $region, string $motDePasse, string $statut, string $ville, string $numeroTelephone)
+    public function __construct(string $login, string $email, string $region, string $motDePasse, string $statut, string $ville, string $numeroTelephone, string $nonce)
     {
         $this->login = $login;
         $this->email = $email;
@@ -33,6 +35,7 @@ class Utilisateur extends AbstractDataObject
         $this->statut = $statut;
         $this->ville = $ville;
         $this->numeroTelephone = $numeroTelephone;
+        $this->nonce = $nonce;
     }
 
     public function getLogin(): string
@@ -85,6 +88,11 @@ class Utilisateur extends AbstractDataObject
         $this->statut = $statut;
     }
 
+    public function setNonce(string $nonce): void
+    {
+        $this->nonce = $nonce;
+    }
+
     public function getVille(): string
     {
         return $this->ville;
@@ -105,7 +113,10 @@ class Utilisateur extends AbstractDataObject
         $this->numeroTelephone = $numeroTelephone;
     }
 
-
+    public function getNonce(): string
+    {
+        return $this->nonce;
+    }
 
 
     public function formatTableau(): array
@@ -117,7 +128,8 @@ class Utilisateur extends AbstractDataObject
             "motDePasseTag"=>$this->motDePasse,
             "statutTag"=>$this->statut,
             "villeTag"=>$this->ville,
-            "numeroTelephoneTag"=>$this->numeroTelephone
+            "numeroTelephoneTag"=>$this->numeroTelephone,
+            "nonceTag"=>$this->nonce
         );
     }
 

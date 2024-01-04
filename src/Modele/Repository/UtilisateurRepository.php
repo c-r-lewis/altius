@@ -22,13 +22,21 @@ class UtilisateurRepository extends AbstractRepository
             "motDePasse",
             "statut",
             "ville",
-            "numeroTelephone"
+            "numeroTelephone",
+            "nonce"
         );
     }
 
     protected function getClePrimaire(): array
     {
         return array("login");
+    }
+
+    public function unsetNonce(string $login): void
+    {
+        $sql = "UPDATE User SET nonce = '' WHERE login = :login";
+        $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $requetePreparee->execute(array(":login" => $login));
     }
 
     protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject
@@ -39,7 +47,8 @@ class UtilisateurRepository extends AbstractRepository
             $objetFormatTableau["motDePasse"],
             $objetFormatTableau["statut"],
             $objetFormatTableau['ville'],
-            $objetFormatTableau['numeroTelephone']
+            $objetFormatTableau['numeroTelephone'],
+            $objetFormatTableau['nonce']
         );
     }
 }

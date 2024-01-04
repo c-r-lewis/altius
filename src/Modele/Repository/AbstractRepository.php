@@ -87,7 +87,14 @@ abstract class AbstractRepository
         $pdoStatement -> execute($this->bindValuesForCompositeKey($id));
     }
 
-
-
-
+    public function mettreAJour(AbstractDataObject $object): void {
+        $sql = "UPDATE " . $this->getNomTable() . " SET ";
+        foreach ($this->getNomsColonnes() as $nomColonne) {
+            $sql .= $nomColonne . " = :" . $nomColonne . ", ";
+        }
+        $sql = substr($sql, 0, -2) . " WHERE " . $this->getClePrimaire()[0]
+            . " = :" . $this->getClePrimaire()[0];
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute($object->formatTableau());
+    }
 }

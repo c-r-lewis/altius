@@ -7,6 +7,7 @@ CREATE TABLE User(
     statut VARCHAR(50),
     ville VARCHAR(80),
     numeroTelephone VARCHAR(50),
+    nonce VARCHAR(8),
     PRIMARY KEY (login)
 );
 

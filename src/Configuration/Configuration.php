@@ -33,10 +33,11 @@ class Configuration {
     }
 
     static public function getLogin() : string {
-        // L'attribut statique $databaseConfiguration
-        // s'obtient avec la syntaxe Conf::$databaseConfiguration
-        // au lieu de $this->databaseConfiguration pour un attribut non statique
         return Configuration::$databaseConfiguration['login'];
     }
 
+    static public function getURLAbsolue() : string {
+        return "localhost:8080/";
+        // TODO: Modifier l'URL absolue
+    }
 }
