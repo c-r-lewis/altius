@@ -3,6 +3,12 @@ document.getElementById('publicationsContainer').addEventListener('click', event
 // Listener on heart buttons for publication popups
 document.getElementById('commentsContainer').addEventListener('click', event=> onHeartButtonClicked(event));
 
+// Listener on show info popup
+document.querySelectorAll('.comment-popup').forEach(commentPopup => {
+    commentPopup.addEventListener('show.bs.modal', function () {
+        loadPopup();
+    });
+});
 function onHeartButtonClicked(event) {
     // Check if the clicked element is a div with data-publication-id attribute
     const svgPath = event.target.closest('div[data-publication-id]');
@@ -119,7 +125,34 @@ function updateComments() {
     });
 }
 
-function replyToComment(replyToUser) {
+function replyToComment(replyToUser, commentID) {
     const input = document.getElementById("commentInput");
     input.value = '@'+replyToUser;
+    const form = document.getElementById("commentForm");
+    const replyToCommentID = document.createElement('input');
+    replyToCommentID.type = 'hidden';
+    replyToCommentID.name = 'replyToCommentID';
+    replyToCommentID.value = commentID;
+    form.appendChild(replyToCommentID);
+}
+
+function showAnswers(commentID) {
+    const answersContainer = document.getElementById("answersForComment"+commentID);
+    answersContainer.style.display = 'block';
+    const btn = document.getElementById("showAnswersBtn"+commentID);
+    btn.textContent = 'Masquer les réponses';
+    btn.addEventListener('click', event => hideAnswers(commentID));
+}
+
+function hideAnswers(commentID) {
+    const answersContainer = document.getElementById("answersForComment"+commentID);
+    answersContainer.style.display = 'none';
+    const btn = document.getElementById("showAnswersBtn"+commentID);
+    btn.textContent = 'Afficher les réponses';
+    btn.addEventListener('click', event => showAnswers(commentID));
+}
+
+function loadPopup() {
+    const input = document.getElementById('commentInput');
+    input.value = '';
 }

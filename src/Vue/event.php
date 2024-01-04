@@ -40,7 +40,7 @@
         </div>
     </article>
         <!-- Comments popup -->
-        <div class="modal fade" id="popup<?=$publication->getID();?>" tabindex="-1" aria-hidden="true">
+        <div class="modal fade comment-popup" id="popup<?=$publication->getID();?>" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="container">
@@ -55,12 +55,19 @@
                                 </div>
                                 <div class="modal-body flex-grow" id="commentsContainer">
                                     <?php foreach($comments[$publication->getID()] as $comment):?>
-                                        <div class="comment" data-comment="<?=htmlentities(json_encode($comment->loadCommentFormat()));?>"></div>
-                                        <?php if(in_array($comment->getCommentID(), $answers)):?>
-                                        <div>
-                                            Afficher réponses
+                                        <div class="d-flex flex-column justify-content-start">
+                                            <div class="comment" data-comment="<?=htmlentities(json_encode($comment->loadCommentFormat()));?>"></div>
+                                            <?php if(sizeof($answers[$comment->getCommentID()])>0) :?>
+                                            <div>
+                                                <hr class="answer-line"/><button id="showAnswersBtn<?=$comment->getCommentID()?>" class="btn moderately-bold fs-small no-outline-focus" onclick="showAnswers('<?=$comment->getCommentID()?>')">Afficher réponses</button>
+                                                <div id="answersForComment<?=$comment->getCommentID()?>" style="display: none;">
+                                                    <?php foreach ($answers[$comment->getCommentID()] as $answer):?>
+                                                        <div class="comment ms-4" data-comment="<?=htmlentities(json_encode($answer->loadCommentFormat()));?>"></div>
+                                                    <?php endforeach;?>
+                                                </div>
+                                            </div>
+                                            <?php endif;?>
                                         </div>
-                                        <?php endif;?>
                                     <?php endforeach;?>
                                 </div>
                                 <div class="justify-content-start border-top d-flex">

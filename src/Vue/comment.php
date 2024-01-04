@@ -15,8 +15,8 @@ use App\Altius\Modele\DataObject\Comment;
     <div>
         <div class="d-flex">
             <div class="fs-small"><?=$comment->calculateTime()?></div>
-            <button class="btn p-0 ms-2 fs-small moderately-bold no-outline-focus" onclick="replyToComment('<?= $comment->getUserID() ?>')">Répondre</button>
+            <button class="btn p-0 ms-2 fs-small moderately-bold no-outline-focus" onclick="replyToComment('<?=$comment->getUserID()?>', '<?=$comment->getCommentID()?>')">Répondre</button>
         </div>
-        <p><!-- Number of likes --></p>
+        <div><!-- Number of likes --></div>
     </div>
 </div>

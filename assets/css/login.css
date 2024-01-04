@@ -21,11 +21,10 @@ main {
 }
 
 
-.no-outline-focus:focus,
-.no-outline-focus:hover {
+.no-outline-focus:focus {
     outline: none !important;
     box-shadow: none !important;
-    border: none;
+    border: none !important;
 }
 
 .flex-grow {
@@ -40,3 +39,11 @@ main {
     font-size: 0.8rem;
     color: #757575;
 }
+
+.answer-line {
+    display: inline-block;
+    width: 1.5rem;
+    margin: 0 5px;
+    vertical-align: middle;
+}
+

@@ -55,6 +55,7 @@ class Comment extends AbstractDataObjectWithTime
             "comment"=>$this->comment,
             "datePosted"=>$this->datePosted,
             "replyToCommentID"=>$this->replyToCommentID,
+            "commentID"=>$this->commentID,
             "controleur"=>"commentaire",
             "action"=>"loadComment"];
     }
