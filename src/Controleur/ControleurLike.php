@@ -10,9 +10,8 @@ class ControleurLike
 
     public static function like() {
         //TODO : userID should be connected user
-        echo ("Like function called");
         $userID = "test";
-        $like = new Like($_REQUEST["publicationID"], $userID);
+        $like = new Like((int)$_REQUEST["publicationID"], $userID);
         (new LikeRepository())->create($like);
     }
 
@@ -21,5 +20,6 @@ class ControleurLike
         $userID = "test";
         (new LikeRepository())->deleteByID(array ($_REQUEST["publicationID"], $userID));
     }
+
 
 }

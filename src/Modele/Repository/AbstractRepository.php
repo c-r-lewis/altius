@@ -82,7 +82,6 @@ abstract class AbstractRepository
             $sql .= $column.' =:'.$column.'Tag AND ';
         }
         $sql = rtrim($sql, 'AND ');
-        echo $sql;
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement -> execute($this->bindValuesForCompositeKey($id));
     }
