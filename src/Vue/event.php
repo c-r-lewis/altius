@@ -11,7 +11,7 @@
     <?php foreach ($publications as $publication) :?>
     <article class="card mb-3 border border-0" style="max-width: 25rem;">
         <div class="card-header d-flex bg-transparent border border-0">
-            <?=$publication->getUserID()?> - <?=$publication->calculateTime()?>
+            <span class="moderately-bold"><?=$publication->getUserID()?></span><span class="grey">&nbsp;-&nbsp;<?=$publication->calculateTime()?></span>
         </div>
         <img src="<?=$publication->getPathToImage()?>" class="card-img-top" alt="Image évènement">
         <div class="card-body px-1">
@@ -59,7 +59,7 @@
                                             <div class="comment" data-comment="<?=htmlentities(json_encode($comment->loadCommentFormat()));?>"></div>
                                             <?php if(sizeof($answers[$comment->getCommentID()])>0) :?>
                                             <div>
-                                                <hr class="answer-line"/><button id="showAnswersBtn<?=$comment->getCommentID()?>" class="btn moderately-bold fs-small no-outline-focus" onclick="showAnswers('<?=$comment->getCommentID()?>')">Afficher réponses</button>
+                                                <hr class="answer-line"/><div id="showAnswersBtn<?=$comment->getCommentID()?>" class="moderately-bold fs-small no-outline-focus grey btn-behaviour-dark btn-behaviour" onclick="showAnswers('<?=$comment->getCommentID()?>')" style="display: inline-block">Afficher réponses</div>
                                                 <div id="answersForComment<?=$comment->getCommentID()?>" style="display: none;">
                                                     <?php foreach ($answers[$comment->getCommentID()] as $answer):?>
                                                         <div class="comment ms-4" data-comment="<?=htmlentities(json_encode($answer->loadCommentFormat()));?>"></div>

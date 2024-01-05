@@ -32,10 +32,13 @@ abstract class AbstractDataObjectWithTime extends AbstractDataObject
                 return $time.' h';
             }
             $time = $interval->days;
+            if ($time == 1) {
+                return $time.' jour';
+            }
             if ($time < 7) {
                 return $time.' jours';
             }
-            return floor($time/7).' semaines';
+            return floor($time/7) == 1 ? floor($time/7). 'semaine' : floor($time/7).' semaines';
         } catch (Exception $e) {
         }
         return -1;

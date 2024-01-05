@@ -21,7 +21,8 @@ main {
 }
 
 
-.no-outline-focus:focus {
+.no-outline-focus:focus,
+.no-outline-focus:focus:not(:focus-visible){
     outline: none !important;
     box-shadow: none !important;
     border: none !important;
@@ -37,7 +38,6 @@ main {
 
 .fs-small {
     font-size: 0.8rem;
-    color: #757575;
 }
 
 .answer-line {
@@ -47,3 +47,14 @@ main {
     vertical-align: middle;
 }
 
+.grey, .btn-behaviour-light:hover {
+    color: #757575;
+}
+
+.btn-behaviour {
+    cursor: pointer;
+}
+
+.btn-behaviour-dark:hover {
+    color: black;
+}

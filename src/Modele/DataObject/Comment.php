@@ -70,6 +70,10 @@ class Comment extends AbstractDataObjectWithTime
         return $this->commentID;
     }
 
+    public function removeReplyToCommentID(): void {
+        $this->replyToCommentID = null;
+    }
+
 
 
 

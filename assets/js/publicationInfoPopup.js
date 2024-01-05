@@ -126,10 +126,15 @@ function updateComments() {
 }
 
 function replyToComment(replyToUser, commentID) {
+    const existingHiddenInput = document.getElementById('input'+commentID);
+    if (existingHiddenInput) {
+        existingHiddenInput.parentNode.removeChild(existingHiddenInput);
+    }
     const input = document.getElementById("commentInput");
     input.value = '@'+replyToUser;
     const form = document.getElementById("commentForm");
     const replyToCommentID = document.createElement('input');
+    replyToCommentID.id = 'input'+commentID;
     replyToCommentID.type = 'hidden';
     replyToCommentID.name = 'replyToCommentID';
     replyToCommentID.value = commentID;
@@ -137,6 +142,7 @@ function replyToComment(replyToUser, commentID) {
 }
 
 function showAnswers(commentID) {
+    document.activeElement.blur();
     const answersContainer = document.getElementById("answersForComment"+commentID);
     answersContainer.style.display = 'block';
     const btn = document.getElementById("showAnswersBtn"+commentID);
