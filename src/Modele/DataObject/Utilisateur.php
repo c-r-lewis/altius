@@ -137,6 +137,6 @@ class Utilisateur extends AbstractDataObject
         $mdpClaire = $tableauFormulaire['mdp2'];
         $motDePasse = MotDePasse::hacher($mdpClaire);
         return new Utilisateur($tableauFormulaire['login'], $tableauFormulaire['email'],
-            $tableauFormulaire['region'],$motDePasse,$tableauFormulaire['statut'],$tableauFormulaire['ville'],$tableauFormulaire['numeroTelephone']);
+            $tableauFormulaire['region'],$motDePasse,$tableauFormulaire['statut'],$tableauFormulaire['ville'],$tableauFormulaire['numeroTelephone'], "");
     }
 }

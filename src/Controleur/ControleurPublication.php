@@ -7,7 +7,7 @@ use App\Altius\Modele\Repository\CommentRepository;
 use App\Altius\Modele\Repository\LikeRepository;
 use App\Altius\Modele\Repository\PublicationRepository;
 
-class ControleurPublication extends ControleurGeneral
+class ControleurPublication extends ControleurGenerique
 {
     static function createPublication(): void {
         //TODO : userID should correspond with connected user
@@ -20,10 +20,10 @@ class ControleurPublication extends ControleurGeneral
         $datePosted = date('Y-m-d H:i:s');
         $newPublication = new Publication($datePosted, $_REQUEST["eventDate"], $_REQUEST["description"], $targetPath, $userID, $_REQUEST["title"]);
         (new PublicationRepository())->create($newPublication);
-        self::loadHomePage();
+        self::afficherDefaultPage();
     }
 
-    static function loadHomePage(): void {
+    static function afficherDefaultPage(): void {
         //TODO : get connected user
         $userID = 'test';
         $publicationRepository = new PublicationRepository();
@@ -41,7 +41,7 @@ class ControleurPublication extends ControleurGeneral
             $answers[$parentComment->getCommentID()] = $commentRepository->getRepliesFor($parentComment->getCommentID());
         }
         $publicationsLikedByConnectedUser = $publicationRepository->getPublicationsLikedBy($userID);
-        self::afficherVue("vueGenerale.php", array("cheminVueBody"=>"event.php","publications"=>$publications,
+        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"event.php","publications"=>$publications,
             "nbLikes"=>$nbLikes,
             "publicationsLikedByConnectedUser"=>$publicationsLikedByConnectedUser,
             "comments"=>$comments,

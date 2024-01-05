@@ -55,7 +55,7 @@
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#">Paramètres</a></li>
-                            <li><a class="dropdown-item" href="#">Se déconnecter</a></li>
+                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Se déconnecter</a></li>
                         </ul>
                     </li>
                 </ul>
