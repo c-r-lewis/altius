@@ -9,6 +9,7 @@ class Comment extends AbstractDataObjectWithTime
     private int $publicationID;
     private ?int $replyToCommentID;
 
+
     private int $commentID;
 
 
@@ -51,7 +52,8 @@ class Comment extends AbstractDataObjectWithTime
 
     public function loadCommentFormat(): array
     {
-        return ["publicationID"=>$this->publicationID,
+        return [
+            "publicationID"=>$this->publicationID,
             "comment"=>$this->comment,
             "datePosted"=>$this->datePosted,
             "replyToCommentID"=>$this->replyToCommentID,

@@ -18,7 +18,7 @@ class ControleurPublication extends ControleurGeneral
             move_uploaded_file($_FILES["newImage"]["tmp_name"], $targetPath);
         }
         $datePosted = date('Y-m-d H:i:s');
-        $newPublication = new Publication($datePosted, $_REQUEST["eventDate"], $_REQUEST["description"], $targetPath, $userID);
+        $newPublication = new Publication($datePosted, $_REQUEST["eventDate"], $_REQUEST["description"], $targetPath, $userID, $_REQUEST["title"]);
         (new PublicationRepository())->create($newPublication);
         self::loadHomePage();
     }

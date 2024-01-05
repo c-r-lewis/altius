@@ -15,7 +15,7 @@ class PublicationRepository extends AbstractRepository
 
     protected function getNomsColonnes(): array
     {
-        return array("description", "postedDate", "eventDate", "pathToImage", "userID");
+        return array("description", "postedDate", "eventDate", "pathToImage", "userID", "title");
     }
 
     protected function getClePrimaire(): array
@@ -25,7 +25,7 @@ class PublicationRepository extends AbstractRepository
 
     protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject
     {
-        return Publication::publicationWithID($objetFormatTableau["publicationID"], $objetFormatTableau["postedDate"], $objetFormatTableau["eventDate"], $objetFormatTableau["description"], $objetFormatTableau["pathToImage"], $objetFormatTableau["userID"]);
+        return Publication::publicationWithID($objetFormatTableau["publicationID"], $objetFormatTableau["postedDate"], $objetFormatTableau["eventDate"], $objetFormatTableau["description"], $objetFormatTableau["pathToImage"], $objetFormatTableau["userID"], $objetFormatTableau["title"]);
     }
 
     public function getPublicationsLikedBy($userID) : array {

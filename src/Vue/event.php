@@ -35,9 +35,7 @@
             <p class="card-text nbLikes<?=$publication->getID();?>"><?=$nbLikes[$publication->getID()]?> J'aime</p>
             <p class="card-text"><?=$publication->getDescription()?></p>
         </div>
-        <div class="card-footer bg-transparent">
-
-        </div>
+        <div class="card-footer bg-transparent"></div>
     </article>
         <!-- Comments popup -->
         <div class="modal fade comment-popup" id="popup<?=$publication->getID();?>" tabindex="-1" aria-hidden="true">
@@ -50,7 +48,7 @@
                             </div>
                             <div class="col-8 p-0 d-flex flex-column">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-3" id="popupLabel">Commentaires</h1>
+                                    <div class="modal-title" id="popupLabel"><?=$publication->getTitle()?>&nbsp;-&nbsp;<?=$publication->getEventDate()?></div>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body flex-grow" id="commentsContainer">

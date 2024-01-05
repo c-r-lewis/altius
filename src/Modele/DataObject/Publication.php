@@ -11,17 +11,19 @@ class Publication extends AbstractDataObjectWithTime
     private string $pathToImage;
     private string $userID;
 
-    public function __construct(string $datePosted, string $eventDate, string $description, string $pathToImage, string $userID) {
+    private ?string $title;
+    public function __construct(string $datePosted, string $eventDate, string $description, string $pathToImage, string $userID, ?string $title) {
         parent::__construct($datePosted);
         $this->eventDate = $eventDate;
         $this->datePosted = $datePosted;
         $this->description = $description;
         $this->pathToImage = $pathToImage;
         $this->userID = $userID;
+        $this->title = $title;
     }
 
-    public static function publicationWithID(int $id, string $datePosted, string $eventDate, string $description, string $pathToImage, string $userID) : Publication {
-        $publication = new self($datePosted, $eventDate, $description, $pathToImage, $userID);
+    public static function publicationWithID(int $id, string $datePosted, string $eventDate, string $description, string $pathToImage, string $userID, ?string $title) : Publication {
+        $publication = new self($datePosted, $eventDate, $description, $pathToImage, $userID, $title);
         $publication->id = $id;
         return $publication;
     }
@@ -36,7 +38,8 @@ class Publication extends AbstractDataObjectWithTime
             "postedDateTag"=>$this->datePosted,
             "eventDateTag"=>$this->eventDate,
             "pathToImageTag"=>$this->pathToImage,
-            "userIDTag"=>$this->userID];
+            "userIDTag"=>$this->userID,
+            "titleTag"=>$this->title];
     }
 
     public function getDatePosted() : string
@@ -69,6 +72,12 @@ class Publication extends AbstractDataObjectWithTime
     {
         return $this->userID;
     }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
 
 
 
