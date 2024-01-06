@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,16 +8,15 @@
     <title>Paramètres</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="ressourcess/styles/login.css">
-    <link type="text/css" rel="stylesheet" href="ressourcess/styles/Parametres.css">
+    <link type="text/css" rel="stylesheet" href="/assets/css/Parametres.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Navbar brand -->
-        <a class="navbar-brand" href="accueil.php">
-            <img src="ressources/images/logo.png" height="30" alt="" loading="lazy"/>
+        <a class="navbar-brand" href="?controleur=publication&action=afficherDefaultPage">
+            <img src="/assets/images/logo.png" height="30" alt="" loading="lazy"/>
         </a>
 
         <!-- Toggle button -->
@@ -31,10 +30,7 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="accueil.php">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Covoiturage</a>
+                    <a class="nav-link active" aria-current="page" href="?controleur=publication&action=afficherDefaultPage">Accueil</a>
                 </li>
             </ul>
             <!-- Left links -->
@@ -74,66 +70,31 @@
     <!-- Container wrapper -->
 </nav>
 
-<main>
-    <article>
-        <h1>Paramètres</h1>
+    <main>
+        <article class="container">
+            <h1>Paramètres</h1>
 
+            <label for="ModifLogin">Modifier le login</label>
+            <input id="ModifLogin" name="ModifLogin" type="text" value="Login">
 
-        <label for="ModifLogin">Modifier le login</label>
-        <input id="ModifLogin" name="ModifLogin" type="text" value="Login">
+            <label for="ModifStatut">Modifier le statut</label>
+            <select id="ModifStatut" name="ModifStatut">
+                <option value="Statut de l'utilisateur">Statut de l'utilisateur</option>
+                <option value="Organisateur">Organisateur</option>
+                <option value="PMR">PMR</option>
+                <option value="autre">Autre...</option>
+            </select>
 
-        <label for="ModifStatut">Modifier le statut</label>
-        <select id="ModifStatut" name="ModifStatut">
-            <option value="Statut de l'utilisateur">Statut de l'utilisateur</option>
-            <option value="Organisateur">Organisateur</option>
-            <option value="PMR">PMR</option>
-            <option value="autre">Autre...</option>
-        </select>
+            <label for="ModifVilleResidence">Modifier la ville de résidence</label>
+            <input id="ModifVilleResidence" name="ModifVilleResidence" type="search" placeholder="Ville de Résidence">
 
-        <label for="ModifVilleResidence">Modifier la ville de résidence</label>
-        <input id="ModifVilleResidence" name="ModifVilleResidence" type="search" placeholder="Ville de Résidence">
+            <label for="ModifMail">Modifier adresse mail</label>
+            <input id="ModifMail" name="ModifMail" type="email" value="email">
 
-        <label for="ModifMail">Modifier adresse mail</label>
-        <input id="ModifMail" name="ModifMail" type="email" value="email">
+            <label for="ModifMdp">Modifier mon mot de passe</label>
+            <input id="ModifMdp" name="MotifMdp">
 
-        <label for="MotifMdp">Modifier mon mot de passe</label>
-        <input id="ModifMdp" name="MotifMdp">
-
-        <!--
-
-        <div class="DivPara" id="photoProfil">
-            <label for="ModifPhoto">Photo</label>
-            <div>
-                <img src="#"/>
-                <button type="button" id="ModifPhoto">Modifier</button>
-            </div>
-        </div>
-
-
-        <div class="DivPara" id="ModifPrenomNom">
-            <div>
-                <label for="ModifPrenom">Prénom
-                    <input id="ModifPrenom" type="text" placeholder="Prénom donné lors de la création du compte">
-                </label>
-            </div>
-            <div>
-                <label for="ModifNom">Nom
-                    <input id="ModifNom" type="text" placeholder="Nom donné lors de la création du compte">
-                </label>
-            </div>
-        </div>
-        <div class="DivPara">
-            <label for="Apropos">À propos
-                <textarea placeholder="Racontez votre histoire"></textarea>
-            </label>
-        </div>
-        <div class="DivPara">
-            <label for="NomUtilisateur">Nom d'utilisateur
-                <input id="NomUtilisateur" type="text"
-                       value="Nom d'utilisateur donné lors de la création du compte">
-            </label>
-        </div>-->
-
-    </article>
-</main>
+            <button id="Valider" name="Valider">Valider</button>
+        </article>
+    </main>
 </body>

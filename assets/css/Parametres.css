@@ -1,0 +1,43 @@
+main > article {
+    position: inherit;
+    border: 1px solid darkgrey;
+    border-radius:10px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+label {
+    display:block;
+}
+
+input {
+    border-radius:15px;
+    padding:5px;
+    border: 1px solid #a8b1ba;
+    outline:none;
+}
+
+select, input, button {
+    margin: 10px;
+}
+
+label {
+    font-size:15px;
+}
+
+input {
+    width:100%;
+    border: 2px solid #a8b1ba;
+    font-size:17px;
+}
+
+input:hover {
+    border: 2px solid grey;
+}

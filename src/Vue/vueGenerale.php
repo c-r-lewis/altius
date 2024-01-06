@@ -27,9 +27,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Accueil</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Covoiturage</a>
-                        </li>
                     </ul>
                 </div>
 
@@ -54,7 +51,7 @@
                         </a>
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Paramètres</a></li>
+                            <li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
                             <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Se déconnecter</a></li>
                         </ul>
                     </li>

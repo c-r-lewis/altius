@@ -32,4 +32,8 @@ class ControleurGeneral extends ControleurGenerique
     public static function afficherVueErreur($message="Page Not Found"){
         self::afficherVue("vueGenerale.php",["cheminVueBody"=>"vueErreur.php","message"=>$message]);
     }
+
+    public static function afficherParametres(){
+        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"parametres.html"]);
+    }
 }
