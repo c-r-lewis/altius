@@ -45,9 +45,11 @@ class ControleurPublication extends ControleurGenerique
         $publications = $publicationRepository->getAll();
         $nbLikes = [];
         $answers = [];
+        $connectedUserPublications = [];
         foreach($publications as $publication) {
             $nbLikes[$publication->getID()] = $likeRepository->countLikesOnPublication($publication->getID());
             $comments[$publication->getID()] = $commentRepository->getParentCommentsFor($publication->getID());
+            $connectedUserPublications[$publication->getID()] = $userID == $publication->getUserID();
         }
         foreach ($commentRepository->getParentComments() as $parentComment) {
             $answers[$parentComment->getCommentID()] = $commentRepository->getRepliesFor($parentComment->getCommentID());
@@ -57,6 +59,7 @@ class ControleurPublication extends ControleurGenerique
             "nbLikes"=>$nbLikes,
             "publicationsLikedByConnectedUser"=>$publicationsLikedByConnectedUser,
             "comments"=>$comments,
-            "answers"=>$answers));
+            "answers"=>$answers,
+            "connectedUserPublications"=>$connectedUserPublications));
     }
 }

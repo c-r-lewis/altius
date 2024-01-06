@@ -16,26 +16,32 @@
                     <span class="moderately-bold"><?= $publication->getUserID() ?></span><span
                             class="grey">&nbsp;-&nbsp;<?= $publication->calculateTime() ?></span>
                 </div>
-                <a id="showEditBtn" role="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#popupEdit">
-                    &#8230;
-                </a>
-                <div class="modal fade" id="popupEdit" tabindex="=-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered rounded" style="max-width: 300px;">
-                        <div class="modal-content rounded">
-                            <div class="card">
-                                <form action="../web/controleurFrontal.php" method="post" id="editForm">
-                                    <ul class="list-group list-group-flush rounded">
-                                        <li class="list-group-item link-danger btn-behaviour d-flex justify-content-center"" id="deleteBtn">Supprimer</li>
-                                        <li class="list-group-item d-flex justify-content-center" id="editBtn">Editer</li>
-                                    </ul>
-                                    <input type="hidden" name="controleur" value="publication"/>
-                                    <input type="hidden" name="action" value="deletePublication"/>
-                                    <input type="hidden" name="publicationID" value="<?=$publication->getID()?>"/>
-                                </form>
+                <?php if ($connectedUserPublications[$publication->getID()]): ?>
+                    <a id="showEditBtn" role="button" class="nav-link" data-bs-toggle="modal"
+                       data-bs-target="#popupEdit">
+                        &#8230;
+                    </a>
+                    <div class="modal fade" id="popupEdit" tabindex="=-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered rounded" style="max-width: 300px;">
+                            <div class="modal-content rounded">
+                                <div class="card">
+                                    <form action="../web/controleurFrontal.php" method="post" id="editForm">
+                                        <ul class="list-group list-group-flush rounded">
+                                            <li class="list-group-item link-danger btn-behaviour d-flex justify-content-center"
+                                            " id="deleteBtn">Supprimer</li>
+                                            <li class="list-group-item d-flex justify-content-center" id="editBtn">
+                                                Editer
+                                            </li>
+                                        </ul>
+                                        <input type="hidden" name="controleur" value="publication"/>
+                                        <input type="hidden" name="action" value="deletePublication"/>
+                                        <input type="hidden" name="publicationID" value="<?= $publication->getID() ?>"/>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
             <img src="<?= $publication->getPathToImage() ?>" class="card-img-top" alt="Image évènement">
             <div class="card-body px-1">
