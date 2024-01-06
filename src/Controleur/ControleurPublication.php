@@ -2,6 +2,7 @@
 
 namespace App\Altius\Controleur;
 
+use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Modele\DataObject\Publication;
 use App\Altius\Modele\Repository\CommentRepository;
 use App\Altius\Modele\Repository\LikeRepository;
@@ -10,8 +11,7 @@ use App\Altius\Modele\Repository\PublicationRepository;
 class ControleurPublication extends ControleurGenerique
 {
     static function createPublication(): void {
-        //TODO : userID should correspond with connected user
-        $userID = "test";
+        $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
         $targetPath = "";
         if(isset($_FILES["newImage"])) {
             $targetPath = '../assets/uploads/'.uniqid().'-'.$_FILES["newImage"]["name"];
@@ -36,8 +36,7 @@ class ControleurPublication extends ControleurGenerique
     }
 
     static function afficherDefaultPage(): void {
-        //TODO : get connected user
-        $userID = 'test';
+        $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
         $publicationRepository = new PublicationRepository();
         $likeRepository = new LikeRepository();
         $commentRepository = new CommentRepository();
