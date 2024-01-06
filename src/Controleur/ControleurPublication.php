@@ -24,7 +24,10 @@ class ControleurPublication extends ControleurGenerique
     }
 
     static function deletePublication() : void {
-        (new PublicationRepository())->deleteByID(array($_POST["publicationID"]));
+        $publicationRepository = new PublicationRepository();
+        $publication = $publicationRepository->recupererParClePrimaire((int)$_POST["publicationID"]);
+        unlink($publication->getPathToImage());
+        $publicationRepository->deleteByID(array($_POST["publicationID"]));
         self::afficherDefaultPage();
     }
 
