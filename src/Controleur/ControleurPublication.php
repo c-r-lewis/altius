@@ -23,6 +23,15 @@ class ControleurPublication extends ControleurGenerique
         self::afficherDefaultPage();
     }
 
+    static function deletePublication() : void {
+        (new PublicationRepository())->deleteByID(array($_POST["publicationID"]));
+        self::afficherDefaultPage();
+    }
+
+    static function editPublication() : void  {
+
+    }
+
     static function afficherDefaultPage(): void {
         //TODO : get connected user
         $userID = 'test';

@@ -20,7 +20,7 @@ class PublicationRepository extends AbstractRepository
 
     protected function getClePrimaire(): array
     {
-        return array("id");
+        return array("publicationID");
     }
 
     protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject

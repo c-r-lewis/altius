@@ -179,3 +179,7 @@ document.getElementById('shareButton').addEventListener('click', async () => {
         console.error('Error sharing:', error.message);
     }
 });
+
+document.getElementById("deleteBtn").addEventListener('click', function (){
+    document.getElementById("editForm").submit();
+});
