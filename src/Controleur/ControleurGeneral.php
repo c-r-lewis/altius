@@ -3,7 +3,7 @@
 namespace App\Altius\Controleur;
 
 
-use App\Altius\Modele\Repository\PublicationRepository;
+use App\Altius\Lib\ConnexionUtilisateur;
 
 class ControleurGeneral extends ControleurGenerique
 {
@@ -20,13 +20,11 @@ class ControleurGeneral extends ControleurGenerique
 
     public static function afficherDefaultPage()
     {
-        self::afficherVue("connexion.php");
-    }
-
-    public static function afficherAccueil()
-    {
-        $publications = (new PublicationRepository())->getAll();
-
+        if (ConnexionUtilisateur::estConnecte()){
+            ControleurPublication::afficherDefaultPage();
+        } else {
+            self::afficherVue("connexion.php");
+        }
     }
 
     public static function afficherVueErreur($message="Page Not Found"){

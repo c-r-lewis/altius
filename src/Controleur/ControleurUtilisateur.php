@@ -25,22 +25,22 @@ class ControleurUtilisateur extends ControleurGeneral{
             $utilisateurRepo = new UtilisateurRepository();
             $utilisateur = $utilisateurRepo->recupererParClePrimaire($_POST['login']);
             /* @var Utilisateur $utilisateur */
-            if (VerificationEmail::aValideEmail($utilisateur)) {
-                if ($utilisateur !== null) {
-                    if (MotDePasse::verifier($_POST['mdp2'], $utilisateur->getMotDePasse())) {
+            if ($utilisateur !== null) {
+                if (MotDePasse::verifier($_POST['mdp2'], $utilisateur->getMotDePasse())) {
+                    if (VerificationEmail::aValideEmail($utilisateur)) {
                         ConnexionUtilisateur::connecter($_POST['login']);
                         ControleurPublication::afficherDefaultPage();
                     } else {
-                        self::afficherVueErreur("Login ou mot de passe incorrect");
+                        ControleurGeneral::afficherVueErreur("Veuillez valider votre email");
                     }
                 } else {
-                    self::afficherVueErreur("Login ou mot de passe incorrect");
+                    ControleurGeneral::afficherDefaultPage();
                 }
             } else {
-                self::afficherVueErreur("Veuillez valider votre email");
+                ControleurGeneral::afficherDefaultPage();
             }
         } else {
-            self::afficherVueErreur("Mot de passe ou login incorrect");
+            ControleurGeneral::afficherDefaultPage();
         }
     }
 
