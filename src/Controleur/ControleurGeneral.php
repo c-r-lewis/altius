@@ -4,12 +4,14 @@ namespace App\Altius\Controleur;
 
 
 use App\Altius\Lib\ConnexionUtilisateur;
+use App\Altius\Lib\MessageFlash;
 
 class ControleurGeneral extends ControleurGenerique
 {
 
     public static function afficherVue(string $cheminVue, array $parametres = []){
         extract($parametres);
+        $messagesFlash = MessageFlash::lireTousMessages();
         require __DIR__ . "/../Vue/$cheminVue";
     }
 

@@ -63,6 +63,22 @@
         </nav>
         <!-- Navbar -->
 
+        <!-- Messages flash -->
+        <?php
+        /** @var string[][] $messagesFlash */
+        foreach ($messagesFlash as $type => $messagesFlashPourUnType) {
+            // $type est l'une des valeurs suivantes : "success", "info", "warning", "danger"
+            // $messagesFlashPourUnType est la liste des messages flash d'un type
+            foreach ($messagesFlashPourUnType as $messageFlash) {
+                echo <<< HTML
+            <div class="alert alert-$type">
+               $messageFlash
+            </div>
+            HTML;
+            }
+        }
+        ?>
+
         <!-- New publication popup -->
         <div class="modal fade" id="popupCreate" tabindex="=-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">

@@ -6,6 +6,7 @@ use App\Altius\Lib\MotDePasse;
 use App\Altius\Lib\VerificationEmail;
 use App\Altius\Modele\DataObject\Utilisateur;
 use App\Altius\Modele\Repository\UtilisateurRepository;
+use App\Altius\Lib\MessageFlash;
 
 class ControleurUtilisateur extends ControleurGeneral{
 
@@ -31,15 +32,19 @@ class ControleurUtilisateur extends ControleurGeneral{
                         ConnexionUtilisateur::connecter($_POST['login']);
                         ControleurPublication::afficherDefaultPage();
                     } else {
-                        ControleurGeneral::afficherVueErreur("Veuillez valider votre email");
+                       MessageFlash::ajouter("warning", "Veuillez valider votre email avant d'accéder au site.");
+                       ControleurGeneral::afficherDefaultPage();
                     }
                 } else {
+                    MessageFlash::ajouter("warning", "Mot de passe incorrect.");
                     ControleurGeneral::afficherDefaultPage();
                 }
             } else {
+                MessageFlash::ajouter("warning", "Utilisateur inconnu.");
                 ControleurGeneral::afficherDefaultPage();
             }
         } else {
+            MessageFlash::ajouter("warning", "Veuillez remplir tous les champs.");
             ControleurGeneral::afficherDefaultPage();
         }
     }
