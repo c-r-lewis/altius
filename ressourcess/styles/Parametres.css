@@ -1,18 +1,17 @@
 main {
-    display:flex;
-    position: absolute;
-    top: 40px;
     margin:auto;
 }
 
 main > article {
-    margin:auto;
-    position: inherit;
+    top:100px;
+    margin:0 35%;
+    position: absolute;
     border: 1px solid darkgrey;
     border-radius:10px;
     display:flex;
     flex-direction: column;
     padding: 30px;
+    width:30%;
 }
 
 h1 {
@@ -46,4 +45,9 @@ input {
 
 input:hover {
     border: 2px solid gray;
+}
+
+#labelDeleteAccount{
+    padding-top:30px;
+    text-align:center;
 }
