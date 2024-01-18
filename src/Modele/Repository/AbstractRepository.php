@@ -68,6 +68,7 @@ abstract class AbstractRepository
         return $objets;
     }
 
+
     private function bindValuesForCompositeKey(array $idValues): array {
         $tags = [];
         for ($i=0; $i < sizeof($idValues); $i++) {
@@ -82,6 +83,7 @@ abstract class AbstractRepository
             $sql .= $column.' =:'.$column.'Tag AND ';
         }
         $sql = rtrim($sql, 'AND ');
+        echo $sql;
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement -> execute($this->bindValuesForCompositeKey($id));
     }
