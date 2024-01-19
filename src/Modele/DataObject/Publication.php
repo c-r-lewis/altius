@@ -2,6 +2,10 @@
 
 namespace App\Altius\Modele\DataObject;
 
+use DateTime;
+use Exception;
+use IntlDateFormatter;
+
 class Publication extends AbstractDataObjectWithTime
 {
     private int $id;
@@ -47,8 +51,19 @@ class Publication extends AbstractDataObjectWithTime
         return $this->datePosted;
     }
 
+    public function getEventDate() : string {
+        $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
+        $formatter->setPattern("EEE d MMM");
+        try {
+            $date = new DateTime($this->eventDate);
+            return $formatter->format($date);
+        } catch (Exception $e) {
+        }
+        return "";
+    }
 
-    public function getEventDate() : string
+
+    public function getEventDateAsNumerical() : string
     {
         return $this->eventDate;
     }

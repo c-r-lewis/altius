@@ -54,7 +54,7 @@ class ControleurPublication extends ControleurGenerique
             $answers[$parentComment->getCommentID()] = $commentRepository->getRepliesFor($parentComment->getCommentID());
         }
         $publicationsLikedByConnectedUser = $publicationRepository->getPublicationsLikedBy($userID);
-        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"event.php","publications"=>$publications,
+        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"homePage.php","publications"=>$publications,
             "nbLikes"=>$nbLikes,
             "publicationsLikedByConnectedUser"=>$publicationsLikedByConnectedUser,
             "comments"=>$comments,

@@ -49,6 +49,6 @@ class ControleurCommentaire extends ControleurGeneral
     public static function loadComment(): void
     {
         $comment = self::createComment(true);
-        self::afficherVue("comment.php", array("comment"=>$comment));
+        self::afficherVue("publication/comment.php", array("comment"=>$comment));
     }
 }

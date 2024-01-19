@@ -8,6 +8,7 @@
             <input type="text" placeholder="Ajouter une description..." class="pb-3 border-0 flex-grow no-outline-focus" name="description">
             <input type="text" placeholder="Ajouter un lieu" class="border-0 pb-3 no-outline-focus">
             <input type="date" class="border-0 no-outline-focus pb-3" name="eventDate">
+            <input type="number" placeholder="heure">
         </div>
         <input type="hidden" name="controleur" value="publication">
         <input type="hidden" name="action" value="createPublication">

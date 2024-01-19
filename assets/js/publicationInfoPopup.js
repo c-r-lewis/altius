@@ -180,6 +180,10 @@ document.getElementById('shareButton').addEventListener('click', async () => {
     }
 });
 
-document.getElementById("deleteBtn").addEventListener('click', function (){
-    document.getElementById("editForm").submit();
-});
+const deleteBtn = document.getElementById("deleteBtn");
+
+if (deleteBtn) {
+    deleteBtn.addEventListener('click', function (){
+        document.getElementById("editForm").submit();
+    });
+}
