@@ -15,7 +15,7 @@ abstract class AbstractRepository
 
     abstract protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject;
 
-    public function create(AbstractDataObject $object): void {
+    public function create(AbstractDataObject $object): AbstractDataObject {
         $columns = $this->getNomsColonnes();
         $sql = 'INSERT INTO '.$this->getNomTable().' (';
         $sqlTag = '(';
@@ -28,9 +28,19 @@ abstract class AbstractRepository
 
         $sqlTag = rtrim($sqlTag, ', '); // Remove the trailing comma
         $sql = rtrim($sql, ', ').') VALUES '.$sqlTag.')';
+
         // Prepare and execute the query
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $pdoStatement->execute($object->formatTableau());
+        $pdo = ConnexionBaseDeDonnee::getPdo();
+        $pdoStatement = $pdo->prepare($sql);
+        $success = $pdoStatement->execute($object->formatTableau());
+
+        if ($success) {
+            // Retrieve the last inserted ID
+            $id = $pdo->lastInsertId();
+            // Set the ID back to the object if necessary
+            $object->setID($id);
+        }
+        return $object;
     }
 
     public function recupererParClePrimaire(string $valeurClePrimaire): ?AbstractDataObject
