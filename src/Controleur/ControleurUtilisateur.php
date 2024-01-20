@@ -6,6 +6,7 @@ use App\Altius\Lib\MotDePasse;
 use App\Altius\Lib\VerificationEmail;
 use App\Altius\Modele\DataObject\Utilisateur;
 use App\Altius\Modele\Repository\UtilisateurRepository;
+use App\Altius\Lib\MessageFlash;
 
 class ControleurUtilisateur extends ControleurGeneral{
 
@@ -25,22 +26,26 @@ class ControleurUtilisateur extends ControleurGeneral{
             $utilisateurRepo = new UtilisateurRepository();
             $utilisateur = $utilisateurRepo->recupererParClePrimaire($_POST['login']);
             /* @var Utilisateur $utilisateur */
-            if (VerificationEmail::aValideEmail($utilisateur)) {
-                if ($utilisateur !== null) {
-                    if (MotDePasse::verifier($_POST['mdp2'], $utilisateur->getMotDePasse())) {
+            if ($utilisateur !== null) {
+                if (MotDePasse::verifier($_POST['mdp2'], $utilisateur->getMotDePasse())) {
+                    if (VerificationEmail::aValideEmail($utilisateur)) {
                         ConnexionUtilisateur::connecter($_POST['login']);
                         ControleurPublication::afficherDefaultPage();
                     } else {
-                        self::afficherVueErreur("Login ou mot de passe incorrect");
+                       MessageFlash::ajouter("warning", "Veuillez valider votre email avant d'accéder au site.");
+                       ControleurGeneral::afficherDefaultPage();
                     }
                 } else {
-                    self::afficherVueErreur("Login ou mot de passe incorrect");
+                    MessageFlash::ajouter("warning", "Mot de passe incorrect.");
+                    ControleurGeneral::afficherDefaultPage();
                 }
             } else {
-                self::afficherVueErreur("Veuillez valider votre email");
+                MessageFlash::ajouter("warning", "Utilisateur inconnu.");
+                ControleurGeneral::afficherDefaultPage();
             }
         } else {
-            self::afficherVueErreur("Mot de passe ou login incorrect");
+            MessageFlash::ajouter("warning", "Veuillez remplir tous les champs.");
+            ControleurGeneral::afficherDefaultPage();
         }
     }
 

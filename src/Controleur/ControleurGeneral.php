@@ -3,13 +3,15 @@
 namespace App\Altius\Controleur;
 
 
-use App\Altius\Modele\Repository\PublicationRepository;
+use App\Altius\Lib\ConnexionUtilisateur;
+use App\Altius\Lib\MessageFlash;
 
 class ControleurGeneral extends ControleurGenerique
 {
 
     public static function afficherVue(string $cheminVue, array $parametres = []){
         extract($parametres);
+        $messagesFlash = MessageFlash::lireTousMessages();
         require __DIR__ . "/../Vue/$cheminVue";
     }
 
@@ -20,16 +22,18 @@ class ControleurGeneral extends ControleurGenerique
 
     public static function afficherDefaultPage()
     {
-        self::afficherVue("connexion.php");
-    }
-
-    public static function afficherAccueil()
-    {
-        $publications = (new PublicationRepository())->getAll();
-
+        if (ConnexionUtilisateur::estConnecte()){
+            ControleurPublication::afficherDefaultPage();
+        } else {
+            self::afficherVue("connexion.php");
+        }
     }
 
     public static function afficherVueErreur($message="Page Not Found"){
         self::afficherVue("vueGenerale.php",["cheminVueBody"=>"vueErreur.php","message"=>$message]);
+    }
+
+    public static function afficherParametres(){
+        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"parametres.html"]);
     }
 }

@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Altius</title>
         <link rel="icon" type="image/png" href="../assets/images/logo.png"/>
-        <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link type="text/css" rel="stylesheet" href="../assets/css/login.css">
     </head>
     <body>
@@ -26,9 +26,6 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Covoiturage</a>
                         </li>
                     </ul>
                 </div>
@@ -54,7 +51,7 @@
                         </a>
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Paramètres</a></li>
+                            <li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
                             <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Se déconnecter</a></li>
                         </ul>
                     </li>
@@ -62,6 +59,22 @@
             </div>
         </nav>
         <!-- Navbar -->
+
+        <!-- Messages flash -->
+        <?php
+        /** @var string[][] $messagesFlash */
+        foreach ($messagesFlash as $type => $messagesFlashPourUnType) {
+            // $type est l'une des valeurs suivantes : "success", "info", "warning", "danger"
+            // $messagesFlashPourUnType est la liste des messages flash d'un type
+            foreach ($messagesFlashPourUnType as $messageFlash) {
+                echo <<< HTML
+            <div class="alert alert-$type">
+               $messageFlash
+            </div>
+            HTML;
+            }
+        }
+        ?>
 
         <!-- New publication popup -->
         <div class="modal fade" id="popupCreate" tabindex="=-1" aria-hidden="true">
@@ -91,7 +104,7 @@
         </main>
 
         <script defer src="../assets/js/createPublicationPopup.js"></script>
-        <script src="../assets/js/bootstrap.bundle.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="../assets/js/publicationInfoPopup.js"></script>
     </body>
 </html>

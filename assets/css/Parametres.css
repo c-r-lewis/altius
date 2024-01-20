@@ -1,17 +1,12 @@
-main {
-    margin:auto;
-}
-
 main > article {
-    top:100px;
-    margin:0 35%;
-    position: absolute;
+    position: inherit;
     border: 1px solid darkgrey;
     border-radius:10px;
     display:flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 30px;
-    width:30%;
 }
 
 h1 {
@@ -29,7 +24,7 @@ input {
     outline:none;
 }
 
-select, input {
+select, input, button {
     margin: 10px;
 }
 
@@ -44,10 +39,5 @@ input {
 }
 
 input:hover {
-    border: 2px solid gray;
-}
-
-#labelDeleteAccount{
-    padding-top:30px;
-    text-align:center;
+    border: 2px solid grey;
 }
