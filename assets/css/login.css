@@ -94,6 +94,14 @@ main {
     justify-content: center;
 }
 
+.add-image-popup img {
+    max-height: 3rem;
+}
+
+.carousel-image img {
+    max-height: 10rem;
+}
+
 .stand-out {
     color: var(--color-logo-dark-green);
     font-weight: 600;

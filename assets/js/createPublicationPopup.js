@@ -26,7 +26,7 @@ function loadCreatePublicationContent() {
         });
 }
 
-let nbImages = 0
+let nbImages = 1
 function loadMultipleImageChoice() {
     if (fileInput.files.length > 0) {
         const container = document.getElementById("createContainer");
@@ -37,6 +37,7 @@ function loadMultipleImageChoice() {
 
         const nextBtn = document.getElementById('nextBtn');
         nextBtn.style.display = 'inline-block';
+
 
         // Fetch the content of the PHP file
         fetch('../src/Vue/publication/addOtherImages.php')
@@ -54,17 +55,23 @@ function loadMultipleImageChoice() {
                     img.classList.add("img-fluid");
 
                     // Add the image to the image container
-                    const imgContainer = document.getElementById("firstImage");
+                    const imgContainer = document.getElementById("slide1");
                     imgContainer.innerHTML = '';
                     imgContainer.appendChild(img);
 
                     // Add loaded image to popup
                     const img2 = img.cloneNode(true);
-                    img2.style.maxHeight = '3rem'
                     document.getElementById('addImagePopup').appendChild(img2);
 
                     // Add on click listeners
                     document.getElementById("showAddImagePopupBtn").addEventListener('click', showFilesAdded)
+                    const rightBtn = document.querySelector('.bi-chevron-right')
+                    rightBtn.addEventListener('click', goToNextSlide);
+                    const leftBtn = document.querySelector('.bi-chevron-left')
+                    leftBtn.addEventListener('click', goToPrevSlide);
+
+                    const fileInputContainer = document.getElementById("fileInputContainer");
+
                     // Handle file input changes
                     document.getElementById('newExtraImage').addEventListener('change', function(event) {
                         const files = event.target.files;
@@ -72,19 +79,38 @@ function loadMultipleImageChoice() {
                             const reader = new FileReader();
                             reader.onload = function(e) {
                                 const slide = document.createElement('div');
-                                slide.className = 'd-none';
+                                slide.id = 'slide'+(nbImages+1)
                                 slide.innerHTML = `<img src="${e.target.result}" alt="Slide Image">`;
+
+                                // Add to popup
+                                const popupImage = slide.cloneNode(true)
+                                popupImage.classList.add('me-1')
+                                document.getElementById('addImagePopup').appendChild(popupImage)
+
+                                // Add to list of files
+                                slide.style.display = 'none';
+                                fileInputContainer.appendChild(slide.cloneNode(true))
+
+                                // Add to carousel
+                                slide.classList.add('carousel-image')
                                 document.getElementById('imgContainer').appendChild(slide);
-                                nbImages+=1
+
+                                nbImages++
+
+                                rightBtn.classList.remove('d-none')
+                                rightBtn.style.display = 'block'
+
+                                // 3 images max
+                                if (nbImages >= 3) {
+                                    const btn = document.getElementById('addImageBtn')
+                                    btn.classList.remove('d-flex')
+                                    btn.classList.add('d-none')
+                                }
                             };
                             reader.readAsDataURL(file);
                         }
                     });
-                    document.querySelector('.bi-chevron-right').addEventListener('click', goToNextSlide);
-                    document.querySelector('.bi-chevron-left').addEventListener('click', goToPrevSlide);
 
-
-                    const fileInputContainer = document.getElementById("fileInputContainer");
                     fileInputContainer.appendChild(fileInput);
                 };
                 reader.readAsDataURL(fileInput.files[0]);
@@ -97,7 +123,6 @@ function loadMultipleImageChoice() {
 }
 
 function showFilesAdded() {
-    console.log("show files")
     const addImagePopup = document.getElementById('addImagePopup');
     addImagePopup.style.display = 'flex';
     addImagePopup.classList.remove('d-none');
@@ -106,7 +131,6 @@ function showFilesAdded() {
     showBtn.addEventListener('click', hideFilesAdded);}
 
 function hideFilesAdded() {
-    console.log("hide files")
     const addImagePopup = document.getElementById('addImagePopup');
     addImagePopup.classList.add('d-none')
     const showBtn = document.getElementById('showAddImagePopupBtn')
@@ -167,28 +191,45 @@ function addDescriptionToEvent() {
 }
 
 // Carousel logic
-let currentSlideIndex = 0;
+let currentSlideIndex = 1;
 
-function goToSlide(slideIndex) {
-    const slides = document.querySelectorAll('.carousel-image');
-    const totalWidth = imgContainer.offsetWidth * slideIndex;
-    slides.forEach((slide) => {
-        slide.style.transform = `translateX(-${totalWidth}px)`;
-    });
-    currentSlideIndex = slideIndex;
+function goToSlide(nextSlide) {
+    console.log('current slide : '+currentSlideIndex)
+    console.log('next slide : '+nextSlide)
+    document.getElementById('slide'+currentSlideIndex).style.display = 'none'
+    document.getElementById('slide'+nextSlide).style.display = 'block'
+    currentSlideIndex = nextSlide
 }
 
+function showArrow(type) {
+    const btn = document.querySelector('.bi-chevron-'+type)
+    btn.style.display = 'block'
+    btn.classList.remove('d-none')
+}
+
+function hideArrow(type) {
+    const btn = document.querySelector('.bi-chevron-'+type)
+    btn.style.display = 'none'
+}
+
+const types = ['left', 'right']
+
 function goToNextSlide() {
-    const slides = document.querySelectorAll('.carousel-slide');
-    if (currentSlideIndex < slides.length - 1) {
-        goToSlide(currentSlideIndex + 1);
+    console.log('next slide')
+    const slides = document.querySelectorAll('.carousel-image');
+    if (currentSlideIndex+1 === slides.length) {
+        hideArrow('right')
     }
+    showArrow('left')
+    goToSlide(currentSlideIndex+1);
 }
 
 function goToPrevSlide() {
-    if (currentSlideIndex > 0) {
-        goToSlide(currentSlideIndex - 1);
+    if (currentSlideIndex - 1 === 1) {
+        hideArrow('left')
     }
+    showArrow('right')
+    goToSlide(currentSlideIndex-1)
 }
 
 
