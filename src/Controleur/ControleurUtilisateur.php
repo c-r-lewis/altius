@@ -76,4 +76,8 @@ class ControleurUtilisateur extends ControleurGeneral{
             self::afficherVueErreur("Erreur de validation");
         }
     }
+
+    public static function ajouterAmis() : void{
+
+    }
 }
