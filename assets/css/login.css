@@ -96,7 +96,7 @@ main {
 
 .carousel-image img, .carousel-image-main img {
     max-height: 10rem;
-    max-width: fit-content;
+    max-width: 100%;
 }
 
 .carousel-image, .carousel-image-main {
