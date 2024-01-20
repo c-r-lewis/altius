@@ -5,6 +5,7 @@
 /** @var array $comments */
 /** @var array $answers */
 /** @var array $connectedUserPublications */
+/** @var array $images */
 ?>
 <!-- Conteneur des posts -->
 <div class="container-fluid d-flex flex-column justify-content-center align-items-center" id="publicationsContainer">
@@ -43,7 +44,28 @@
                     </div>
                 <?php endif; ?>
             </div>
-            <img src="<?= $publication->getPathToImage() ?>" class="card-img-top" alt="Image évènement">
+            <!-- Carousel -->
+            <div class="row">
+                <!-- Go left button -->
+                <div class="col-1 d-flex align-items-center pe-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left d-none left-btn" id="leftBtnMain<?=$publication->getID()?>" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                    </svg>
+                </div>
+                <div class="col-10 justify-content-center d-flex position-relative my-3 p-0">
+                    <?php for($i=0; $i<sizeof($images[$publication->getID()]); $i++):?>
+                    <div class="carousel-image-main <?php if ($i!=0) echo 'd-none';?>" id="slideMain<?=$i+1?>">
+                        <img src="<?=$images[$publication->getID()][$i]->getPathToImage()?>" alt="Image"/>
+                    </div>
+                    <?php endfor;?>
+                </div>
+                <!-- Go right button -->
+                <div class="col-1 ps-1 pe-0 d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" id="rightBtnMain<?=$publication->getID()?>" class="bi bi-chevron-right right-btn <?php if(sizeof($images[$publication->getID()])<=1) echo 'd-none'?>" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                    </svg>
+                </div>
+            </div>
             <div class="card-body px-1">
                 <div class="row">
                     <span class="stand-out"><?=$publication->getEventDate()?></span>

@@ -94,11 +94,12 @@ main {
     max-height: 3rem;
 }
 
-.carousel-image img {
+.carousel-image img, .carousel-image-main img {
     max-height: 10rem;
+    max-width: fit-content;
 }
 
-.carousel-image {
+.carousel-image, .carousel-image-main {
     align-items: center;
 }
 

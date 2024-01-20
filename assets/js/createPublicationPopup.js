@@ -2,6 +2,7 @@
 // Carousel logic
 let currentSlideIndex;
 
+
 // Listener on create event popup
 document.getElementById('popupCreate').addEventListener('show.bs.modal', function () {
     loadCreatePublicationContent();
@@ -79,9 +80,9 @@ function loadMultipleImageChoice() {
 
                     // Add on click listeners
                     document.getElementById("showAddImagePopupBtn").addEventListener('click', showFilesAdded)
-                    const rightBtn = document.querySelector('.bi-chevron-right')
+                    const rightBtn = document.getElementById('rightButtonCreate')
                     rightBtn.addEventListener('click', goToNextSlide);
-                    const leftBtn = document.querySelector('.bi-chevron-left')
+                    const leftBtn = document.getElementById('leftButtonCreate')
                     leftBtn.addEventListener('click', goToPrevSlide);
 
                     // Handle file input changes
@@ -178,9 +179,9 @@ function addDescriptionToEvent() {
         }
 
         if (children.length === 1) {
-            document.querySelector('.bi-chevron-right').style.display = 'none'
+            document.getElementById('rightButtonCreate').style.display = 'none'
         }
-        document.querySelector('.bi-chevron-left').style.display = 'none'
+        document.getElementById('leftButtonCreate').style.display = 'none'
 
 
         // Fetch the content of the PHP file
@@ -226,9 +227,9 @@ function addDescriptionToEvent() {
                     form.submit();
                 });
 
-                const rightBtn = document.querySelector('.bi-chevron-right')
+                const rightBtn = document.getElementById('rightButtonCreate')
                 rightBtn.addEventListener('click', goToNextSlide);
-                const leftBtn = document.querySelector('.bi-chevron-left')
+                const leftBtn = document.getElementById('leftButtonCreate')
                 leftBtn.addEventListener('click', goToPrevSlide);
 
             })
@@ -248,13 +249,13 @@ function goToSlide(nextSlide) {
 }
 
 function showArrow(type) {
-    const btn = document.querySelector('.bi-chevron-'+type)
+    const btn = document.getElementById(type+'ButtonCreate')
     btn.style.display = 'block'
     btn.classList.remove('d-none')
 }
 
 function hideArrow(type) {
-    const btn = document.querySelector('.bi-chevron-'+type)
+    const btn = document.getElementById(type+'ButtonCreate')
     btn.style.display = 'none'
 }
 
