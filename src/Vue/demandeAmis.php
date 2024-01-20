@@ -1,15 +1,20 @@
-<?php
-use App\Altius\Modele\Repository\FriendsRepository;
-
-$userRepo = new FriendsRepository();
-$users = $userRepo->getAllDemandeAmis();
-?>
-
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link type="text/css" rel="stylesheet" href="../assets/css/amitie.css">
+    <title>Altius</title>
+</head>
 <body>
 <div class="container">
     <div class="column">
-        <h1>Demandes d'amis ( <?= count($users); ?> )</h1>
-        <?php foreach ($users as $user): ?>
+
+        <h1>Demandes d'amis</h1>
+        <?php /** @var array $listeDemandeAmis */
+        foreach ($listeDemandeAmis as $user): ?>
             <div class="friend-request-card">
                 <div class="user-profile">
                     <div class="profile-picture">
@@ -29,3 +34,4 @@ $users = $userRepo->getAllDemandeAmis();
     </div>
 </div>
 </body>
+</html>

@@ -2,8 +2,9 @@
 
 namespace App\Altius\Modele\Repository;
 
-use App\Altius\Modele\DataObject\AbstractDataObject;
 use App\Altius\Modele\DataObject\Friends;
+use App\Altius\Modele\ConnexionBaseDeDonnee as ConnexionBaseDeDonnee;
+use PDO;
 
 class FriendsRepository extends AbstractRepository
 {
@@ -46,5 +47,9 @@ class FriendsRepository extends AbstractRepository
             $listeDemandeAmis[] = $this->construireDepuisTableau($demandeAmis);
         }
         return $listeDemandeAmis;
+    }
+
+    public function getAmis(){
+        //TODO
     }
 }
