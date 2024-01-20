@@ -149,6 +149,7 @@ function addDescriptionToEvent() {
         title.classList.remove('justify-content-center');
         title.classList.add('justify-content-between');
 
+        // Show submit button
         const submitButton = document.getElementById("submitBtn");
         submitButton.style.display = 'inline-block';
         submitButton.addEventListener('click', function() {
@@ -156,37 +157,49 @@ function addDescriptionToEvent() {
             form.submit();
         });
 
+        // Hide next button
+        document.getElementById('nextBtn').style.display = 'none'
+
+        const images = document.getElementById('imgContainer')
+        const carousel = document.getElementById('carouselDiv')
+        const children = images.children;
+
+        for (let i = 0; i < children.length; i++) {
+            // Set the display of the first child to 'block' and the rest to 'none'
+            children[i].style.display = i === 0 ? 'flex' : 'none';
+        }
+
+        if (children.length === 1) {
+            document.querySelector('.bi-chevron-right').style.display = 'none'
+        }
+        document.querySelector('.bi-chevron-left').style.display = 'none'
+
+
         // Fetch the content of the PHP file
         fetch('../src/Vue/publication/createPublication.php')
             .then(response => response.text())
             .then(htmlContent => {
                 // Replace the content of the container with the fetched HTML
                 container.innerHTML = htmlContent;
+                const addCarousel = document.getElementById('addCarousel')
 
-                // Display the selected image
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result.toString();
-                    img.alt = 'Image sélectionnée';
-                    img.width = 200;
-                    img.height = 200;
-                    img.classList.add("img-fluid");
+                // Add the previous images to the carousel
+                Array.from(carousel.children).forEach(child => {
+                    const clone = child.cloneNode(true); // deep clone the child
+                    addCarousel.append(clone);
+                });
 
-                    // Add the image to the image container
-                    const imgContainer = document.getElementById("imgContainer");
-                    imgContainer.innerHTML = '';
-                    imgContainer.appendChild(img);
+                const rightBtn = document.querySelector('.bi-chevron-right')
+                rightBtn.addEventListener('click', goToNextSlide);
+                const leftBtn = document.querySelector('.bi-chevron-left')
+                leftBtn.addEventListener('click', goToPrevSlide);
 
-                    const fileInputContainer = document.getElementById("fileInputContainer");
-                    fileInputContainer.appendChild(fileInput);
-
-                };
-                reader.readAsDataURL(fileInput.files[0]);
             })
             .catch(error => {
                 console.error('Error fetching PHP file:', error);
             });
+
+
     }
 }
 
@@ -197,7 +210,7 @@ function goToSlide(nextSlide) {
     console.log('current slide : '+currentSlideIndex)
     console.log('next slide : '+nextSlide)
     document.getElementById('slide'+currentSlideIndex).style.display = 'none'
-    document.getElementById('slide'+nextSlide).style.display = 'block'
+    document.getElementById('slide'+nextSlide).style.display = 'flex'
     currentSlideIndex = nextSlide
 }
 

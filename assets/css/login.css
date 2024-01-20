@@ -85,10 +85,6 @@ main {
 
 
 
-.modal-content {
-    width: fit-content;
-}
-
 .modal-dialog {
     display: flex;
     justify-content: center;
@@ -100,6 +96,10 @@ main {
 
 .carousel-image img {
     max-height: 10rem;
+}
+
+.carousel-image {
+    align-items: center;
 }
 
 .stand-out {
