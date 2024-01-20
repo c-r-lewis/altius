@@ -1,7 +1,8 @@
 // Listener on heart buttons for publications
 document.getElementById('publicationsContainer').addEventListener('click', event => onHeartButtonClicked(event));
 // Listener on heart buttons for publication popups
-document.getElementById('commentsContainer').addEventListener('click', event=> onHeartButtonClicked(event));
+const commentsContainer = document.getElementById('commentsContainer')
+if (commentsContainer !== null) commentsContainer.addEventListener('click', event=> onHeartButtonClicked(event));
 
 // Listener on show info popup
 document.querySelectorAll('.comment-popup').forEach(commentPopup => {
@@ -26,7 +27,8 @@ function onHeartButtonClicked(event) {
 document.addEventListener('DOMContentLoaded', updateComments);
 
 // Update interface on comment creation
-document.getElementById('commentForm').addEventListener('submit', function (event) {
+const commentForm = document.getElementById('commentForm')
+if(commentForm !== null) commentForm.addEventListener('submit', function (event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     fetch('controleurFrontal.php', {
@@ -163,7 +165,8 @@ function loadPopup() {
     input.value = '';
 }
 
-document.getElementById('shareButton').addEventListener('click', async () => {
+const shareButton = document.getElementById('shareButton')
+if(shareButton != null) shareButton.addEventListener('click', async () => {
     try {
         // Check if the Web Share API is supported
         if (navigator.share) {

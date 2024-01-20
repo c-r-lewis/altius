@@ -207,8 +207,6 @@ function addDescriptionToEvent() {
 let currentSlideIndex = 1;
 
 function goToSlide(nextSlide) {
-    console.log('current slide : '+currentSlideIndex)
-    console.log('next slide : '+nextSlide)
     document.getElementById('slide'+currentSlideIndex).style.display = 'none'
     document.getElementById('slide'+nextSlide).style.display = 'flex'
     currentSlideIndex = nextSlide
@@ -228,7 +226,6 @@ function hideArrow(type) {
 const types = ['left', 'right']
 
 function goToNextSlide() {
-    console.log('next slide')
     const slides = document.querySelectorAll('.carousel-image');
     if (currentSlideIndex+1 === slides.length) {
         hideArrow('right')
