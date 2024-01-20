@@ -3,6 +3,7 @@
 namespace App\Altius\Modele\DataObject;
 
 use App\Altius\Lib\MotDePasse;
+use App\Altius\Modele\Repository\ConnexionBaseDeDonnee;
 
 class Utilisateur extends AbstractDataObject
 {
