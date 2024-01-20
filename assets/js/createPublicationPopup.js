@@ -1,6 +1,11 @@
+
+// Carousel logic
+let currentSlideIndex;
+
 // Listener on create event popup
 document.getElementById('popupCreate').addEventListener('show.bs.modal', function () {
     loadCreatePublicationContent();
+    currentSlideIndex = 1;
 });
 
 let fileInput;
@@ -54,6 +59,8 @@ function loadMultipleImageChoice() {
                     img.alt = 'Image sélectionnée';
                     img.classList.add("img-fluid");
 
+                    const fileInputContainer = document.getElementById("fileInputContainer");
+
                     // Add the image to the image container
                     const imgContainer = document.getElementById("slide1");
                     imgContainer.innerHTML = '';
@@ -63,14 +70,19 @@ function loadMultipleImageChoice() {
                     const img2 = img.cloneNode(true);
                     document.getElementById('addImagePopup').appendChild(img2);
 
+                    // Add the image to storage container
+                    const img3 = imgContainer.cloneNode(true);
+                    img3.style.display = 'none'
+                    fileInputContainer.appendChild(img3)
+
+
+
                     // Add on click listeners
                     document.getElementById("showAddImagePopupBtn").addEventListener('click', showFilesAdded)
                     const rightBtn = document.querySelector('.bi-chevron-right')
                     rightBtn.addEventListener('click', goToNextSlide);
                     const leftBtn = document.querySelector('.bi-chevron-left')
                     leftBtn.addEventListener('click', goToPrevSlide);
-
-                    const fileInputContainer = document.getElementById("fileInputContainer");
 
                     // Handle file input changes
                     document.getElementById('newExtraImage').addEventListener('change', function(event) {
@@ -87,13 +99,14 @@ function loadMultipleImageChoice() {
                                 popupImage.classList.add('me-1')
                                 document.getElementById('addImagePopup').appendChild(popupImage)
 
-                                // Add to list of files
-                                slide.style.display = 'none';
-                                fileInputContainer.appendChild(slide.cloneNode(true))
-
                                 // Add to carousel
+                                slide.style.display = 'none';
                                 slide.classList.add('carousel-image')
                                 document.getElementById('imgContainer').appendChild(slide);
+
+                                // Add to list of files
+                                fileInputContainer.appendChild(slide.cloneNode(true))
+
 
                                 nbImages++
 
@@ -110,8 +123,6 @@ function loadMultipleImageChoice() {
                             reader.readAsDataURL(file);
                         }
                     });
-
-                    fileInputContainer.appendChild(fileInput);
                 };
                 reader.readAsDataURL(fileInput.files[0]);
             })
@@ -152,16 +163,13 @@ function addDescriptionToEvent() {
         // Show submit button
         const submitButton = document.getElementById("submitBtn");
         submitButton.style.display = 'inline-block';
-        submitButton.addEventListener('click', function() {
-            const form = document.getElementById("createPublicationForm");
-            form.submit();
-        });
 
         // Hide next button
         document.getElementById('nextBtn').style.display = 'none'
 
         const images = document.getElementById('imgContainer')
         const carousel = document.getElementById('carouselDiv')
+        const storageContainer = document.getElementById('fileInputContainer')
         const children = images.children;
 
         for (let i = 0; i < children.length; i++) {
@@ -185,8 +193,37 @@ function addDescriptionToEvent() {
 
                 // Add the previous images to the carousel
                 Array.from(carousel.children).forEach(child => {
-                    const clone = child.cloneNode(true); // deep clone the child
+                    const clone = child.cloneNode(true);
                     addCarousel.append(clone);
+                });
+
+                // Add the previous images to the storage
+                const fileInput = document.getElementById('fileInputContainer');
+                Array.from(storageContainer.children).forEach(child => {
+                    const clone = child.cloneNode(true);
+                    fileInput.append(clone);
+                });
+
+                // Add listener to submit button
+                submitButton.addEventListener('click', function() {
+                    const fileInputDiv = document.getElementById("fileInputContainer");
+                    const form = document.getElementById("createPublicationForm");
+
+                    // Find all images in fileInputDiv
+                    const images = fileInputDiv.querySelectorAll('img');
+                    images.forEach((img, index) => {
+                        // Create a hidden input for each image
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.setAttribute('type', 'hidden');
+                        hiddenInput.setAttribute('name', 'imageSrc[' + index + ']');
+                        hiddenInput.setAttribute('value', img.src);
+                        hiddenInput.classList.add('hidden-image-src'); // Add a class for easy removal
+
+                        // Append the hidden input to the form
+                        form.appendChild(hiddenInput);
+                    });
+
+                    form.submit();
                 });
 
                 const rightBtn = document.querySelector('.bi-chevron-right')
@@ -203,8 +240,6 @@ function addDescriptionToEvent() {
     }
 }
 
-// Carousel logic
-let currentSlideIndex = 1;
 
 function goToSlide(nextSlide) {
     document.getElementById('slide'+currentSlideIndex).style.display = 'none'
@@ -222,8 +257,6 @@ function hideArrow(type) {
     const btn = document.querySelector('.bi-chevron-'+type)
     btn.style.display = 'none'
 }
-
-const types = ['left', 'right']
 
 function goToNextSlide() {
     const slides = document.querySelectorAll('.carousel-image');

@@ -77,6 +77,8 @@ class Comment extends AbstractDataObjectWithTime
     }
 
 
-
-
+    public function setID($ID): void
+    {
+        $this->commentID = $ID;
+    }
 }
