@@ -9,6 +9,7 @@
         <link rel="icon" type="image/png" href="../assets/images/logo.png"/>
         <link href="../assets/css/bootstrap.css" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="../assets/css/login.css">
+
         <!-- Calendrier -->
         <link rel="stylesheet" type="text/css" href="../assets/css/evo-calendar.css">
         <link rel="stylesheet" type="text/css" href="../assets/css/evo-calendar.royal-navy.css">
@@ -144,7 +145,6 @@
                 // add multiple events
                 $('#calendar').evoCalendar('addCalendarEvent', eventsCalendar);
             })
-
         </script>
     </body>
 </html>

@@ -549,7 +549,7 @@
             // --- BUILDING MARKUP BEGINS --- //
 
             // sidebar
-            markup = '<div class="calendar-sidebar">'+
+            markup = '<div class="calendar-sidebar" style="min-height: 100vh">'+
                         '<div class="calendar-year">'+
                         '<button class="icon-button" role="button" data-year-val="prev" title="'+_.initials.dates[_.options.language].previousYearText+'">'+
                                 '<span class="chevron-arrow-left"></span>'+
@@ -567,7 +567,7 @@
             markup += '</div></div>';
         
             // inner
-            markup += '<div class="calendar-inner">'+
+            markup += '<div class="calendar-inner" style="min-height: 100vh">'+
                             '<table class="calendar-table">'+
                                 '<tr><th colspan="7"></th></tr>'+
                                 '<tr class="calendar-header">';
@@ -582,7 +582,7 @@
                         '</div>';
 
             // events
-            markup += '<div class="calendar-events">'+
+            markup += '<div class="calendar-events" style="min-height: 100vh">'+
                             '<div class="event-header"><p></p></div>'+
                             '<div class="event-list"></div>'+
                         '</div>';
@@ -670,11 +670,12 @@
         if (event_data.color) {
             markup += 'style="background-color:'+event_data.color+'"'
         }
-        markup += '></div></div><div class="event-info"><p class="event-title">'+_.limitTitle(event_data.name);
+        // TODO: 'test' -> Bon truc à faire
+        markup += '></div></div><a class="event-info" href="test" style="text-decoration: none"><p class="event-title">'+_.limitTitle(event_data.name);
         if (event_data.badge) markup += '<span>'+event_data.badge+'</span>';
         markup += '</p>'
         if (event_data.description) markup += '<p class="event-desc">'+event_data.description+'</p>';
-        markup += '</div>';
+        markup += '</a>';
         markup += '</div>';
         eventListEl.append(markup);
 
