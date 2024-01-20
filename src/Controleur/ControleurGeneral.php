@@ -22,11 +22,7 @@ class ControleurGeneral extends ControleurGenerique
 
     public static function afficherDefaultPage()
     {
-        if (ConnexionUtilisateur::estConnecte()){
-            ControleurPublication::afficherDefaultPage();
-        } else {
-            self::afficherVue("connexion.php");
-        }
+        ControleurPublication::afficherDefaultPage();
     }
 
     public static function afficherVueErreur($message="Page Not Found"){

@@ -42,7 +42,7 @@ class PublicationRepository extends AbstractRepository
     }
 
     public static function getCalendarData(): array {
-        $sql = "SELECT publicationID, title, description FROM PUBLICATIONS WHERE eventDate >= NOW()";
+        $sql = "SELECT publicationID, title, description, eventDate FROM PUBLICATIONS";
         $pdostatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         return $pdostatement->fetchAll();
     }

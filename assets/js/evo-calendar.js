@@ -274,6 +274,8 @@
 
     // v1.0.0 - Limit title (...)
     EvoCalendar.prototype.limitTitle = function(title, limit) {
+        // si le titre est undefined, on retourne une chaine vide
+        if (title === undefined) return '';
         var newTitle = [];
         limit = limit === undefined ? 18 : limit;
         if ((title).split(' ').join('').length > limit) {
