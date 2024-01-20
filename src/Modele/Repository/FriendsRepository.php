@@ -3,8 +3,6 @@
 namespace App\Altius\Modele\Repository;
 
 use App\Altius\Modele\DataObject\Friends;
-use App\Altius\Modele\ConnexionBaseDeDonnee as ConnexionBaseDeDonnee;
-use PDO;
 
 class FriendsRepository extends AbstractRepository
 {
