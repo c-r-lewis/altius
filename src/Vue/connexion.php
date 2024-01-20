@@ -1,6 +1,6 @@
 <!-- Il s'agit d'une vue indépendante de vue générale -->
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,7 +9,7 @@
     <title>Altius</title>
     <link rel="icon" type="image/png" href="../assets/images/logo.png"/>
     <link type="text/css" rel="stylesheet" href="../../assets/css/login.css">
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
@@ -7,8 +7,11 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Altius</title>
         <link rel="icon" type="image/png" href="../assets/images/logo.png"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link href="../assets/css/bootstrap.css" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="../assets/css/login.css">
+        <!-- Calendrier -->
+        <link rel="stylesheet" type="text/css" href="../assets/css/evo-calendar.css">
+        <link rel="stylesheet" type="text/css" href="../assets/css/evo-calendar.royal-navy.css">
     </head>
     <body>
         <!-- Navbar -->
@@ -16,7 +19,7 @@
             <!-- Container wrapper -->
             <div class="container-fluid">
                 <!-- Navbar brand -->
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="?">
                     <img src="../assets/images/logo.png" height="40" alt="" loading="lazy" />
                 </a>
 
@@ -25,7 +28,10 @@
                     <!-- Left links -->
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                            <a class="nav-link active" aria-current="page" href="?">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier">Calendrier</a>
                         </li>
                     </ul>
                 </div>
@@ -104,7 +110,44 @@
         </main>
 
         <script defer src="../assets/js/createPublicationPopup.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="../assets/js/bootstrap.bundle.js"></script>
         <script src="../assets/js/publicationInfoPopup.js"></script>
+
+        <!-- jQuery -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+        <script src="/assets/js/evo-calendar.js"></script>
+
+        <!-- Script pour loader le calendrier -->
+        <script>
+
+            <?php /* @var array $eventsData */ ?>
+
+            const eventsDataNotAdapted = JSON.parse(<?php echo json_encode($eventsData); ?>);
+
+            let eventsCalendar = [];
+            for (let i = 0; i < eventsDataNotAdapted.length; i++) {
+                eventsCalendar.push({
+                    id: eventsDataNotAdapted[i].publicationID,
+                    name: eventsDataNotAdapted[i].title,
+                    description: eventsDataNotAdapted[i].description,
+                    date: new Date(eventsDataNotAdapted[i].eventDate),
+                    type: 'event',
+                    color: 'red',
+                    everyYear: false
+                });
+            }
+
+            $(document).ready(function() {
+                $('#calendar').evoCalendar({
+                    'language': 'fr',
+                    'theme': 'Royal Navy',
+                    'format': 'MM dd, yyyy',
+                });
+
+                // add multiple events
+                $('#calendar').evoCalendar('addCalendarEvent', eventsCalendar);
+            })
+
+        </script>
     </body>
 </html>

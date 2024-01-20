@@ -50,6 +50,9 @@ class PublicationRepository extends AbstractRepository
         return $likes;
     }
 
-
-
+    public static function getCalendarData(): array {
+        $sql = "SELECT publicationID, title, description, eventDate FROM PUBLICATIONS";
+        $pdostatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+        return $pdostatement->fetchAll();
+    }
 }
