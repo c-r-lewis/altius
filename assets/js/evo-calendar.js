@@ -549,7 +549,7 @@
             // --- BUILDING MARKUP BEGINS --- //
 
             // sidebar
-            markup = '<div class="calendar-sidebar" style="min-height: 100vh">'+
+            markup = '<div class="calendar-sidebar">'+
                         '<div class="calendar-year">'+
                         '<button class="icon-button" role="button" data-year-val="prev" title="'+_.initials.dates[_.options.language].previousYearText+'">'+
                                 '<span class="chevron-arrow-left"></span>'+
@@ -567,7 +567,7 @@
             markup += '</div></div>';
         
             // inner
-            markup += '<div class="calendar-inner" style="min-height: 100vh">'+
+            markup += '<div class="calendar-inner">'+
                             '<table class="calendar-table">'+
                                 '<tr><th colspan="7"></th></tr>'+
                                 '<tr class="calendar-header">';
@@ -582,7 +582,7 @@
                         '</div>';
 
             // events
-            markup += '<div class="calendar-events" style="min-height: 100vh">'+
+            markup += '<div class="calendar-events">'+
                             '<div class="event-header"><p></p></div>'+
                             '<div class="event-list"></div>'+
                         '</div>';
