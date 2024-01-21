@@ -165,8 +165,7 @@ function loadPopup() {
     input.value = '';
 }
 
-const shareButton = document.getElementById('shareButton')
-if(shareButton != null) shareButton.addEventListener('click', async () => {
+document.getElementById('shareButton').addEventListener('click', async () => {
     try {
         // Check if the Web Share API is supported
         if (navigator.share) {

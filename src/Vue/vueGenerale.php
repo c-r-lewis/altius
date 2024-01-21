@@ -109,6 +109,7 @@
             ?>
         </main>
 
+        <script src="../assets/js/mainCarousel.js"></script>
         <script defer src="../assets/js/createPublicationPopup.js"></script>
         <script src="../assets/js/bootstrap.bundle.js"></script>
         <script src="../assets/js/publicationInfoPopup.js"></script>
@@ -147,7 +148,6 @@
                 // add multiple events
                 $('#calendar').evoCalendar('addCalendarEvent', eventsCalendar);
             })
-
         </script>
     </body>
 </html>
