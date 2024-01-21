@@ -89,9 +89,12 @@
                 <div class="modal-content">
                     <div class="card">
                         <div class="card-header d-flex justify-content-center" id="newPublicationTitle">
-                            Créer une nouvelle publication
+                            <div>
+                                Créer une nouvelle publication
+                            </div>
+                            <input class="link-primary btn p-0 ms-5" type="submit" id="submitBtn" value="Créer" style="display: none;">
+                            <button class="link-primary btn p-0 ms-5" id="nextBtn" style="display: none;" onclick="addDescriptionToEvent()">Suivant</button>
                         </div>
-                        <input class="link-primary btn p-0" type="submit" id="submitBtn" value="Créer" style="display: none;">
                         <div id="createContainer">
 
                         </div>
@@ -107,6 +110,7 @@
             ?>
         </main>
 
+        <script src="../assets/js/mainCarousel.js"></script>
         <script defer src="../assets/js/createPublicationPopup.js"></script>
         <script src="../assets/js/bootstrap.bundle.js"></script>
         <script src="../assets/js/publicationInfoPopup.js"></script>

@@ -1,5 +1,6 @@
 :root {
     --header-height: 43px;
+    --color-logo-dark-green: #007E7A;
 }
 
 body {
@@ -57,4 +58,52 @@ main {
 
 .btn-behaviour-dark:hover {
     color: black;
+}
+
+/*---------------------------------------------------
+# Add multiple images icon on publication creation  #
+---------------------------------------------------*/
+
+.add-image-icon {
+    background-color: var(--color-logo-dark-green) !important;
+    opacity: 0.5;
+    z-index: 1000;
+}
+
+.add-image-icon:hover {
+    background-color: #77D9CF !important;
+}
+
+.add-image-icon:hover svg {
+    fill: var(--color-logo-dark-green);
+}
+
+.add-image-popup {
+    background-color: rgba(0,0,0,0.8);
+    width: fit-content;
+}
+
+
+
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+}
+
+.add-image-popup img {
+    max-height: 3rem;
+}
+
+.carousel-image img, .carousel-image-main img {
+    max-height: 10rem;
+    max-width: 100%;
+}
+
+.carousel-image, .carousel-image-main {
+    align-items: center;
+}
+
+.stand-out {
+    color: var(--color-logo-dark-green);
+    font-weight: 600;
 }

@@ -2,28 +2,38 @@
 
 namespace App\Altius\Modele\DataObject;
 
+use DateTime;
+use Exception;
+use IntlDateFormatter;
+
 class Publication extends AbstractDataObjectWithTime
 {
     private int $id;
     private string $eventDate;
 
     private string $description;
-    private string $pathToImage;
+
+    private string $town;
+    private int $zip;
+    private string $address;
+
     private string $userID;
 
     private ?string $title;
-    public function __construct(string $datePosted, string $eventDate, string $description, string $pathToImage, string $userID, ?string $title) {
+    public function __construct(string $datePosted, string $eventDate, string $description, string $userID, ?string $title, string $town, string $address, int $zip) {
         parent::__construct($datePosted);
         $this->eventDate = $eventDate;
         $this->datePosted = $datePosted;
         $this->description = $description;
-        $this->pathToImage = $pathToImage;
         $this->userID = $userID;
         $this->title = $title;
+        $this->zip = $zip;
+        $this->address = $address;
+        $this->town = $town;
     }
 
-    public static function publicationWithID(int $id, string $datePosted, string $eventDate, string $description, string $pathToImage, string $userID, ?string $title) : Publication {
-        $publication = new self($datePosted, $eventDate, $description, $pathToImage, $userID, $title);
+    public static function publicationWithID(int $id, string $datePosted, string $eventDate, string $description, string $userID, ?string $title, string $town, string $address, int $zip) : Publication {
+        $publication = new self($datePosted, $eventDate, $description, $userID, $title, $town, $address, $zip);
         $publication->id = $id;
         return $publication;
     }
@@ -37,8 +47,10 @@ class Publication extends AbstractDataObjectWithTime
             "descriptionTag"=>$this->description,
             "postedDateTag"=>$this->datePosted,
             "eventDateTag"=>$this->eventDate,
-            "pathToImageTag"=>$this->pathToImage,
             "userIDTag"=>$this->userID,
+            "townTag"=>$this->town,
+            "zipTag"=>$this->zip,
+            "addressTag"=>$this->address,
             "titleTag"=>$this->title];
     }
 
@@ -47,8 +59,19 @@ class Publication extends AbstractDataObjectWithTime
         return $this->datePosted;
     }
 
+    public function getEventDate() : string {
+        $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
+        $formatter->setPattern("EEE d MMM");
+        try {
+            $date = new DateTime($this->eventDate);
+            return $formatter->format($date);
+        } catch (Exception $e) {
+        }
+        return "";
+    }
 
-    public function getEventDate() : string
+
+    public function getEventDateAsNumerical() : string
     {
         return $this->eventDate;
     }
@@ -63,10 +86,6 @@ class Publication extends AbstractDataObjectWithTime
         return $this->id;
     }
 
-    public function getPathToImage(): string
-    {
-        return $this->pathToImage;
-    }
 
     public function getUserID(): string
     {
@@ -78,11 +97,10 @@ class Publication extends AbstractDataObjectWithTime
         return $this->title;
     }
 
-
-
-
-
-
+    public function setID($ID): void
+    {
+        $this->id = $ID;
+    }
 
 
 
