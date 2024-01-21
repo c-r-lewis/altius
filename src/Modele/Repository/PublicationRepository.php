@@ -15,7 +15,7 @@ class PublicationRepository extends AbstractRepository
 
     protected function getNomsColonnes(): array
     {
-        return array("description", "postedDate", "eventDate", "userID", "title", 'town', 'address', 'zip');
+        return array("description", "postedDate", "eventDate", "userID", "title", 'town', 'address', 'zip', 'time');
     }
 
     protected function getClePrimaire(): array
@@ -33,7 +33,8 @@ class PublicationRepository extends AbstractRepository
             $objetFormatTableau["title"],
             $objetFormatTableau["town"],
             $objetFormatTableau["address"],
-            $objetFormatTableau["zip"]
+            $objetFormatTableau["zip"],
+            $objetFormatTableau["time"]
         );
     }
 

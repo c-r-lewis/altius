@@ -21,7 +21,7 @@ class ControleurPublication extends ControleurGenerique
         $imageRepository = new ImageRepository();
         $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
         $datePosted = date('Y-m-d H:i:s');
-        $newPublication = new Publication($datePosted, $_POST["eventDate"], $_POST["description"], $userID, $_POST["title"], $_POST["town"], $_POST["address"], (int)$_POST['zip']);
+        $newPublication = new Publication($datePosted, $_POST["eventDate"], $_POST["description"], $userID, $_POST["title"], $_POST["town"], $_POST["address"], (int)$_POST['zip'], $_POST['eventTime']);
         $newPublication = (new PublicationRepository())->create($newPublication);
 
         $imageSources = $_POST['imageSrc'];
