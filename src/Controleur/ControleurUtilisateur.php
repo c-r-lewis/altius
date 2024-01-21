@@ -12,8 +12,7 @@ class ControleurUtilisateur extends ControleurGeneral{
 
     public static function afficherDefaultPage()
     {
-        // TODO: Modifier la redirection quand il y aura les connexions utilisateurs
-        ControleurGeneral::afficherDefaultPage();
+        ControleurGeneral::afficherVue("vueConnexion.php");
     }
 
     public static function afficherPageInscription()

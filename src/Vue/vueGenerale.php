@@ -8,10 +8,7 @@
         <title>Altius</title>
         <link rel="icon" type="image/png" href="../assets/images/logo.png"/>
         <link href="../assets/css/bootstrap.css" rel="stylesheet">
-        <link type="text/css" rel="stylesheet" href="../assets/css/login.css">
-        <!-- Calendrier -->
-        <link rel="stylesheet" type="text/css" href="../assets/css/evo-calendar.css">
-        <link rel="stylesheet" type="text/css" href="../assets/css/evo-calendar.royal-navy.css">
+        <?= /* @var ?string $css */ $css ?>
     </head>
     <body>
         <!-- Navbar -->
@@ -104,24 +101,22 @@
 
         <main>
             <?php
-                /** @var string $cheminVueBody */
+                /** @var ?string $cheminVueBody */
                 require __DIR__ . "/$cheminVueBody";
             ?>
         </main>
-
         <script src="../assets/js/mainCarousel.js"></script>
         <script defer src="../assets/js/createPublicationPopup.js"></script>
-        <script src="../assets/js/bootstrap.bundle.js"></script>
         <script src="../assets/js/publicationInfoPopup.js"></script>
-
-        <!-- jQuery -->
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-        <script src="/assets/js/evo-calendar.js"></script>
+        <script src="../assets/js/bootstrap.bundle.js"></script>
+        <?= /* @var string $js */ $js ?>
 
         <!-- Script pour loader le calendrier -->
         <script>
-
-            <?php /* @var array $eventsData */ ?>
+            <?php
+                /* @var array $eventsData */
+                if (!isset($eventsData)) $eventsData = array();
+            ?>
 
             const eventsDataNotAdapted = JSON.parse(<?php echo json_encode($eventsData); ?>);
 
@@ -145,7 +140,6 @@
                     'format': 'MM dd, yyyy',
                 });
 
-                // add multiple events
                 $('#calendar').evoCalendar('addCalendarEvent', eventsCalendar);
             })
         </script>

@@ -3,6 +3,7 @@
 namespace App\Altius\Controleur;
 
 use App\Altius\Lib\ConnexionUtilisateur;
+use App\Altius\Modele\CSSLoader\HomePageCSSLoader;
 use App\Altius\Modele\DataObject\Image;
 use App\Altius\Modele\DataObject\Publication;
 use App\Altius\Modele\Repository\CommentRepository;
@@ -71,6 +72,11 @@ class ControleurPublication extends ControleurGenerique
 
     }
 
+    static function afficherForum() : void {
+        $idPublication = $_GET["id"];
+        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"forum.php"));
+    }
+
     static function afficherDefaultPage(): void {
         $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
         $publicationRepository = new PublicationRepository();
@@ -99,6 +105,8 @@ class ControleurPublication extends ControleurGenerique
             "comments"=>$comments,
             "answers"=>$answers,
             "connectedUserPublications"=>$connectedUserPublications,
-            "images"=>$images));
+            "images"=>$images,
+            "js" => HomePageCSSLoader::getJSImports(),
+            "css" => HomePageCSSLoader::getCSSImports()));
     }
 }
