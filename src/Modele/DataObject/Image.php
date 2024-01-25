@@ -5,19 +5,19 @@ namespace App\Altius\Modele\DataObject;
 class Image extends AbstractDataObject
 {
     private string $pathToImage;
-    private int $publicationID;
+    private int $ID;
 
-    public function __construct(string $pathToImage, int $publicationID)
+    public function __construct(string $pathToImage, int $ID)
     {
         $this->pathToImage = $pathToImage;
-        $this->publicationID = $publicationID;
+        $this->ID = $ID;
     }
 
 
     public function formatTableau(): array
     {
         return array('pathToImageTag'=>$this->pathToImage,
-            'publicationIDTag'=>$this->publicationID);
+            'publicationIDTag'=>$this->ID);
     }
 
     public function getPathToImage(): string

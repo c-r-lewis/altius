@@ -7,8 +7,8 @@ use App\Altius\Modele\CSSLoader\HomePageCSSLoader;
 use App\Altius\Modele\DataObject\Image;
 use App\Altius\Modele\DataObject\Publication;
 use App\Altius\Modele\Repository\CommentRepository;
-use App\Altius\Modele\Repository\ImageRepository;
 use App\Altius\Modele\Repository\LikeRepository;
+use App\Altius\Modele\Repository\PublicationImageRepository;
 use App\Altius\Modele\Repository\PublicationRepository;
 use Exception;
 use finfo;
@@ -19,7 +19,7 @@ class ControleurPublication extends ControleurGenerique
      * @throws Exception
      */
     static function createPublication(): void {
-        $imageRepository = new ImageRepository();
+        $imageRepository = new PublicationImageRepository();
         $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
         $datePosted = date('Y-m-d H:i:s');
         $newPublication = new Publication($datePosted, $_POST["eventDate"], $_POST["description"], $userID, $_POST["title"], $_POST["town"], $_POST["address"], (int)$_POST['zip'], $_POST['eventTime']);
@@ -58,7 +58,7 @@ class ControleurPublication extends ControleurGenerique
 
     static function deletePublication() : void {
         $publicationRepository = new PublicationRepository();
-        $imageRepository = new ImageRepository();
+        $imageRepository = new PublicationImageRepository();
         $publication = $publicationRepository->recupererParClePrimaire((int)$_POST["publicationID"]);
         foreach ($imageRepository->getImagesForPublication($publication->getID()) as $image) {
             unlink($image->getPathToImage());
@@ -84,7 +84,7 @@ class ControleurPublication extends ControleurGenerique
         $publicationRepository = new PublicationRepository();
         $likeRepository = new LikeRepository();
         $commentRepository = new CommentRepository();
-        $imageRepository = new ImageRepository();
+        $imageRepository = new PublicationImageRepository();
         $comments = [];
         $publications = $publicationRepository->getAll();
         $nbLikes = [];
