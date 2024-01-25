@@ -12,11 +12,18 @@ use PDOException;
 class ControleurCommentaire extends ControleurGeneral
 {
     public static function addComment() : void {
-        if (((isset($_POST["message"]) && $_POST['message'] != "")  || (isset($_POST["image"]) && $_POST['image'] != "")) && isset($_POST["publicationID"]) && isset($_POST["userID"])
+        if ((isset($_POST["message"]) && $_POST['message'] != "")  || (isset($_FILES["image"]) && is_uploaded_file($_FILES['image']['tmp_name'])) && isset($_POST["publicationID"]) && isset($_POST["userID"])
                 && $_POST["userID"] == ConnexionUtilisateur::getLoginUtilisateurConnecte()) {
             if (ConnexionUtilisateur::getLoginUtilisateurConnecte() != "") {
-                $_POST["commentID"] = CommentRepository::addComment($_POST);
-                if (isset($_POST["image"]) && $_POST['image'] != "") CommentImageRepository::addCommentImage($_POST);
+                $idCom = CommentRepository::addComment($_POST);
+                if (isset($_FILES["image"]) && is_uploaded_file($_FILES['image']['tmp_name'])) {
+                    $pic_path = "/upload/$idCom";
+                    if(!move_uploaded_file($_FILES['image']['tmp_name'], $pic_path)) {
+                        MessageFlash::ajouter("warning", "Erreur lors de l'ajout de l'image");
+                        ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
+                    }
+                    CommentImageRepository::addCommentImage($pic_path, $idCom);
+                }
                 ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
             } else {
                 MessageFlash::ajouter("warning", "Vous devez être connecté pour ajouter un commentaire");
