@@ -71,9 +71,9 @@ class CommentRepository extends AbstractRepository
     }
 
     public static function addComment($comment) {
-        var_dump($comment);
         $sql = "INSERT INTO COMMENTS (userID, publicationID, comment, datePosted) VALUES (:userIDTag, :publicationIDTag, :commentTag, :datePostedTag)";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement->execute(array('userIDTag'=>$comment['userID'], 'publicationIDTag'=>$comment['publicationID'], 'commentTag'=>$comment['message'], 'datePostedTag'=>date('Y-m-d H:i:s')));;
+        return ConnexionBaseDeDonnee::getPdo()->lastInsertId();
     }
 }

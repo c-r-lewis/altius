@@ -26,4 +26,10 @@ class CommentImageRepository extends ImageRepository
     {
         return new Image($objetFormatTableau["pathToImage"], $objetFormatTableau["commentID"]);
     }
+
+    public static function addCommentImage(array $data): void {
+        $sql = 'INSERT INTO IMAGES_COMMENTS (pathToImage, commentID) VALUES (:pathToImageTag, :commentIDTag)';
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute(array("pathToImageTag"=>$data["image"], "commentIDTag"=>$data["commentID"]));
+    }
 }

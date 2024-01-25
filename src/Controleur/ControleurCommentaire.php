@@ -5,17 +5,18 @@ namespace App\Altius\Controleur;
 use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Lib\MessageFlash;
 use App\Altius\Modele\DataObject\Comment;
+use App\Altius\Modele\Repository\CommentImageRepository;
 use App\Altius\Modele\Repository\CommentRepository;
 use PDOException;
 
 class ControleurCommentaire extends ControleurGeneral
 {
-
     public static function addComment() : void {
-        if ((isset($_POST["message"]) || isset($_POST["image"])) && isset($_POST["publicationID"]) && isset($_POST["userID"])
-                && $_POST["userID"] == ConnexionUtilisateur::getLoginUtilisateurConnecte() && $_POST['message'] != "") {
+        if (((isset($_POST["message"]) && $_POST['message'] != "")  || (isset($_POST["image"]) && $_POST['image'] != "")) && isset($_POST["publicationID"]) && isset($_POST["userID"])
+                && $_POST["userID"] == ConnexionUtilisateur::getLoginUtilisateurConnecte()) {
             if (ConnexionUtilisateur::getLoginUtilisateurConnecte() != "") {
-                CommentRepository::addComment($_POST);
+                $_POST["commentID"] = CommentRepository::addComment($_POST);
+                if (isset($_POST["image"]) && $_POST['image'] != "") CommentImageRepository::addCommentImage($_POST);
                 ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
             } else {
                 MessageFlash::ajouter("warning", "Vous devez être connecté pour ajouter un commentaire");

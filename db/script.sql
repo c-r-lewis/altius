@@ -10,4 +10,3 @@ CREATE TABLE User(
     nonce VARCHAR(8),
     PRIMARY KEY (login)
 );
-

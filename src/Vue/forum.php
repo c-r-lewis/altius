@@ -32,11 +32,19 @@ $description = htmlspecialchars($publication->getDescription() ?? "Pas de descri
                             $datePosted = htmlspecialchars($message["datePosted"] ?? "");
                             $pathToImage = htmlspecialchars($message["pathToImage"] ?? "");
                             $imageHTML = "";
+                            $messageHTML = "";
                             if ($pathToImage != "") {
                                 $imageHTML = <<< HTML
                                 <div class="bg-image">
                                     <img src="$pathToImage" style="border-radius: 15px; max-width: 20vw" alt="image">
                                 </div>
+                                HTML;
+                            }
+                            if ($comment != "") {
+                                $messageHTML = <<< HTML
+                                    <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                        <p class="small mb-0">$comment</p>
+                                    </div>
                                 HTML;
                             }
 
@@ -45,11 +53,9 @@ $description = htmlspecialchars($publication->getDescription() ?? "Pas de descri
                             if ($userCommentID == $userID) {
                                 echo <<< HTML
                                 <div class="d-flex flex-row justify-content-end mb-4">
-                                    <div class="ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                    <div class="ms-3" style="border-radius: 15px;">
                                         $imageHTML
-                                        <div class="p-3 ms-3" style="border-radius: 15px;">
-                                            <p class="small mb-0">$comment</p>
-                                        </div>
+                                        $messageHTML
                                     </div>
                                     <img src="../assets/images/profilepicture.jpg"
                                          alt="avatar 1" style="width: 45px; height: 100%;">
@@ -60,63 +66,22 @@ $description = htmlspecialchars($publication->getDescription() ?? "Pas de descri
                                 <div class="d-flex flex-row justify-content-start mb-4">
                                     <img src="../assets/images/profilepicture.jpg"
                                          alt="avatar 1" style="width: 45px; height: 100%;">
-                                    <div class="ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                    <div class="ms-3" style="border-radius: 15px;">
                                         $imageHTML
-                                        <div class="p-3 ms-3" style="border-radius: 15px;>
-                                            <p class="small mb-0">$comment</p>
-                                        </div>
+                                        $messageHTML
                                     </div>
                                 </div>
                                 HTML;
                             }
-                            /*
-                             <!--
-                        <div class="d-flex flex-row justify-content-start mb-4">
-                            <img src="../assets/images/profilepicture.jpg"
-                                 alt="avatar 1" style="width: 45px; height: 100%;">
-                            <div class="ms-3" style="border-radius: 15px;">
-                                <div class="bg-image">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/screenshot1.webp"
-                                         style="border-radius: 15px;" alt="video">
-                                </div>
-                                <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
-                                    <p class="small mb-0">My message with image example</p>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-                             */
                         }
                         ?>
 
-                        <!--
-                        <div class="d-flex flex-row justify-content-start mb-4">
-                            <img src="../assets/images/profilepicture.jpg"
-                                 alt="avatar 1" style="width: 45px; height: 100%;">
-                            <div class="ms-3" style="border-radius: 15px;">
-                                <div class="bg-image">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/screenshot1.webp"
-                                         style="border-radius: 15px;" alt="video">
-                                </div>
-                                <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
-                                    <p class="small mb-0">My message with image example</p>
-                                </div>
-                            </div>
-                        </div>
-                        -->
-
-                        <form method="post" action="?controleur=commentaire&action=addComment">
+                        <form method="post" action="?controleur=commentaire&action=addComment" enctype="multipart/form-data">
                             <div class="form-outline p-3 rounded">
                                 <label class="form-label" for="message" style="visibility: hidden">Message</label>
                                 <textarea id="message" class="form-control" rows="4" name="message" placeholder="Ecrivez votre message ici"></textarea>
                                 <div class="d-flex justify-content-between align-items-center mt-2">
-                                    <label for="insertImage" class="btn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                        </svg>
-                                    </label>
-                                    <input type="file" id="insertImage" name="image" style="visibility: hidden">
+                                    <input type="file" name="image">
                                     <input type="hidden" name="publicationID" value="<?= $pubID ?>">
                                     <input type="hidden" name="userID" value="<?= $userID ?>">
                                     <button type="submit" class="btn btn-primary btn-sm px-3" style="height: 32px">Envoyer</button>
