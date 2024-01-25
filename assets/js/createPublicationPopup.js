@@ -205,27 +205,35 @@ function addDescriptionToEvent() {
                     fileInput.append(clone);
                 });
 
-                // Add listener to submit button
                 submitButton.addEventListener('click', function() {
-                    const fileInputDiv = document.getElementById("fileInputContainer");
                     const form = document.getElementById("createPublicationForm");
 
-                    // Find all images in fileInputDiv
+                    // Check if the form is valid
+                    if (!form.checkValidity()) {
+                        form.reportValidity(); // This will show the browser's default error messages
+                        return; // Prevent form submission
+                    }
+
+                    const fileInputDiv = document.getElementById("fileInputContainer");
+
+                    // Clear any previously added hidden inputs
+                    const oldInputs = form.querySelectorAll('.hidden-image-src');
+                    oldInputs.forEach(input => input.remove());
+
+                    // Find all images in fileInputDiv and append them as hidden inputs
                     const images = fileInputDiv.querySelectorAll('img');
                     images.forEach((img, index) => {
-                        // Create a hidden input for each image
                         const hiddenInput = document.createElement('input');
                         hiddenInput.setAttribute('type', 'hidden');
                         hiddenInput.setAttribute('name', 'imageSrc[' + index + ']');
                         hiddenInput.setAttribute('value', img.src);
-                        hiddenInput.classList.add('hidden-image-src'); // Add a class for easy removal
-
-                        // Append the hidden input to the form
+                        hiddenInput.classList.add('hidden-image-src');
                         form.appendChild(hiddenInput);
                     });
 
                     form.submit();
                 });
+
 
                 const rightBtn = document.getElementById('rightButtonCreate')
                 rightBtn.addEventListener('click', goToNextSlide);
@@ -274,6 +282,17 @@ function goToPrevSlide() {
     }
     showArrow('right')
     goToSlide(currentSlideIndex-1)
+}
+
+function validateDate(input) {
+    const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
+    if (!datePattern.test(input.value)) {
+        // Handle invalid date format
+        input.setCustomValidity("Date must be in jj/mm/aaaa format");
+    } else {
+        // Clear custom validity message
+        input.setCustomValidity("");
+    }
 }
 
 

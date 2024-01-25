@@ -10,6 +10,7 @@ class Publication extends AbstractDataObjectWithTime
 {
     private int $id;
     private string $eventDate;
+    private string $time;
 
     private string $description;
 
@@ -20,7 +21,7 @@ class Publication extends AbstractDataObjectWithTime
     private string $userID;
 
     private ?string $title;
-    public function __construct(string $datePosted, string $eventDate, string $description, string $userID, ?string $title, string $town, string $address, int $zip) {
+    public function __construct(string $datePosted, string $eventDate, string $description, string $userID, ?string $title, string $town, string $address, int $zip, string $time) {
         parent::__construct($datePosted);
         $this->eventDate = $eventDate;
         $this->datePosted = $datePosted;
@@ -30,10 +31,11 @@ class Publication extends AbstractDataObjectWithTime
         $this->zip = $zip;
         $this->address = $address;
         $this->town = $town;
+        $this->time = $time;
     }
 
-    public static function publicationWithID(int $id, string $datePosted, string $eventDate, string $description, string $userID, ?string $title, string $town, string $address, int $zip) : Publication {
-        $publication = new self($datePosted, $eventDate, $description, $userID, $title, $town, $address, $zip);
+    public static function publicationWithID(int $id, string $datePosted, string $eventDate, string $description, string $userID, ?string $title, string $town, string $address, int $zip, string $time) : Publication {
+        $publication = new self($datePosted, $eventDate, $description, $userID, $title, $town, $address, $zip, $time);
         $publication->id = $id;
         return $publication;
     }
@@ -51,7 +53,8 @@ class Publication extends AbstractDataObjectWithTime
             "townTag"=>$this->town,
             "zipTag"=>$this->zip,
             "addressTag"=>$this->address,
-            "titleTag"=>$this->title];
+            "titleTag"=>$this->title,
+            "timeTag"=>$this->time];
     }
 
     public function getDatePosted() : string
