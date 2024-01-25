@@ -4,6 +4,7 @@ namespace App\Altius\Modele\Repository;
 
 use App\Altius\Modele\DataObject\AbstractDataObject;
 use App\Altius\Modele\DataObject\Comment;
+use Cassandra\Date;
 
 class CommentRepository extends AbstractRepository
 {
@@ -58,5 +59,19 @@ class CommentRepository extends AbstractRepository
             $comments[] = $this->construireDepuisTableau($objectFormatTableau);
         }
         return $comments;
+    }
+
+    public static function getCommentsByPublications($publicationID) : array {
+        $sql = "SELECT userID, comment, datePosted, replyToCommentID FROM COMMENTS WHERE publicationID = :publicationIDTag ORDER BY datePosted ASC";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute(array('publicationIDTag'=>$publicationID));
+        return [$publicationID, $pdoStatement->fetchAll()];
+    }
+
+    public static function addComment($comment) {
+        var_dump($comment);
+        $sql = "INSERT INTO COMMENTS (userID, publicationID, comment, datePosted) VALUES (:userIDTag, :publicationIDTag, :commentTag, :datePostedTag)";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute(array('userIDTag'=>$comment['userID'], 'publicationIDTag'=>$comment['publicationID'], 'commentTag'=>$comment['message'], 'datePostedTag'=>date('Y-m-d H:i:s')));;
     }
 }

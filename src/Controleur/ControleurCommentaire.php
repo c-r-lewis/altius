@@ -2,6 +2,8 @@
 
 namespace App\Altius\Controleur;
 
+use App\Altius\Lib\ConnexionUtilisateur;
+use App\Altius\Lib\MessageFlash;
 use App\Altius\Modele\DataObject\Comment;
 use App\Altius\Modele\Repository\CommentRepository;
 use PDOException;
@@ -10,17 +12,16 @@ class ControleurCommentaire extends ControleurGeneral
 {
 
     public static function addComment() : void {
-        try {
-            $comment = self::createComment(false);
-            (new CommentRepository())->create($comment);
-            self::afficherVue("comment.php", array("comment"=>$comment));
-        }
-        catch (PDOException $e) {
-            // If the replyToCommentID references a commentID that doesn't exist save as a parent comment
-            if ($e->getCode()==23000) {
-                $comment->removeReplyToCommentID();
-                (new CommentRepository())->create($comment);
-                self::afficherVue("comment.php", array("comment"=>$comment));
+        if ((isset($_POST["message"]) || isset($_POST["image"])) && isset($_POST["publicationID"]) && isset($_POST["userID"])
+                && $_POST["userID"] == ConnexionUtilisateur::getLoginUtilisateurConnecte() && $_POST['message'] != "") {
+            CommentRepository::addComment($_POST);
+            ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
+        } else {
+            MessageFlash::ajouter("danger", "Erreur lors de l'ajout du commentaire");
+            if (isset($_POST["publicationID"])) {
+                ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
+            } else {
+                ControleurGeneral::redirectionVersURL("?");
             }
         }
     }

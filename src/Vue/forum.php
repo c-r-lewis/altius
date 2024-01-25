@@ -1,7 +1,9 @@
 <?php
 use App\Altius\Lib\ConnexionUtilisateur;
 
-/** @var array $messages */
+/** @var array $res */
+$pubID = $res[0];
+$messages = $res[1];
 $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
 
 ?>
@@ -68,10 +70,10 @@ $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
                         </div>
                         -->
 
-                        <form method="post" action="#">
+                        <form method="post" action="?controleur=commentaire&action=addComment">
                             <div class="form-outline p-3 rounded">
                                 <label class="form-label" for="message" style="visibility: hidden">Message</label>
-                                <textarea id="message" class="form-control" rows="4" placeholder="Ecrivez votre message ici"></textarea>
+                                <textarea id="message" class="form-control" rows="4" name="message" placeholder="Ecrivez votre message ici"></textarea>
                                 <div class="d-flex justify-content-between align-items-center mt-2">
                                     <label for="insertImage" class="btn">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -79,7 +81,9 @@ $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
                                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                                         </svg>
                                     </label>
-                                    <input type="file" id="insertImage" name="images" style="visibility: hidden">
+                                    <input type="file" id="insertImage" name="image" style="visibility: hidden">
+                                    <input type="hidden" name="publicationID" value="<?= $pubID ?>">
+                                    <input type="hidden" name="userID" value="<?= $userID ?>">
                                     <button type="submit" class="btn btn-primary btn-sm px-3" style="height: 32px">Envoyer</button>
                                 </div>
                             </div>

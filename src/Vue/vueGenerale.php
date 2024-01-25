@@ -63,6 +63,8 @@
         </nav>
         <!-- Navbar -->
 
+        <div style="margin-top: 70px"></div>
+
         <!-- Messages flash -->
         <?php
         /** @var string[][] $messagesFlash */

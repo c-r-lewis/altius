@@ -55,11 +55,4 @@ class PublicationRepository extends AbstractRepository
         $pdostatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         return $pdostatement->fetchAll();
     }
-
-    public static function getCommentsByPublications($publicationID) : array {
-        $sql = "SELECT userID, comment, datePosted, replyToCommentID FROM COMMENTS WHERE publicationID = :publicationIDTag ORDER BY datePosted ASC";
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $pdoStatement->execute(array('publicationIDTag'=>$publicationID));
-        return $pdoStatement->fetchAll();
-    }
 }
