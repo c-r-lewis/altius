@@ -19,9 +19,7 @@ html, body {
     padding: 0;
     margin: 0;
 }
-body {
-    font-family: 'Source Sans Pro';
-}
+
 input:focus, textarea:focus, button:focus {
     outline: none;
 }
@@ -143,6 +141,7 @@ input:focus, textarea:focus, button:focus {
     padding: 40px 30px;
     float: left;
     width: 100%;
+    height: 100vh;
     max-width: calc(100% - 600px);
     margin-left: 200px;
     background-color: #fff;
@@ -640,6 +639,7 @@ button.icon-button > span.chevron-arrow-right {
     }
     .calendar-inner {
         padding: 50px 10px 70px 10px;
+        height: auto;
         max-width: calc(100% - 425px);
         margin-left: 150px;
     }
@@ -662,6 +662,7 @@ button.icon-button > span.chevron-arrow-right {
     }
     .calendar-inner {
         padding: 50px 10px 70px 10px;
+        height: auto;
         max-width: 100%;
         margin-left: 0;
     }
