@@ -2,10 +2,13 @@
 use App\Altius\Lib\ConnexionUtilisateur;
 
 /** @var array $res */
+/** @var \App\Altius\Modele\DataObject\Publication $publication */
 $pubID = $res[0];
 $messages = $res[1];
 $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
 
+$title = htmlspecialchars($publication->getTitle() ?? "Pas de titre");
+$description = htmlspecialchars($publication->getDescription() ?? "Pas de description");
 ?>
 
 <section class="mt-5">
@@ -15,11 +18,11 @@ $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
                 <div class="card" id="chat1" style="border-radius: 15px;">
                     <div
                         class="d-flex align-items-center p-3 border-bottom-0">
-                        <h1 class="mb-0 fw-bold">Titre du salon de discussion</h1>
+                        <h1 class="mb-0 fw-bold"><?= $title ?></h1>
                     </div>
                     <div
                         class="d-flex align-items-center p-3 border-bottom-0">
-                        <sub class="mb-0 fw-bold">Description</sub>
+                        <sub class="mb-0 fw-bold"><?= $description ?></sub>
                     </div>
                     <div class="card-body" style="margin-top: 100px">
                         <?php

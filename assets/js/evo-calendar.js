@@ -274,19 +274,6 @@
 
     // v1.0.0 - Limit title (...)
     EvoCalendar.prototype.limitTitle = function(title, limit) {
-        // si le titre est undefined, on retourne une chaine vide
-        if (title === undefined) return '';
-        var newTitle = [];
-        limit = limit === undefined ? 18 : limit;
-        if ((title).split(' ').join('').length > limit) {
-            var t = title.split(' ');
-            for (var i=0; i<t.length; i++) {
-                if (t[i].length + newTitle.join('').length <= limit) {
-                    newTitle.push(t[i])
-                }
-            }
-            return newTitle.join(' ') + '...'
-        }
         return title;
     }
 
@@ -674,7 +661,6 @@
         markup += '></div></div><a class="event-info" href="?controleur=publication&action=afficherForum&id=' + event_data.id + '" style="text-decoration: none"><p class="event-title">'+_.limitTitle(event_data.name);
         if (event_data.badge) markup += '<span>'+event_data.badge+'</span>';
         markup += '</p>'
-        if (event_data.description) markup += '<p class="event-desc">'+event_data.description+'</p>';
         markup += '</a>';
         markup += '</div>';
         eventListEl.append(markup);
