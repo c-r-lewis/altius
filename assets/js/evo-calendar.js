@@ -671,7 +671,7 @@
             markup += 'style="background-color:'+event_data.color+'"'
         }
         // TODO: 'test' -> Bon truc à faire
-        markup += '></div></div><a class="event-info" href="test" style="text-decoration: none"><p class="event-title">'+_.limitTitle(event_data.name);
+        markup += '></div></div><a class="event-info" href="?controleur=publication&action=afficherForum" style="text-decoration: none"><p class="event-title">'+_.limitTitle(event_data.name);
         if (event_data.badge) markup += '<span>'+event_data.badge+'</span>';
         markup += '</p>'
         if (event_data.description) markup += '<p class="event-desc">'+event_data.description+'</p>';
