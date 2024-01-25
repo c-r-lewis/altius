@@ -74,7 +74,7 @@ class ControleurPublication extends ControleurGenerique
 
     static function afficherForum() : void {
         $idPublication = $_GET["id"];
-        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"forum.php"));
+        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"forum.php", "messages" => PublicationRepository::getCommentsByPublications($idPublication)));
     }
 
     static function afficherDefaultPage(): void {
