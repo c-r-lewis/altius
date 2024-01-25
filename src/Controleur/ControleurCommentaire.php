@@ -14,8 +14,13 @@ class ControleurCommentaire extends ControleurGeneral
     public static function addComment() : void {
         if ((isset($_POST["message"]) || isset($_POST["image"])) && isset($_POST["publicationID"]) && isset($_POST["userID"])
                 && $_POST["userID"] == ConnexionUtilisateur::getLoginUtilisateurConnecte() && $_POST['message'] != "") {
-            CommentRepository::addComment($_POST);
-            ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
+            if (ConnexionUtilisateur::getLoginUtilisateurConnecte() != "") {
+                CommentRepository::addComment($_POST);
+                ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
+            } else {
+                MessageFlash::ajouter("warning", "Vous devez être connecté pour ajouter un commentaire");
+                ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
+            }
         } else {
             MessageFlash::ajouter("danger", "Erreur lors de l'ajout du commentaire");
             if (isset($_POST["publicationID"])) {
