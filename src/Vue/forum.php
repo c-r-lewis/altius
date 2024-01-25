@@ -22,42 +22,74 @@ $description = htmlspecialchars($publication->getDescription() ?? "Pas de descri
                     </div>
                     <div
                         class="d-flex align-items-center p-3 border-bottom-0">
-                        <sub class="mb-0 fw-bold"><?= $description ?></sub>
+                        <p class="mb-0 fw-bold"><?= $description ?></p>
                     </div>
                     <div class="card-body" style="margin-top: 100px">
                         <?php
                         foreach ($messages as $message) {
-                            $comment = htmlspecialchars($message["comment"]) ?? "";
-                            $userCommentID = htmlspecialchars($message["userID"]) ?? "";
-                            $datePosted = htmlspecialchars($message["datePosted"]) ?? "";
+                            $comment = htmlspecialchars($message["comment"] ?? "");
+                            $userCommentID = htmlspecialchars($message["userID"] ?? "");
+                            $datePosted = htmlspecialchars($message["datePosted"] ?? "");
+                            $pathToImage = htmlspecialchars($message["pathToImage"] ?? "");
+                            $imageHTML = "";
+                            if ($pathToImage != "") {
+                                $imageHTML = <<< HTML
+                                <div class="bg-image">
+                                    <img src="$pathToImage" style="border-radius: 15px; max-width: 20vw" alt="image">
+                                </div>
+                                HTML;
+                            }
+
                             // Si l'utilisateur est celui qui a posté le message, on affiche le message à droite sinon à gauche
                             // Avec l'image de profil à gauche ou à droite
                             if ($userCommentID == $userID) {
                                 echo <<< HTML
-                            <div class="d-flex flex-row justify-content-end mb-4">
-                                <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                                    <p class="small mb-0">$comment</p>
+                                <div class="d-flex flex-row justify-content-end mb-4">
+                                    <div class="ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                        $imageHTML
+                                        <div class="p-3 ms-3" style="border-radius: 15px;">
+                                            <p class="small mb-0">$comment</p>
+                                        </div>
+                                    </div>
+                                    <img src="../assets/images/profilepicture.jpg"
+                                         alt="avatar 1" style="width: 45px; height: 100%;">
                                 </div>
-                                <img src="../assets/images/profilepicture.jpg"
-                                     alt="avatar 1" style="width: 45px; height: 100%;">
-                            </div>
-                            HTML;
+                                HTML;
                             } else {
                                 echo <<< HTML
-                            <div class="d-flex flex-row justify-content-start mb-4">
-                                <img src="../assets/images/profilepicture.jpg"
-                                     alt="avatar 1" style="width: 45px; height: 100%;">
-                                <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                                    <p class="small mb-0">$comment</p>
+                                <div class="d-flex flex-row justify-content-start mb-4">
+                                    <img src="../assets/images/profilepicture.jpg"
+                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                    <div class="ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                        $imageHTML
+                                        <div class="p-3 ms-3" style="border-radius: 15px;>
+                                            <p class="small mb-0">$comment</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                HTML;
+                            }
+                            /*
+                             <!--
+                        <div class="d-flex flex-row justify-content-start mb-4">
+                            <img src="../assets/images/profilepicture.jpg"
+                                 alt="avatar 1" style="width: 45px; height: 100%;">
+                            <div class="ms-3" style="border-radius: 15px;">
+                                <div class="bg-image">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/screenshot1.webp"
+                                         style="border-radius: 15px;" alt="video">
+                                </div>
+                                <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                                    <p class="small mb-0">My message with image example</p>
                                 </div>
                             </div>
-                            HTML;
-                            }
+                        </div>
+                        -->
+                             */
                         }
                         ?>
 
                         <!--
-                        //TODO: Pour les images quand ce sera implémenter
                         <div class="d-flex flex-row justify-content-start mb-4">
                             <img src="../assets/images/profilepicture.jpg"
                                  alt="avatar 1" style="width: 45px; height: 100%;">

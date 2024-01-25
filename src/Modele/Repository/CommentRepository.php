@@ -62,7 +62,9 @@ class CommentRepository extends AbstractRepository
     }
 
     public static function getCommentsByPublications($publicationID) : array {
-        $sql = "SELECT userID, comment, datePosted, replyToCommentID FROM COMMENTS WHERE publicationID = :publicationIDTag ORDER BY datePosted ASC";
+        $sql = "SELECT userID, comment, datePosted, replyToCommentID, pathToImage FROM COMMENTS c 
+        LEFT JOIN IMAGES_COMMENTS i ON c.commentID = i.commentID WHERE publicationID = :publicationIDTag 
+        ORDER BY datePosted ASC";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement->execute(array('publicationIDTag'=>$publicationID));
         return [$publicationID, $pdoStatement->fetchAll()];
