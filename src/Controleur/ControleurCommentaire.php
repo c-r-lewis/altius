@@ -20,7 +20,7 @@ class ControleurCommentaire extends ControleurGeneral
                 if (isset($_FILES["image"]) && is_uploaded_file($_FILES['image']['tmp_name'])) {
                     if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
                         // File is uploaded and error-free
-                        $pic_path = "../assets/uploads/".$uploadedFileName;
+                        $pic_path = "../assets/uploads/".$idCom.$uploadedFileName;
                         if (!is_dir(dirname($pic_path))) {
                             // Handle directory not found or not writable
                             MessageFlash::ajouter("warning", "Erreur lors de l'ajout de l'image: répertoire invalide - ".$pic_path);
