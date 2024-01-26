@@ -28,7 +28,10 @@
                             <a class="nav-link active" aria-current="page" href="?">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier">Calendrier</a>
+                            <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier">Evènements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="?">Forums</a>
                         </li>
                     </ul>
                 </div>
