@@ -5,11 +5,11 @@ namespace App\Altius\Controleur;
 use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Modele\CSSLoader\HomePageCSSLoader;
 use App\Altius\Modele\DataObject\Image;
-use App\Altius\Modele\DataObject\Publication;
+use App\Altius\Modele\DataObject\Event;
 use App\Altius\Modele\Repository\CommentRepository;
 use App\Altius\Modele\Repository\LikeRepository;
-use App\Altius\Modele\Repository\PublicationImageRepository;
-use App\Altius\Modele\Repository\PublicationRepository;
+use App\Altius\Modele\Repository\EventImageRepository;
+use App\Altius\Modele\Repository\EventRepository;
 use Exception;
 use finfo;
 
@@ -19,11 +19,11 @@ class ControleurPublication extends ControleurGenerique
      * @throws Exception
      */
     static function createPublication(): void {
-        $imageRepository = new PublicationImageRepository();
+        $imageRepository = new EventImageRepository();
         $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
         $datePosted = date('Y-m-d H:i:s');
-        $newPublication = new Publication($datePosted, $_POST["eventDate"], $_POST["description"], $userID, $_POST["title"], $_POST["town"], $_POST["address"], (int)$_POST['zip'], $_POST['eventTime']);
-        $newPublication = (new PublicationRepository())->create($newPublication);
+        $newPublication = new Event($datePosted, $_POST["eventDate"], $_POST["description"], $userID, $_POST["title"], $_POST["town"], $_POST["address"], (int)$_POST['zip'], $_POST['eventTime']);
+        $newPublication = (new EventRepository())->create($newPublication);
 
         $imageSources = $_POST['imageSrc'];
 
@@ -57,8 +57,8 @@ class ControleurPublication extends ControleurGenerique
     }
 
     static function deletePublication() : void {
-        $publicationRepository = new PublicationRepository();
-        $imageRepository = new PublicationImageRepository();
+        $publicationRepository = new EventRepository();
+        $imageRepository = new EventImageRepository();
         $publication = $publicationRepository->recupererParClePrimaire((int)$_POST["publicationID"]);
         foreach ($imageRepository->getImagesForPublication($publication->getID()) as $image) {
             unlink($image->getPathToImage());
@@ -80,15 +80,15 @@ class ControleurPublication extends ControleurGenerique
         $idPublication = $_GET["id"];
         ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"forum.php",
             "res" => CommentRepository::getCommentsByPublications($idPublication),
-            "publication" => (new PublicationRepository())->recupererParClePrimaire($idPublication)));
+            "publication" => (new EventRepository())->recupererParClePrimaire($idPublication)));
     }
 
     static function afficherDefaultPage(): void {
         $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
-        $publicationRepository = new PublicationRepository();
+        $publicationRepository = new EventRepository();
         $likeRepository = new LikeRepository();
         $commentRepository = new CommentRepository();
-        $imageRepository = new PublicationImageRepository();
+        $imageRepository = new EventImageRepository();
         $comments = [];
         $publications = $publicationRepository->getAll();
         $nbLikes = [];

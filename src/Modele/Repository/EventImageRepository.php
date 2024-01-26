@@ -4,7 +4,7 @@ namespace App\Altius\Modele\Repository;
 
 use App\Altius\Modele\DataObject\Image;
 
-class PublicationImageRepository extends ImageRepository
+class EventImageRepository extends ImageRepository
 {
     public function getImagesForPublication(int $publicationID) : array {
         $sql = "SELECT * FROM IMAGES_PUBLICATIONS WHERE publicationID = :publicationIDTag";

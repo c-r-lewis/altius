@@ -6,7 +6,7 @@ use DateTime;
 use Exception;
 use IntlDateFormatter;
 
-class Publication extends AbstractDataObjectWithTime
+class Event extends AbstractDataObjectWithTime
 {
     private int $id;
     private string $eventDate;
@@ -34,7 +34,7 @@ class Publication extends AbstractDataObjectWithTime
         $this->time = $time;
     }
 
-    public static function publicationWithID(int $id, string $datePosted, string $eventDate, string $description, string $userID, ?string $title, string $town, string $address, int $zip, string $time) : Publication {
+    public static function eventWithID(int $id, string $datePosted, string $eventDate, string $description, string $userID, ?string $title, string $town, string $address, int $zip, string $time) : Event {
         $publication = new self($datePosted, $eventDate, $description, $userID, $title, $town, $address, $zip, $time);
         $publication->id = $id;
         return $publication;

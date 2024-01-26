@@ -3,14 +3,14 @@
 namespace App\Altius\Modele\Repository;
 
 use App\Altius\Modele\DataObject\AbstractDataObject;
-use App\Altius\Modele\DataObject\Publication;
+use App\Altius\Modele\DataObject\Event;
 
-class PublicationRepository extends AbstractRepository
+class EventRepository extends AbstractRepository
 {
 
     protected function getNomTable(): string
     {
-        return "PUBLICATIONS";
+        return "EVENTS";
     }
 
     protected function getNomsColonnes(): array
@@ -25,7 +25,7 @@ class PublicationRepository extends AbstractRepository
 
     protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject
     {
-        return Publication::publicationWithID($objetFormatTableau["publicationID"],
+        return Event::eventWithID($objetFormatTableau["publicationID"],
             $objetFormatTableau["postedDate"],
             $objetFormatTableau["eventDate"],
             $objetFormatTableau["description"],
@@ -39,7 +39,7 @@ class PublicationRepository extends AbstractRepository
     }
 
     public function getPublicationsLikedBy($userID) : array {
-        $sql = 'SELECT * FROM PUBLICATIONS P 
+        $sql = 'SELECT * FROM EVENTS P 
         JOIN LIKES L ON L.publicationID = P.publicationID
         WHERE L.userID = :userIDTag';
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
@@ -52,7 +52,7 @@ class PublicationRepository extends AbstractRepository
     }
 
     public static function getCalendarData(): array {
-        $sql = "SELECT publicationID, title, description, eventDate FROM PUBLICATIONS";
+        $sql = "SELECT publicationID, title, description, eventDate FROM EVENTS";
         $pdostatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         return $pdostatement->fetchAll();
     }

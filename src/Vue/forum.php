@@ -1,9 +1,9 @@
 <?php
 use App\Altius\Lib\ConnexionUtilisateur;
-use App\Altius\Modele\DataObject\Publication;
+use App\Altius\Modele\DataObject\Event;
 
 /** @var array $res */
-/** @var Publication $publication */
+/** @var Event $publication */
 $pubID = $res[0];
 $messages = $res[1];
 $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
