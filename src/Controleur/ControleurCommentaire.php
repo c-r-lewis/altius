@@ -7,7 +7,6 @@ use App\Altius\Lib\MessageFlash;
 use App\Altius\Modele\DataObject\Comment;
 use App\Altius\Modele\Repository\CommentImageRepository;
 use App\Altius\Modele\Repository\CommentRepository;
-use PDOException;
 
 class ControleurCommentaire extends ControleurGeneral
 {
@@ -17,18 +16,35 @@ class ControleurCommentaire extends ControleurGeneral
             if (ConnexionUtilisateur::getLoginUtilisateurConnecte() != "") {
                 $idCom = CommentRepository::addComment($_POST);
                 if (isset($_FILES["image"]) && is_uploaded_file($_FILES['image']['tmp_name'])) {
-                    $pic_path = "/upload/$idCom";
-                    if(!move_uploaded_file($_FILES['image']['tmp_name'], $pic_path)) {
-                        MessageFlash::ajouter("warning", "Erreur lors de l'ajout de l'image");
+                    if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
+                        // File is uploaded and error-free
+                        $idCom = CommentRepository::addComment($_POST);
+                        $pic_path = "../assets/upload/";
+                        if (!is_dir(dirname($pic_path))) {
+                            // Handle directory not found or not writable
+                            MessageFlash::ajouter("warning", "Erreur lors de l'ajout de l'image: répertoire invalide - ".$pic_path);
+                            ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
+                        }
+                        else if (!is_writable(dirname($pic_path))) {
+                            MessageFlash::ajouter("warning", "Erreur lors de l'ajout de l'image: répertoire non accessible - ".$pic_path);
+                            ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
+
+                        }
+                        else if (!move_uploaded_file($_FILES['image']['tmp_name'], $pic_path)) {
+                            MessageFlash::ajouter("warning", "Erreur lors de l'ajout de l'image");
+                            ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
+                        }
+                        CommentImageRepository::addCommentImage($pic_path, $idCom);
+                    } else {
+                        // Handle file upload error
+                        MessageFlash::ajouter("warning", "Erreur lors de l'upload du fichier: " . $_FILES["image"]["error"]);
                         ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
                     }
-                    CommentImageRepository::addCommentImage($pic_path, $idCom);
                 }
-                ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
             } else {
                 MessageFlash::ajouter("warning", "Vous devez être connecté pour ajouter un commentaire");
-                ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
             }
+            ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
         } else {
             MessageFlash::ajouter("danger", "Erreur lors de l'ajout du commentaire");
             if (isset($_POST["publicationID"])) {

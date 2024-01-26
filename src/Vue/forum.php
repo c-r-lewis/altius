@@ -1,8 +1,9 @@
 <?php
 use App\Altius\Lib\ConnexionUtilisateur;
+use App\Altius\Modele\DataObject\Publication;
 
 /** @var array $res */
-/** @var \App\Altius\Modele\DataObject\Publication $publication */
+/** @var Publication $publication */
 $pubID = $res[0];
 $messages = $res[1];
 $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
@@ -83,7 +84,7 @@ $description = htmlspecialchars($publication->getDescription() ?? "Pas de descri
                                 <div class="d-flex justify-content-between align-items-center mt-2">
                                     <input type="file" name="image">
                                     <input type="hidden" name="publicationID" value="<?= $pubID ?>">
-                                    <input type="hidden" name="userID" value="<?= $userID ?>">
+                                    <input type="hidden" name="userID" value="<?=$userID ?>">
                                     <button type="submit" class="btn btn-primary btn-sm px-3" style="height: 32px">Envoyer</button>
                                 </div>
                             </div>
