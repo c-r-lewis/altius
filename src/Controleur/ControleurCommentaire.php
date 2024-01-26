@@ -15,11 +15,12 @@ class ControleurCommentaire extends ControleurGeneral
                 && $_POST["userID"] == ConnexionUtilisateur::getLoginUtilisateurConnecte()) {
             if (ConnexionUtilisateur::getLoginUtilisateurConnecte() != "") {
                 $idCom = CommentRepository::addComment($_POST);
+                $uploadedFileName = $_FILES['image']['name'];
                 var_dump($_FILES);
                 if (isset($_FILES["image"]) && is_uploaded_file($_FILES['image']['tmp_name'])) {
                     if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
                         // File is uploaded and error-free
-                        $pic_path = "../assets/upload/";
+                        $pic_path = "../assets/uploads/".$uploadedFileName;
                         if (!is_dir(dirname($pic_path))) {
                             // Handle directory not found or not writable
                             MessageFlash::ajouter("warning", "Erreur lors de l'ajout de l'image: répertoire invalide - ".$pic_path);
@@ -30,7 +31,7 @@ class ControleurCommentaire extends ControleurGeneral
                             ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
 
                         }
-                        else if (!move_uploaded_file($_FILES['image']['tmp_name'], $pic_path)) {
+                        if (!move_uploaded_file($_FILES['image']['tmp_name'], $pic_path)) {
                             MessageFlash::ajouter("warning", "Erreur lors de l'ajout de l'image");
                             ControleurGeneral::redirectionVersURL("?controleur=publication&action=afficherForum&id=" . $_POST["publicationID"]);
                         }
