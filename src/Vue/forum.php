@@ -58,14 +58,14 @@ $description = htmlspecialchars($publication->getDescription() ?? "Pas de descri
                                         $imageHTML
                                         $messageHTML
                                     </div>
-                                    <img src="../assets/images/profilepicture.jpg"
+                                    <img src="../assets/images/profilepicture.png"
                                          alt="avatar 1" style="width: 45px; height: 100%;">
                                 </div>
                                 HTML;
                             } else {
                                 echo <<< HTML
                                 <div class="d-flex flex-row justify-content-start mb-4">
-                                    <img src="../assets/images/profilepicture.jpg"
+                                    <img src="../assets/images/profilepicture.png"
                                          alt="avatar 1" style="width: 45px; height: 100%;">
                                     <div class="ms-3" style="border-radius: 15px;">
                                         $imageHTML

@@ -8,7 +8,7 @@
         <title>Altius</title>
         <link rel="icon" type="image/png" href="../assets/images/logo.png"/>
         <link href="../assets/css/bootstrap.css" rel="stylesheet">
-        <?= /* @var ?string $css */ $css ?>
+        <?= /* @var ?string $css */ $css ?? "" ?>
     </head>
     <body>
         <!-- Navbar -->
@@ -111,7 +111,7 @@
         <script defer src="../assets/js/createPublicationPopup.js"></script>
         <script src="../assets/js/publicationInfoPopup.js"></script>
         <script src="../assets/js/bootstrap.bundle.js"></script>
-        <?php /** @var string $js */?>
+        <?= /** @var string $js */ $js ?? "" ?>
 
         <!-- Script pour loader le calendrier -->
         <script>

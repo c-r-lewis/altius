@@ -15,10 +15,10 @@ class ControleurCommentaire extends ControleurGeneral
                 && $_POST["userID"] == ConnexionUtilisateur::getLoginUtilisateurConnecte()) {
             if (ConnexionUtilisateur::getLoginUtilisateurConnecte() != "") {
                 $idCom = CommentRepository::addComment($_POST);
+                var_dump($_FILES);
                 if (isset($_FILES["image"]) && is_uploaded_file($_FILES['image']['tmp_name'])) {
                     if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
                         // File is uploaded and error-free
-                        $idCom = CommentRepository::addComment($_POST);
                         $pic_path = "../assets/upload/";
                         if (!is_dir(dirname($pic_path))) {
                             // Handle directory not found or not writable
