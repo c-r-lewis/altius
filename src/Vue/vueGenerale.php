@@ -31,7 +31,7 @@
                             <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier">Evènements</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?">Forums</a>
+                            <a class="nav-link active" aria-current="page" href="?controleur=publication&action=afficherListeForum">Forums</a>
                         </li>
                     </ul>
                 </div>
