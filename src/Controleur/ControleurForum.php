@@ -38,7 +38,7 @@ class ControleurForum extends ControleurGenerique
         $idForum = $_GET["id"];
         ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"forum.php",
             "res" => CommentRepository::getCommentsByForum($idForum),
-            "Forum" => (new ForumRepository())->recupererParClePrimaire($idForum)));
+            "forum" => (new ForumRepository())->recupererParClePrimaire($idForum)));
     }
 
     static function afficherDefaultPage(): void {

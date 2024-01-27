@@ -63,7 +63,8 @@ class CommentRepository extends AbstractRepository
 
     public static function getCommentsByForum($forumID) : array {
         $sql = "SELECT userID, comment, datePosted, replyToCommentID, pathToImage FROM COMMENTS c 
-        LEFT JOIN IMAGES_COMMENTS i ON c.commentID = i.commentID WHERE publicationID = :forumIDTag 
+        LEFT JOIN IMAGES_COMMENTS i ON c.commentID = i.commentID 
+        WHERE forumID = :forumIDTag 
         ORDER BY c.commentID ASC";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement->execute(array('forumIDTag'=>$forumID));

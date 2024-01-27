@@ -3,13 +3,13 @@ use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Modele\DataObject\Event;
 
 /** @var array $res */
-/** @var Event $publication */
+/** @var Event $forum */
 $pubID = $res[0];
 $messages = $res[1];
 $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
 
-$title = htmlspecialchars($publication->getTitle() ?? "Pas de titre");
-$description = htmlspecialchars($publication->getDescription() ?? "Pas de description");
+$title = htmlspecialchars($forum->getTitle() ?? "Pas de titre");
+$description = htmlspecialchars($forum->getDescription() ?? "Pas de description");
 ?>
 
 <section class="mt-5">

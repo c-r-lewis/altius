@@ -4,6 +4,7 @@ namespace App\Altius\Modele\Repository;
 
 use App\Altius\Modele\DataObject\AbstractDataObject;
 use App\Altius\Modele\DataObject\Comment;
+use App\Altius\Modele\DataObject\Forum;
 use Cassandra\Date;
 use PDO;
 
@@ -43,6 +44,6 @@ class FOrumRepository extends AbstractRepository
 
     protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject
     {
-        // TODO
+        return Forum::createForumWithID($objetFormatTableau["forumID"], $objetFormatTableau["title"], $objetFormatTableau["description"], $objetFormatTableau["eventID"]);
     }
 }
