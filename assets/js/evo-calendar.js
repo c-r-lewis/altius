@@ -652,23 +652,22 @@
         var eventListEl = _.$elements.eventEl.find('.event-list');
         if (eventListEl.find('[data-event-index]').length === 0) eventListEl.empty();
         _.$active.events.push(event_data);
-        markup = '<div class="event-container" role="button" data-event-index="'+(event_data.id)+'">';
+        markup = '<div class="event-container" role="button" data-event-index="'+(event_data.id)+'" data-modal-id="'+event_data.modalID+'">'; // Include modal ID here
         markup += '<div class="event-icon"><div class="event-bullet-'+event_data.type+'"';
         if (event_data.color) {
-            markup += 'style="background-color:'+event_data.color+'"'
+            markup += 'style="background-color:'+event_data.color+'"';
         }
-        //ici
-        markup += '></div></div><a class="event-info" href="?controleur=publication&action=afficherForum&id=' + event_data.id + '" style="text-decoration: none"><p class="event-title">'+_.limitTitle(event_data.name);
+        markup += '></div></div><p class="event-info" style="text-decoration: none">'+_.limitTitle(event_data.name);
         if (event_data.badge) markup += '<span>'+event_data.badge+'</span>';
-        markup += '</p>'
-        markup += '</a>';
+        markup += '</p>';
         markup += '</div>';
         eventListEl.append(markup);
 
         _.$elements.eventEl.find('[data-event-index="'+(event_data.id)+'"]')
-        .off('click.evocalendar')
-        .on('click.evocalendar', _.selectEvent);
+            .off('click.evocalendar')
+            .on('click.evocalendar', _.selectEvent);
     }
+
     // v1.0.0 - Remove single event to event list
     EvoCalendar.prototype.removeEventList = function(event_data) {
         var _ = this, markup;
@@ -853,14 +852,15 @@
     EvoCalendar.prototype.selectEvent = function(event) {
         var _ = this;
         var el = $(event.target).closest('.event-container');
-        var id = $(el).data('eventIndex').toString();
-        var index = _.options.calendarEvents.map(function (event) { return (event.id).toString() }).indexOf(id);
-        var modified_event = _.options.calendarEvents[index];
-        if (modified_event.date instanceof Array) {
-            modified_event.dates_range = _.getBetweenDates(modified_event.date);
-        }
-        $(_.$elements.calendarEl).trigger("selectEvent", [_.options.calendarEvents[index]])
+        var eventId = $(el).data('eventIndex').toString();
+
+        // Open the modal with the same ID as the event
+        $('#' + eventId).modal('show');
+
+        // Trigger any additional actions
+        $(_.$elements.calendarEl).trigger("selectEvent", [eventId]);
     }
+
 
     // v1.0.0 - Select year
     EvoCalendar.prototype.selectYear = function(event) {
