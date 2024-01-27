@@ -61,13 +61,13 @@ class CommentRepository extends AbstractRepository
         return $comments;
     }
 
-    public static function getCommentsByPublications($publicationID) : array {
+    public static function getCommentsByForum($forumID) : array {
         $sql = "SELECT userID, comment, datePosted, replyToCommentID, pathToImage FROM COMMENTS c 
-        LEFT JOIN IMAGES_COMMENTS i ON c.commentID = i.commentID WHERE publicationID = :publicationIDTag 
+        LEFT JOIN IMAGES_COMMENTS i ON c.commentID = i.commentID WHERE publicationID = :forumIDTag 
         ORDER BY c.commentID ASC";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $pdoStatement->execute(array('publicationIDTag'=>$publicationID));
-        return [$publicationID, $pdoStatement->fetchAll()];
+        $pdoStatement->execute(array('forumIDTag'=>$forumID));
+        return [$forumID, $pdoStatement->fetchAll()];
     }
 
     public static function addComment($comment) {

@@ -72,17 +72,6 @@ class ControleurPublication extends ControleurGenerique
 
     }
 
-    static function afficherListeForum() {
-        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"listeForums.php"));
-    }
-
-    static function afficherForum() : void {
-        $idPublication = $_GET["id"];
-        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"forum.php",
-            "res" => CommentRepository::getCommentsByPublications($idPublication),
-            "publication" => (new EventRepository())->recupererParClePrimaire($idPublication)));
-    }
-
     static function afficherDefaultPage(): void {
         $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
         $publicationRepository = new EventRepository();
