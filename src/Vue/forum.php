@@ -53,6 +53,7 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                             // Avec l'image de profil à gauche ou à droite
                             if ($userCommentID == $userID) {
                                 echo <<< HTML
+                                <div class="text-end" style="margin-right: 60px"><cite style="font-size: 13px">$userCommentID</cite></div>
                                 <div class="d-flex flex-row justify-content-end mb-4">
                                     <div class="ms-3" style="border-radius: 15px;">
                                         $imageHTML
@@ -64,9 +65,10 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                                 HTML;
                             } else {
                                 echo <<< HTML
+                                <div class="text-start" style="margin-left: 90px"><cite style="font-size: 13px">$userCommentID</cite></div>
                                 <div class="d-flex flex-row justify-content-start mb-4">
                                     <img src="../assets/images/profilepicture.png"
-                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                         alt="avatar 1" style="width: 45px; height: 45px;">
                                     <div class="ms-3" style="border-radius: 15px;">
                                         $imageHTML
                                         $messageHTML
