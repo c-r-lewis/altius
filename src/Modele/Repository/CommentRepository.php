@@ -28,11 +28,11 @@ class CommentRepository extends AbstractRepository
     {
         return Comment::createCommentWithID($objetFormatTableau["commentID"], $objetFormatTableau["userID"], $objetFormatTableau["comment"], $objetFormatTableau["datePosted"], $objetFormatTableau["publicationID"], $objetFormatTableau["replyToCommentID"]);
     }
-
-    public function getParentCommentsFor(int $publicationID): array {
-        $sql = 'SELECT * FROM COMMENTS WHERE publicationID=:publicationIDTag AND replyToCommentID IS NULL';
+    /*
+    public function getParentCommentsFor(int $forumID): array {
+        $sql = 'SELECT * FROM COMMENTS WHERE forumID=:forumIDTag AND replyToCommentID IS NULL';
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $pdoStatement->execute(array("publicationIDTag"=>$publicationID));
+        $pdoStatement->execute(array("forumIDTag"=>$forumID));
         $comments = [];
         foreach ($pdoStatement as $objectFormatTableau) {
             $comments[] = $this->construireDepuisTableau($objectFormatTableau);
@@ -60,7 +60,7 @@ class CommentRepository extends AbstractRepository
         }
         return $comments;
     }
-
+    */
     public static function getCommentsByForum($forumID) : array {
         $sql = "SELECT userID, comment, datePosted, replyToCommentID, pathToImage FROM COMMENTS c 
         LEFT JOIN IMAGES_COMMENTS i ON c.commentID = i.commentID 
@@ -72,9 +72,9 @@ class CommentRepository extends AbstractRepository
     }
 
     public static function addComment($comment) {
-        $sql = "INSERT INTO COMMENTS (userID, publicationID, comment, datePosted) VALUES (:userIDTag, :publicationIDTag, :commentTag, :datePostedTag)";
+        $sql = "INSERT INTO COMMENTS (userID, forumID, comment, datePosted) VALUES (:userIDTag, :forumIDTag, :commentTag, :datePostedTag)";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $pdoStatement->execute(array('userIDTag'=>$comment['userID'], 'publicationIDTag'=>$comment['publicationID'], 'commentTag'=>$comment['message'], 'datePostedTag'=>date('Y-m-d H:i:s')));;
+        $pdoStatement->execute(array('userIDTag'=>$comment['userID'], 'forumIDTag'=>$comment['forumID'], 'commentTag'=>$comment['message'], 'datePostedTag'=>date('Y-m-d H:i:s')));;
         return ConnexionBaseDeDonnee::getPdo()->lastInsertId();
     }
 }

@@ -29,7 +29,7 @@ class FOrumRepository extends AbstractRepository
     public static function getForumByResearch(string $research): array
     {
         $requete = ConnexionBaseDeDonnee::getPdo()->prepare("
-           SELECT f.forumID, f.title, f.description, f.eventID, COUNT(commentID) + 1 AS nbMessage FROM FORUMS f
+           SELECT f.forumID, f.title, f.description, f.eventID, COUNT(commentID) AS nbMessage FROM FORUMS f
            LEFT JOIN COMMENTS ON f.forumID = COMMENTS.forumID
            WHERE LOWER(f.title) LIKE :motcle OR LOWER(f.description) LIKE :motcle
            GROUP BY f.forumID, f.title, f.description, f.eventID");

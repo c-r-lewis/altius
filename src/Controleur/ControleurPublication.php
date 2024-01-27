@@ -90,9 +90,9 @@ class ControleurPublication extends ControleurGenerique
             $comments[$publication->getID()] = $commentRepository->getParentCommentsFor($publication->getID());
             $connectedUserPublications[$publication->getID()] = $userID == $publication->getUserID();
         }
-        foreach ($commentRepository->getParentComments() as $parentComment) {
+        /*foreach ($commentRepository->getParentComments() as $parentComment) {
             $answers[$parentComment->getCommentID()] = $commentRepository->getRepliesFor($parentComment->getCommentID());
-        }
+        }*/
         $publicationsLikedByConnectedUser = $publicationRepository->getPublicationsLikedBy($userID);
         ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"homePage.php","publications"=>$publications,
             "nbLikes"=>$nbLikes,

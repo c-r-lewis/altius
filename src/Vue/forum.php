@@ -4,7 +4,7 @@ use App\Altius\Modele\DataObject\Event;
 
 /** @var array $res */
 /** @var Event $forum */
-$pubID = $res[0];
+$forumID = $res[0];
 $messages = $res[1];
 $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
 
@@ -83,7 +83,7 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                                 <textarea id="message" class="form-control" rows="4" name="message" placeholder="Ecrivez votre message ici"></textarea>
                                 <div class="d-flex justify-content-between align-items-center mt-2">
                                     <input type="file" name="image">
-                                    <input type="hidden" name="publicationID" value="<?= $pubID ?>">
+                                    <input type="hidden" name="forumID" value="<?= $forumID ?>">
                                     <input type="hidden" name="userID" value="<?=$userID ?>">
                                     <button type="submit" class="btn btn-primary btn-sm px-3" style="height: 32px">Envoyer</button>
                                 </div>

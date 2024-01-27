@@ -22,8 +22,8 @@ class ControleurGeneral extends ControleurGenerique
 
     public static function afficherDefaultPage()
     {
-        ControleurPublication::afficherDefaultPage();
-        //self::afficherVue("connexion.php");
+        //ControleurPublication::afficherDefaultPage();
+        self::afficherVue("connexion.php");
     }
 
     public static function afficherVueErreur($message="Page Not Found"){

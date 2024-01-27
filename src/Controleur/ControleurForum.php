@@ -2,17 +2,8 @@
 
 namespace App\Altius\Controleur;
 
-use App\Altius\Lib\ConnexionUtilisateur;
-use App\Altius\Modele\CSSLoader\HomePageCSSLoader;
-use App\Altius\Modele\DataObject\Image;
-use App\Altius\Modele\DataObject\Event;
 use App\Altius\Modele\Repository\CommentRepository;
 use App\Altius\Modele\Repository\ForumRepository;
-use App\Altius\Modele\Repository\LikeRepository;
-use App\Altius\Modele\Repository\EventImageRepository;
-use App\Altius\Modele\Repository\EventRepository;
-use Exception;
-use finfo;
 
 class ControleurForum extends ControleurGenerique
 {
