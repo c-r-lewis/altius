@@ -30,7 +30,8 @@
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="?controleur=publication&action=afficherDefaultPage">Accueil</a>
+                    <a class="nav-link active" aria-current="page"
+                       href="?controleur=publication&action=afficherDefaultPage">Accueil</a>
                 </li>
             </ul>
             <!-- Left links -->
@@ -70,39 +71,35 @@
     <!-- Container wrapper -->
 </nav>
 
-    <main>
-        <article class="container">
-            <h1>Paramètres</h1>
+<main>
+    <article class="container border rounded-4 p-4">
+        <h1>Paramètres</h1>
 
-            <label for="ModifLogin">Modifier le login</label>
-            <input id="ModifLogin" name="ModifLogin" type="text" value="Login">
+        <label for="ModifLogin">Modifier le login</label>
+        <input id="ModifLogin" name="ModifLogin" type="text" value="Login">
 
-            <label for="ModifStatut">Modifier le statut</label>
-            <select id="ModifStatut" name="ModifStatut">
-                <option value="Statut de l'utilisateur">Statut de l'utilisateur</option>
-                <option value="Organisateur">Organisateur</option>
-                <option value="PMR">PMR</option>
-                <option value="autre">Autre...</option>
-            </select>
+        <label for="ModifStatut">Modifier le statut</label>
+        <select id="ModifStatut" name="ModifStatut">
+            <option value="Statut de l'utilisateur">Statut de l'utilisateur</option>
+            <option value="Organisateur">Organisateur</option>
+            <option value="PMR">PMR</option>
+            <option value="autre">Autre...</option>
+        </select>
 
-            <label for="ModifVilleResidence">Modifier la ville de résidence</label>
-            <input id="ModifVilleResidence" name="ModifVilleResidence" type="search" placeholder="Ville de Résidence">
+        <label for="ModifVilleResidence">Modifier la ville de résidence</label>
+        <input id="ModifVilleResidence" name="ModifVilleResidence" type="search" placeholder="Ville de Résidence">
 
-            <label for="ModifMail">Modifier adresse mail</label>
-            <input id="ModifMail" name="ModifMail" type="email" value="email">
+        <label for="ModifMail">Modifier adresse mail</label>
+        <input id="ModifMail" name="ModifMail" type="email" value="email">
 
-            <label for="ModifMdp">Modifier mon mot de passe</label>
-            <input id="ModifMdp" name="MotifMdp">
+        <label for="ModifMdp">Modifier mon mot de passe</label>
+        <input id="ModifMdp" name="MotifMdp">
 
-            <button id="Valider" name="Valider">Valider</button>
-        </article>
-    </main>
-        <label for="ModifMdp2">Modifier mon mot de passe</label>
-        <input id="ModifMdp2" name="ModifMdp">
-
-        <label for="deleteAccount" id="labelDeleteAccount">Supprimer son Compte</label>
+        <button id="Valider" name="Valider">Valider</button>
+        <div class="deleteAccountLabel">
+            <label for="deleteAccount" id="labelDeleteAccount">Supprimer mon Compte</label>
+        </div>
         <button id="deleteAccount" name="deleteAccount">Supprimer</button>
-
     </article>
 </main>
 </body>

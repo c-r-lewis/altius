@@ -1,12 +1,22 @@
-main > article {
+.container {
     position: inherit;
-    border: 1px solid darkgrey;
-    border-radius:10px;
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    width: 50%;
+    margin-top: 6rem;
+    margin-bottom: 3rem;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    min-width:400px;
+}
+
+@media (max-width:450px){
+    .container{min-width:90%;}
+}
+
+body {
+    width:100%;
 }
 
 h1 {
@@ -40,4 +50,27 @@ input {
 
 input:hover {
     border: 2px solid grey;
+}
+
+button {
+    border-radius: 10px;
+    transition:350ms;
+}
+
+button:hover {
+    transform: scale(1.1,1.1);
+}
+
+label {
+    pointer-events: none;
+}
+
+.deleteAccountLabel {
+    margin-top:1rem;
+    padding-top:1rem;
+    border-top: 1px solid #ababab;
+    width:100%;
+    text-align:center;
+    display:flex;
+    justify-content: center;
 }
