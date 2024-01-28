@@ -37,7 +37,7 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                             if ($pathToImage != "") {
                                 $imageHTML = <<< HTML
                                 <div class="bg-image">
-                                    <img src="$pathToImage" style="border-radius: 15px; max-width: 20vw" alt="image">
+                                    <img src="$pathToImage" style="border-radius: 15px; width: 80%" alt="image">
                                 </div>
                                 HTML;
                             }

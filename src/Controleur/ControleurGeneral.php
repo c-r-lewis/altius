@@ -5,6 +5,7 @@ namespace App\Altius\Controleur;
 
 use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Lib\MessageFlash;
+use App\Altius\Modele\CSSLoader\HomePageCSSLoader;
 
 class ControleurGeneral extends ControleurGenerique
 {
@@ -22,8 +23,7 @@ class ControleurGeneral extends ControleurGenerique
 
     public static function afficherDefaultPage()
     {
-        //ControleurPublication::afficherDefaultPage();
-        self::afficherVue("connexion.php");
+        self::afficherVue("vueGenerale.php", ["cheminVueBody" => "Accueil.html", "css" => HomePageCSSLoader::getCSSImports()]);
     }
 
     public static function afficherVueErreur($message="Page Not Found"){

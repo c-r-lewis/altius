@@ -8,7 +8,7 @@ use App\Altius\Modele\DataObject\Forum;
 use Cassandra\Date;
 use PDO;
 
-class FOrumRepository extends AbstractRepository
+class ForumRepository extends AbstractRepository
 {
 
     protected function getNomTable(): string
