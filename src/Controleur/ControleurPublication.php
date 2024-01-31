@@ -87,7 +87,7 @@ class ControleurPublication extends ControleurGenerique
         foreach($publications as $publication) {
             $images[$publication->getID()] = $imageRepository->getImagesForPublication($publication->getID());
             $nbLikes[$publication->getID()] = $likeRepository->countLikesOnPublication($publication->getID());
-            $comments[$publication->getID()] = $commentRepository->getParentCommentsFor($publication->getID());
+            //$comments[$publication->getID()] = $commentRepository->getParentCommentsFor($publication->getID());
             $connectedUserPublications[$publication->getID()] = $userID == $publication->getUserID();
         }
         /*foreach ($commentRepository->getParentComments() as $parentComment) {

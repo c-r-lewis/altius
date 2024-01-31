@@ -57,8 +57,14 @@
                         </a>
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
-                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Se déconnecter</a></li>
+                            <?php use \App\Altius\Lib\ConnexionUtilisateur;
+                            if (ConnexionUtilisateur::estConnecte())
+                                echo '<li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
+                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>';
+
+                            else echo '<li><a class="dropdown-item" href="?controleur=utilisateur&action=afficherFormulaireConnexion">Connexion</a></li>
+                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=afficherPageInscription">Inscription</a></li>';
+                            ?>
                         </ul>
                     </li>
                 </ul>

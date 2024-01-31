@@ -53,6 +53,10 @@ class ControleurUtilisateur extends ControleurGeneral{
         ControleurGeneral::afficherDefaultPage();
     }
 
+    public static function afficherFormulaireConnexion() : void {
+        ControleurGeneral::afficherVue("connexion.php");
+    }
+
     public static function creerUtilisateur() : void{
         $valeurPost = $_POST;
         if ($valeurPost["mdp1"]== $valeurPost["mdp2"]){
@@ -74,5 +78,25 @@ class ControleurUtilisateur extends ControleurGeneral{
         } else {
             self::afficherVueErreur("Erreur de validation");
         }
+    }
+
+    public static function modifierLogin() : void{
+        echo "login modif";
+    }
+
+    public static function modifierStatut() : void{
+        echo "statut modifier";
+    }
+
+    public static function modifierVille() : void{
+        echo "ville Modifier";
+    }
+
+    public static function modifierEmail() : void{
+        echo "mail modifier";
+    }
+
+    public static function modifierMotDePasse() : void{
+        echo "mot de passe modifier";
     }
 }
