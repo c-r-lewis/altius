@@ -105,18 +105,29 @@ abstract class AbstractRepository
     public function mettreAJour(AbstractDataObject $object): void {
         $sql = "UPDATE " . $this->getNomTable() . " SET ";
         foreach ($this->getNomsColonnes() as $nomColonne) {
-            $sql .= $nomColonne . " = :" . $nomColonne . ", ";
+            $sql .= $nomColonne . " = :" . $nomColonne . "Tag, ";
         }
         $sql = substr($sql, 0, -2) . " WHERE " . $this->getClePrimaire()[0]
-            . " = :" . $this->getClePrimaire()[0];
+            . " = :" . $this->getClePrimaire()[0]."Tag";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement->execute($object->formatTableau());
     }
 
-    public  function modifierValeurAttribut(string $attribut, string $valeur) : void {
-        $sql = "UPDATE".$this->getNomTable()."SET".$attribut."= :valeur WHERE ".$this->getClePrimaire();
-        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $pdoStatement->execute(["valeur"=>$valeur]);
+    //Pré requi : @param $clePrimaire est sous la forme de $clePrimaire[nomCle]=valeur
+    // et garder le meme ordre que getClePrimaire
 
+    public  function modifierValeurAttribut(string $attribut, string $valeur,array $clePrimaire) : void {
+        $sql = "UPDATE ".$this->getNomTable()." SET ".$attribut." = :valeur WHERE ";
+        $clesPrimaires=$this->getClePrimaire();
+        $values = array();
+        for ($i = 0;$i<count($clesPrimaires);$i++){
+            $sql.=$clesPrimaires[$i]." =:$clesPrimaires[$i] AND ";
+            $values[$clesPrimaires[$i]]=$clePrimaire[$clesPrimaires[$i]];
+        }
+        $sql = substr($sql, 0, -4);
+        $values["valeur"]=$valeur;
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute($values);
     }
 }

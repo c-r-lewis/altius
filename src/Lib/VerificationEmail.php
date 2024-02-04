@@ -2,12 +2,13 @@
 namespace App\Altius\Lib;
 
 use App\Altius\Configuration\Configuration;
+use App\Altius\Modele\DataObject\AbstractDataObject;
 use App\Altius\Modele\DataObject\Utilisateur;
 use App\Altius\Modele\Repository\UtilisateurRepository;
 
 class VerificationEmail
 {
-    public static function envoiEmailValidation(Utilisateur $utilisateur): void
+    public static function envoiEmailValidation(AbstractDataObject|Utilisateur $utilisateur): void
     {
         $loginURL = rawurlencode($utilisateur->getLogin());
         $nonceURL = rawurlencode($utilisateur->getNonce());

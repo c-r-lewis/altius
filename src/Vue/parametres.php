@@ -10,6 +10,25 @@ $numeroTelephoneHTML = htmlspecialchars($utilisateur->getNumeroTelephone());
 
 echo <<<HTML
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Supprimer</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Voulez vous vraiment supprimer votre compte ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='?controleur=utilisateur&action=supprimerCompte';">Oui</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <article class="container border rounded-4 p-4" xmlns="http://www.w3.org/1999/html">
 
     <h1>Paramètres</h1>
@@ -58,7 +77,7 @@ echo <<<HTML
                 </div>
             </div>
             <div class="form-label row">
-                <label class="col-md-3" for="ModifVilleResidence">Nouvelle la ville de résidence</label>
+                <label class="col-md-3" for="ModifVilleResidence">Nouvelle ville de résidence</label>
                 <div class="col-md-9">
                     <input id="ModifVilleResidence" name="ModifVilleResidence" type="search" placeholder="Ville de Résidence">
                 </div>
@@ -85,15 +104,21 @@ echo <<<HTML
         </form>
         <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierMotDePasse">
             <div class="form-label row">
-                <label class="col-md-3" for="ModifMdp">Nouveau mot de passe</label>
+                <label class="col-md-3" for="mdp1">Ancien mot de passe</label>
                 <div class="col-md-9">
-                    <input id="ModifMdp" name="mdp3">
+                    <input type="password" id="mdp1" name="mdp1">
                 </div>
             </div>
             <div class="form-label row">
-                <label class="col-md-3" for="mdp2"> Confirmer le mot de passe</label>
+                <label class="col-md-3" for="mdp2">Nouveau mot de passe</label>
                 <div class="col-md-9">
-                    <input type="password" name="mdp2">
+                    <input type="password" id=mdp2 name="mdp2">
+                </div>
+            </div>
+            <div class="form-label row">
+                <label class="col-md-3" for="mdp3"> Confirmer le mot de passe</label>
+                <div class="col-md-9">
+                    <input id="mdp3" type="password" name="mdp3">
                 </div>
             </div>
         
@@ -107,7 +132,7 @@ echo <<<HTML
             </div>
             <div class="form-label">
                 <p>
-                    <button id="deleteAccount" name="deleteAccount">Supprimer</button>
+                    <button id="deleteAccount" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#exampleModal">Supprimer</button>
                 </p>
             </div>
         </div>

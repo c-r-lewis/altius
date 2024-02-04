@@ -4,7 +4,8 @@ function creerChampsAutre(){
         champSup.type="text";
         champSup.name = "champsAutre";
         champSup.id = "champsAutre";
-        champSup.placeholder = "Autre statut"
+        champSup.placeholder = "Autre statut";
+        champSup.readOnly = true;
         document.getElementById("statut").appendChild(champSup);
 
         console.log("autre selectionner");

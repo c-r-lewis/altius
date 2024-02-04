@@ -10,10 +10,6 @@ use App\Altius\Lib\MessageFlash;
 
 class ControleurUtilisateur extends ControleurGeneral{
 
-    public static function afficherDefaultPage()
-    {
-        ControleurGeneral::afficherVue("vueConnexion.php");
-    }
 
     public static function afficherPageInscription()
     {
@@ -85,28 +81,95 @@ class ControleurUtilisateur extends ControleurGeneral{
     }
 
     public static function modifierStatut() : void{
-        print_r($_POST);
-        $patern = '/[a-z]/i';
+        $patern = '/\S/';
         if(ConnexionUtilisateur::estConnecte()){
-            if(isset($_POST["champsAutre"])){
-                if (preg_match($patern,$_POST["champsAutre"])){
-                    (new UtilisateurRepository())->modifierValeurAttribut("statut",$_POST["champsAutre"]);
-                }else self::afficherVueErreur("veuillez remplir correctement le champ");
+            if($_POST["ModifStatut"]=="Statut de l'utilisateur"){
+                MessageFlash::ajouter("danger","Veuillez selectionner un champs valide");
             }else{
-                echo "le champs n'est pas la";
+                if(isset($_POST["champsAutre"])){
+                    if (preg_match($patern,$_POST["champsAutre"])){
+                        (new UtilisateurRepository())->modifierValeurAttribut("statut",$_POST["champsAutre"],["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte()]);
+                        MessageFlash::ajouter("success","Le statut a bien été modifié");
+                    }else {
+                        MessageFlash::ajouter("danger", "Veuillez saisir un statut valide");
+                    }
+                }else{
+                    (new UtilisateurRepository())->modifierValeurAttribut("statut",$_POST["ModifStatut"],["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte()]);
+                    MessageFlash::ajouter("success","Le statut a bien été modifié");
+                }
             }
+            self::afficherParametres();
+        }else{
+            MessageFlash::ajouter("danger","Vous n'êtes pas connecté");
+            self::afficherDefaultPage();
         }
     }
 
     public static function modifierVille() : void{
-        echo "ville Modifier";
+        if (ConnexionUtilisateur::estConnecte()){
+            $patern = "/\S/i";
+            $paternBis = "/\D/" ;
+            if (preg_match($patern,$_POST["ModifVilleResidence"])){
+                if (preg_match_all($paternBis,$_POST["ModifVilleResidence"])){
+                    (new UtilisateurRepository())->modifierValeurAttribut("ville",$_POST["ModifVilleResidence"],["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte()]);
+                    MessageFlash::ajouter("success","Ville de résidance changée avec succes");
+                }else{
+                    MessageFlash::ajouter("danger","Veuillez rentrer un nom de ville correcte");
+                }
+            }else{
+                MessageFlash::ajouter("danger","Veuillez rentrer un nom de ville correcte");
+            }
+            self::afficherParametres();
+        }else{
+            MessageFlash::ajouter("danger","Vous n'êtes pas connecté");
+            self::afficherDefaultPage();
+        }
     }
 
     public static function modifierEmail() : void{
-        echo "mail modifier";
+        if (ConnexionUtilisateur::estConnecte()){
+            if (filter_var($_POST["ModifMail"],FILTER_VALIDATE_EMAIL)){
+                $utilisateur=(new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte()]);
+                $utilisateur->setNonce(VerificationEmail::genererNonceAleatoire());
+                $utilisateur->setEmail($_POST["ModifMail"]);
+                (new UtilisateurRepository())->mettreAJour($utilisateur);
+                VerificationEmail::envoiEmailValidation($utilisateur);
+                MessageFlash::ajouter("success","Mail modifié avec succes. Un mmail de vérification vous a été envoyé");
+                self::afficherParametres();
+            }else{
+                MessageFlash::ajouter("danger","l'email est incorrect");
+                self::afficherParametres();
+            }
+        }else{
+            MessageFlash::ajouter("danger","Vous n'êtes pas connecté");
+            self::afficherDefaultPage();
+        }
     }
 
     public static function modifierMotDePasse() : void{
-        echo "mot de passe modifier";
+        if (ConnexionUtilisateur::estConnecte()){
+            $utilisateur = (new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte()]);
+            if (MotDePasse::verifier($_POST['mdp1'],$utilisateur->getMotDePasse())){
+                if ($_POST["mdp2"]==$_POST["mdp3"]){
+                    $mdpHache  = MotDePasse::hacher($_POST["mdp2"]);
+                    $utilisateur->setMotDePasse($mdpHache);
+                    (new UtilisateurRepository())->mettreAJour($utilisateur);
+                    MessageFlash::ajouter("success","Votre mot de passe a bien été mis à jour");
+                }else{
+                    MessageFlash::ajouter("danger","mot de passe distinct");
+                }
+            }else{
+                MessageFlash::ajouter("danger","Ancien mot de passe incorrect");
+            }
+            self::afficherParametres();
+
+        }else {
+            MessageFlash::ajouter("danger","Vous n'êtes pas connecté");
+            self::afficherDefaultPage();
+        }
+    }
+
+    public static function supprimerCompte() : void{
+        echo "compte supprimé";
     }
 }
