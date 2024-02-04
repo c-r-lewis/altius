@@ -120,6 +120,7 @@
         <script defer src="../assets/js/createPublicationPopup.js"></script>
         <script src="../assets/js/publicationInfoPopup.js"></script>
         <script src="../assets/js/bootstrap.bundle.js"></script>
+        <script src="../assets/js/parametres.js"></script>
         <?= /** @var string $js */ $js ?? "" ?>
 
         <!-- Script pour loader le calendrier -->

@@ -11,6 +11,7 @@ $numeroTelephoneHTML = htmlspecialchars($utilisateur->getNumeroTelephone());
 echo <<<HTML
 
 <article class="container border rounded-4 p-4" xmlns="http://www.w3.org/1999/html">
+
     <h1>Paramètres</h1>
     <div class="list-group">
         <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierLogin">
@@ -37,12 +38,12 @@ echo <<<HTML
             </div>
             <div class="form-label row">
                 <label class="col-md-3" for="ModifStatut">Nouveau statut</label>
-                <div class="col-md-9">
-                    <select id="ModifStatut" name="ModifStatut">
+                <div id="statut" class="col-md-9">
+                    <select id="ModifStatut" name="ModifStatut" onchange="creerChampsAutre()">
                         <option value="Statut de l'utilisateur">Statut de l'utilisateur</option>
                         <option value="Organisateur">Organisateur</option>
                         <option value="PMR">PMR</option>
-                        <option value="autre">Autre...</option>
+                        <option id="autre" value="autre">Autre...</option>
                     </select>
                 </div>
             </div>

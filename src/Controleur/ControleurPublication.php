@@ -59,7 +59,7 @@ class ControleurPublication extends ControleurGenerique
     static function deletePublication() : void {
         $publicationRepository = new EventRepository();
         $imageRepository = new EventImageRepository();
-        $publication = $publicationRepository->recupererParClePrimaire((int)$_POST["publicationID"]);
+        $publication = $publicationRepository->recupererParClePrimaire(["publicationID"=>(int)$_POST["publicationID"]]);
         foreach ($imageRepository->getImagesForPublication($publication->getID()) as $image) {
             unlink($image->getPathToImage());
             $imageRepository->deleteByID(array($image->getPathToImage()));

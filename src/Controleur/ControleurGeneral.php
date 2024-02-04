@@ -33,6 +33,6 @@ class ControleurGeneral extends ControleurGenerique
 
     public static function afficherParametres(){
         if(ConnexionUtilisateur::estConnecte())
-        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"parametres.php","utilisateur"=>(new UtilisateurRepository())->recupererParClePrimaire(ConnexionUtilisateur::getLoginUtilisateurConnecte())]);
+        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"parametres.php","utilisateur"=>(new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte()])]);
     }
 }

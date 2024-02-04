@@ -23,7 +23,7 @@ class ControleurUtilisateur extends ControleurGeneral{
     public static function seConnecter(): void {
         if (isset($_POST['login']) && isset($_POST['mdp2'])) {
             $utilisateurRepo = new UtilisateurRepository();
-            $utilisateur = $utilisateurRepo->recupererParClePrimaire($_POST['login']);
+            $utilisateur = $utilisateurRepo->recupererParClePrimaire(["login"=>$_POST['login']]);
             /* @var Utilisateur $utilisateur */
             if ($utilisateur !== null) {
                 if (MotDePasse::verifier($_POST['mdp2'], $utilisateur->getMotDePasse())) {
@@ -85,7 +85,17 @@ class ControleurUtilisateur extends ControleurGeneral{
     }
 
     public static function modifierStatut() : void{
-        echo "statut modifier";
+        print_r($_POST);
+        $patern = '/[a-z]/i';
+        if(ConnexionUtilisateur::estConnecte()){
+            if(isset($_POST["champsAutre"])){
+                if (preg_match($patern,$_POST["champsAutre"])){
+                    (new UtilisateurRepository())->modifierValeurAttribut("statut",$_POST["champsAutre"]);
+                }else self::afficherVueErreur("veuillez remplir correctement le champ");
+            }else{
+                echo "le champs n'est pas la";
+            }
+        }
     }
 
     public static function modifierVille() : void{
