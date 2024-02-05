@@ -80,7 +80,6 @@ class UtilisateurRepository extends AbstractRepository
         $values = array("login"=>$login);
         $pdoStatment->execute($values);
         $res = $pdoStatment->fetchColumn();
-        echo $res;
         return $res==1;
     }
 

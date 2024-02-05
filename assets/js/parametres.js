@@ -5,11 +5,8 @@ function creerChampsAutre(){
         champSup.name = "champsAutre";
         champSup.id = "champsAutre";
         champSup.placeholder = "Autre statut";
-        champSup.readOnly = true;
+        champSup.required = true;
         document.getElementById("statut").appendChild(champSup);
-
-        console.log("autre selectionner");
-        console.log(champSup);
     }else{
         if (document.getElementById("champsAutre")!== null){
             document.getElementById("statut").removeChild(document.getElementById("champsAutre"));

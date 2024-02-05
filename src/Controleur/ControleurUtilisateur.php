@@ -89,7 +89,6 @@ class ControleurUtilisateur extends ControleurGeneral{
 
     public static function modifierLogin() : void{
         $patern = '/\S/';
-        print_r($_POST);
         if (ConnexionUtilisateur::estConnecte()){
             $utilisateur= (new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte()]);
             if (!UtilisateurRepository::loginEstUtilise($_POST["ModifLogin"])){
