@@ -12,6 +12,23 @@
     <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap.css">
 </head>
 <body>
+<div class="container" style="margin-top: 70px">
+    <!-- Messages flash -->
+    <?php
+    /** @var string[][] $messagesFlash */
+    foreach ($messagesFlash as $type => $messagesFlashPourUnType) {
+        // $type est l'une des valeurs suivantes : "success", "info", "warning", "danger"
+        // $messagesFlashPourUnType est la liste des messages flash d'un type
+        foreach ($messagesFlashPourUnType as $messageFlash) {
+            echo <<< HTML
+            <div class="alert alert-$type">
+               $messageFlash
+            </div>
+            HTML;
+        }
+    }
+    ?>
+</div>
 <div class="bg-light py-3 py-md-4 py-xl-8 background d-flex align-items-center">
     <div class="container">
         <div class="row justify-content-md-center">

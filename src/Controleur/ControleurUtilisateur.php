@@ -5,6 +5,7 @@ use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Lib\MotDePasse;
 use App\Altius\Lib\VerificationEmail;
 use App\Altius\Modele\DataObject\Utilisateur;
+use App\Altius\Modele\HTTP\Session;
 use App\Altius\Modele\Repository\UtilisateurRepository;
 use App\Altius\Lib\MessageFlash;
 
@@ -13,7 +14,7 @@ class ControleurUtilisateur extends ControleurGeneral{
 
     public static function afficherPageInscription()
     {
-        ControleurGeneral::afficherVue("inscription.html");
+        ControleurGeneral::afficherVue("inscription.php");
     }
 
     public static function seConnecter(): void {
@@ -21,7 +22,7 @@ class ControleurUtilisateur extends ControleurGeneral{
             $utilisateurRepo = new UtilisateurRepository();
             $utilisateur = $utilisateurRepo->recupererParClePrimaire(["login"=>$_POST['login']]);
             /* @var Utilisateur $utilisateur */
-            if ($utilisateur !== null) {
+            if ($utilisateur !== null && !$utilisateur->estSuppr()) {
                 if (MotDePasse::verifier($_POST['mdp2'], $utilisateur->getMotDePasse())) {
                     if (VerificationEmail::aValideEmail($utilisateur)) {
                         ConnexionUtilisateur::connecter($_POST['login']);
@@ -56,12 +57,22 @@ class ControleurUtilisateur extends ControleurGeneral{
     public static function creerUtilisateur() : void{
         $valeurPost = $_POST;
         if ($valeurPost["mdp1"]== $valeurPost["mdp2"]){
-            $utlisateur = Utilisateur::construireDepuisFormulaire($valeurPost);
-            $utlisateur->setNonce(VerificationEmail::genererNonceAleatoire());
-            (new UtilisateurRepository())->create($utlisateur);
-            VerificationEmail::envoiEmailValidation($utlisateur);
-            ControleurGeneral::afficherDefaultPage();
-        }else self::afficherVueErreur("Les mots de passe ne correspondent pas");
+            if(!UtilisateurRepository::loginEstUtilise($valeurPost["login"])) {
+                $valeurPost["idUser"]=UtilisateurRepository::getMaxId()+1;
+                $valeurPost["estSuppr"]=0;
+                $utlisateur = Utilisateur::construireDepuisFormulaire($valeurPost);
+                $utlisateur->setNonce(VerificationEmail::genererNonceAleatoire());
+                (new UtilisateurRepository())->create($utlisateur);
+                VerificationEmail::envoiEmailValidation($utlisateur);
+                ControleurGeneral::afficherDefaultPage();
+            }else{
+                MessageFlash::ajouter("danger","Login déjà existant");
+                self::afficherPageInscription();
+            }
+        }else {
+            MessageFlash::ajouter("danger","Les mots de passe ne correspondent pas");
+            self::afficherPageInscription();
+        }
     }
 
     public static function validerMail() : void{
@@ -77,7 +88,24 @@ class ControleurUtilisateur extends ControleurGeneral{
     }
 
     public static function modifierLogin() : void{
-        echo "login modif";
+        $patern = '/\S/';
+        print_r($_POST);
+        if (ConnexionUtilisateur::estConnecte()){
+            $utilisateur= (new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte()]);
+            if (!UtilisateurRepository::loginEstUtilise($_POST["ModifLogin"])){
+                $utilisateur->setLogin($_POST["ModifLogin"]);
+                (new UtilisateurRepository())->modifierValeurAttribut("login",$_POST["ModifLogin"],["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte()]);
+                ConnexionUtilisateur::deconnecter();
+                ConnexionUtilisateur::connecter($_POST["ModifLogin"]);
+                MessageFlash::ajouter("success","Votre login a bien été modifié");
+            }else{
+                MessageFlash::ajouter("danger","Login déjà existant");
+            }
+            self::afficherParametres();
+        }else{
+            MessageFlash::ajouter("danger","Vous n'êtes pas connecté");
+            self::afficherDefaultPage();
+        }
     }
 
     public static function modifierStatut() : void{
@@ -170,6 +198,15 @@ class ControleurUtilisateur extends ControleurGeneral{
     }
 
     public static function supprimerCompte() : void{
-        echo "compte supprimé";
+        if (ConnexionUtilisateur::estConnecte()){
+            $utilisateur = (new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte()]);
+            $utilisateur->setEstSuppr(1);
+            (new UtilisateurRepository())->mettreAJour($utilisateur);
+            MessageFlash::ajouter("success","Votre compte a bien été supprimé");
+            ConnexionUtilisateur::deconnecter();
+        }else{
+            MessageFlash::ajouter("danger","Vous n'êtes pas connecté");
+        }
+        self::afficherDefaultPage();
     }
 }

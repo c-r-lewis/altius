@@ -8,6 +8,7 @@ use App\Altius\Modele\Repository\ConnexionBaseDeDonnee;
 class Utilisateur extends AbstractDataObject
 {
 
+    private int $idUser;
     private string $login;
     private string $email;
     private string $region;
@@ -16,8 +17,10 @@ class Utilisateur extends AbstractDataObject
     private string $ville;
     private string $numeroTelephone;
     private string $nonce;
+    private int $estSuppr;
 
     /**
+     * @param int $idUser
      * @param string $login
      * @param string $email
      * @param string $region
@@ -26,9 +29,11 @@ class Utilisateur extends AbstractDataObject
      * @param string $ville
      * @param string $numeroTelephone
      * @param string $nonce
+     * @param int $estSuppr
      */
-    public function __construct(string $login, string $email, string $region, string $motDePasse, string $statut, string $ville, string $numeroTelephone, string $nonce)
+    public function __construct(int $idUser,string $login, string $email, string $region, string $motDePasse, string $statut, string $ville, string $numeroTelephone, string $nonce,int $estSuppr)
     {
+        $this->idUser = $idUser;
         $this->login = $login;
         $this->email = $email;
         $this->region = $region;
@@ -37,7 +42,19 @@ class Utilisateur extends AbstractDataObject
         $this->ville = $ville;
         $this->numeroTelephone = $numeroTelephone;
         $this->nonce = $nonce;
+        $this->estSuppr = $estSuppr;
     }
+
+    public function getIdUser(): int
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(int $idUser): void
+    {
+        $this->idUser = $idUser;
+    }
+
 
     public function getLogin(): string
     {
@@ -119,10 +136,27 @@ class Utilisateur extends AbstractDataObject
         return $this->nonce;
     }
 
+    public function getEstSuppr(): int
+    {
+        return $this->estSuppr;
+    }
+
+    public function setEstSuppr(int $estSuppr): void
+    {
+        $this->estSuppr = $estSuppr;
+    }
+
+    public function estSuppr() : bool{
+        if ($this->estSuppr==0) return false;
+        else return true;
+    }
+
+
 
     public function formatTableau(): array
     {
         return array(
+            "idUserTag"=>$this->idUser,
             "loginTag"=>$this->login,
             "emailTag"=>$this->email,
             "regionTag"=>$this->region,
@@ -130,14 +164,15 @@ class Utilisateur extends AbstractDataObject
             "statutTag"=>$this->statut,
             "villeTag"=>$this->ville,
             "numeroTelephoneTag"=>$this->numeroTelephone,
-            "nonceTag"=>$this->nonce
+            "nonceTag"=>$this->nonce,
+            "estSupprTag"=> $this->estSuppr
         );
     }
 
     public static function construireDepuisFormulaire (array $tableauFormulaire) : Utilisateur{
         $mdpClaire = $tableauFormulaire['mdp2'];
         $motDePasse = MotDePasse::hacher($mdpClaire);
-        return new Utilisateur($tableauFormulaire['login'], $tableauFormulaire['email'],
-            $tableauFormulaire['region'],$motDePasse,$tableauFormulaire['statut'],$tableauFormulaire['ville'],$tableauFormulaire['numeroTelephone'], "");
+        return new Utilisateur($tableauFormulaire["idUser"], $tableauFormulaire['login'], $tableauFormulaire['email'],
+            $tableauFormulaire['region'],$motDePasse,$tableauFormulaire['statut'],$tableauFormulaire['ville'],$tableauFormulaire['numeroTelephone'], "",$tableauFormulaire["estSuppr"]);
     }
 }

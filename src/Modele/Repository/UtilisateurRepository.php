@@ -16,6 +16,7 @@ class UtilisateurRepository extends AbstractRepository
     protected function getNomsColonnes(): array
     {
         return array(
+            "idUser",
             "login",
             "email",
             "region",
@@ -23,7 +24,8 @@ class UtilisateurRepository extends AbstractRepository
             "statut",
             "ville",
             "numeroTelephone",
-            "nonce"
+            "nonce",
+            "estSuppr"
         );
     }
 
@@ -59,14 +61,45 @@ class UtilisateurRepository extends AbstractRepository
 
     protected function construireDepuisTableau(array $objetFormatTableau): Utilisateur
     {
-        return new Utilisateur( $objetFormatTableau["login"],
+        return new Utilisateur( $objetFormatTableau["idUser"],
+            $objetFormatTableau["login"],
             $objetFormatTableau["email"],
             $objetFormatTableau["region"],
             $objetFormatTableau["motDePasse"],
             $objetFormatTableau["statut"],
             $objetFormatTableau['ville'],
             $objetFormatTableau['numeroTelephone'],
-            $objetFormatTableau['nonce']
+            $objetFormatTableau['nonce'],
+            $objetFormatTableau['estSuppr']
         );
+    }
+
+    public static function loginEstUtilise(string $login) : bool{
+        $sql = "SELECT loginEstUtiliser(:login) FROM DUAL;";
+        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $values = array("login"=>$login);
+        $pdoStatment->execute($values);
+        $res = $pdoStatment->fetchColumn();
+        echo $res;
+        return $res==1;
+    }
+
+    public static function getMaxId() : int{
+        $sql = "SELECT MAX(idUser) FROM User;";
+        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->query($sql);
+        return $pdoStatment->fetchColumn();
+    }
+
+    public  function create(AbstractDataObject $object): AbstractDataObject
+    {
+        $nomColonnes= $this->getNomsColonnes();
+        $sql = "CALL ajouterUser(";
+        foreach ($nomColonnes as $nomColonne){
+            $sql.=":$nomColonne"."Tag, ";
+        }
+        $sql = substr($sql,0,-2).");";
+        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatment->execute($object->formatTableau());
+        return $object;
     }
 }
