@@ -1,8 +1,20 @@
 article {
-    padding-left:1.5rem;
-    padding-right:1rem;
+    padding: 1rem 1rem 1rem 1.5rem;
 }
 
+body {
+    background-image : url("../images/accueilImage.jpg");
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+    background-size:70%;
+    background-position-x: right;
+    background-position-y: bottom;
+}
+
+@media (max-width: 700px){
+    body {background-image:none;}
+    .mt-5:nth-child(2) {margin-top: 0 !important;}
+}
 
 button {
     margin: 10px;
@@ -15,4 +27,18 @@ button {
 
 button:hover {
     transform: scale(1.1,1.1);
+}
+
+.container {
+    <!--background-color: rgb(207, 242, 224, 0.9);-->
+    border-radius: 20px;
+}
+
+.container > * {
+    opacity: 100%;
+}
+
+h1, h2, h3, p {
+    text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+    1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
 }
