@@ -2,7 +2,6 @@
 /** @var array $publications */
 /** @var array $nbLikes */
 /** @var array $publicationsLikedByConnectedUser */
-/** @var array $comments */
 /** @var array $answers */
 /** @var array $connectedUserPublications */
 /** @var array $images */
@@ -116,31 +115,6 @@
                                     <div class="modal-title" id="popupLabel"><?= $publication->getTitle() ?>&nbsp;-&nbsp;<?= $publication->getEventDate() ?></div>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body flex-grow" id="commentsContainer">
-                                    <?php foreach ($comments[$publication->getID()] as $comment): ?>
-                                        <div class="d-flex flex-column justify-content-start">
-                                            <div class="comment"
-                                                 data-comment="<?= htmlentities(json_encode($comment->loadCommentFormat())); ?>"></div>
-                                            <?php if (sizeof($answers[$comment->getCommentID()]) > 0) : ?>
-                                                <div>
-                                                    <hr class="answer-line"/>
-                                                    <div id="showAnswersBtn<?= $comment->getCommentID() ?>"
-                                                         class="moderately-bold fs-small no-outline-focus grey btn-behaviour-dark btn-behaviour"
-                                                         onclick="showAnswers('<?= $comment->getCommentID() ?>')"
-                                                         style="display: inline-block">Afficher réponses
-                                                    </div>
-                                                    <div id="answersForComment<?= $comment->getCommentID() ?>"
-                                                         style="display: none;">
-                                                        <?php foreach ($answers[$comment->getCommentID()] as $answer): ?>
-                                                            <div class="comment ms-4"
-                                                                 data-comment="<?= htmlentities(json_encode($answer->loadCommentFormat())); ?>"></div>
-                                                        <?php endforeach; ?>
-                                                    </div>
-                                                </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    <?php endforeach; ?>
                                 </div>
                                 <div class="justify-content-start border-top d-flex">
                                     <div class="ms-2 heart-btn" data-publication-id="<?= $publication->getID() ?>">

@@ -1,6 +1,6 @@
 
 // Carousel logic
-let currentSlideIndex;
+var currentSlideIndex;
 
 
 // Listener on create event popup
@@ -9,7 +9,7 @@ document.getElementById('popupCreate').addEventListener('show.bs.modal', functio
     currentSlideIndex = 1;
 });
 
-let fileInput;
+var fileInput;
 
 function loadCreatePublicationContent() {
     const container = document.getElementById("createContainer");
@@ -32,7 +32,7 @@ function loadCreatePublicationContent() {
         });
 }
 
-let nbImages = 1
+var nbImages = 1
 function loadMultipleImageChoice() {
     if (fileInput.files.length > 0) {
         const container = document.getElementById("createContainer");

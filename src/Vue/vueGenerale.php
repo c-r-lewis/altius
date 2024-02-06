@@ -1,3 +1,10 @@
+<?php
+
+use App\Altius\Lib\ConnexionUtilisateur;
+if (!isset($pageConnexion)) {
+    $pageConnexion = false;
+}
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -38,6 +45,7 @@
 
                 <!-- Left links -->
                 <ul class="navbar-nav mb-0 d-flex flex-row">
+                    <?php if(ConnexionUtilisateur::estConnecte()):?>
                     <li class="nav-item">
                         <a class="nav-link px-1" role="button" data-bs-toggle="modal" data-bs-target="#popupCreate">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -67,6 +75,13 @@
                             ?>
                         </ul>
                     </li>
+                    <?php elseif (!$pageConnexion):?>
+                    <li class="nav-item">
+                        <a class="btn btn-primary" href="../web/controleurFrontal.php?controleur=utilisateur&action=afficherDefaultPage">
+                            Se connecter
+                        </a>
+                    </li>
+                    <?php endif;?>
                 </ul>
             </div>
         </nav>

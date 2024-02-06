@@ -72,11 +72,10 @@ class ControleurPublication extends ControleurGenerique
 
     }
 
-    static function afficherDefaultPage(): void {
+    static function getInfo() : array {
         $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
         $publicationRepository = new EventRepository();
         $likeRepository = new LikeRepository();
-        $commentRepository = new CommentRepository();
         $imageRepository = new EventImageRepository();
         $comments = [];
         $publications = $publicationRepository->getAll();
@@ -87,20 +86,22 @@ class ControleurPublication extends ControleurGenerique
         foreach($publications as $publication) {
             $images[$publication->getID()] = $imageRepository->getImagesForPublication($publication->getID());
             $nbLikes[$publication->getID()] = $likeRepository->countLikesOnPublication($publication->getID());
-            //$comments[$publication->getID()] = $commentRepository->getParentCommentsFor($publication->getID());
             $connectedUserPublications[$publication->getID()] = $userID == $publication->getUserID();
         }
-        /*foreach ($commentRepository->getParentComments() as $parentComment) {
-            $answers[$parentComment->getCommentID()] = $commentRepository->getRepliesFor($parentComment->getCommentID());
-        }*/
         $publicationsLikedByConnectedUser = $publicationRepository->getPublicationsLikedBy($userID);
-        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"homePage.php","publications"=>$publications,
-            "nbLikes"=>$nbLikes,
-            "publicationsLikedByConnectedUser"=>$publicationsLikedByConnectedUser,
-            "comments"=>$comments,
-            "answers"=>$answers,
-            "connectedUserPublications"=>$connectedUserPublications,
-            "images"=>$images,
+        return array("publications"=>$publications, "nbLikes"=>$nbLikes, "publicationsLikedByConnectedUser"=>$publicationsLikedByConnectedUser,
+            "comments"=>$comments, "answers"=>$answers, "connectedUserPublications"=>$connectedUserPublications,
+            "images"=>$images);
+    }
+    static function afficherDefaultPage(): void {
+        $info = self::getInfo();
+        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"homePage.php","publications"=>$info["publications"],
+            "nbLikes"=>$info["nbLikes"],
+            "publicationsLikedByConnectedUser"=>$info["publicationsLikedByConnectedUser"],
+            "comments"=>$info["comments"],
+            "answers"=>$info["answers"],
+            "connectedUserPublications"=>$info["connectedUserPublications"],
+            "images"=>$info["images"],
             "js" => HomePageCSSLoader::getJSImports(),
             "css" => HomePageCSSLoader::getCSSImports()));
     }

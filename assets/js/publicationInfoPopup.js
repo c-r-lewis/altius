@@ -1,15 +1,11 @@
 // Listener on heart buttons for publications
-document.getElementById('publicationsContainer').addEventListener('click', event => onHeartButtonClicked(event));
+if(document.getElementById('publicationsContainer')) document.getElementById('publicationsContainer').addEventListener('click', event => onHeartButtonClicked(event));
+else if (document.getElementById('calendarInfo')) document.getElementById('calendarInfo').addEventListener('click', event => onHeartButtonClicked(event));
 // Listener on heart buttons for publication popups
 const commentsContainer = document.getElementById('commentsContainer')
 if (commentsContainer !== null) commentsContainer.addEventListener('click', event=> onHeartButtonClicked(event));
 
-// Listener on show info popup
-document.querySelectorAll('.comment-popup').forEach(commentPopup => {
-    commentPopup.addEventListener('show.bs.modal', function () {
-        loadPopup();
-    });
-});
+
 function onHeartButtonClicked(event) {
     // Check if the clicked element is a div with data-publication-id attribute
     const svgPath = event.target.closest('div[data-publication-id]');
@@ -160,27 +156,25 @@ function hideAnswers(commentID) {
     btn.addEventListener('click', event => showAnswers(commentID));
 }
 
-function loadPopup() {
-    const input = document.getElementById('commentInput');
-    input.value = '';
-}
 
-document.getElementById('shareButton').addEventListener('click', async () => {
-    try {
-        // Check if the Web Share API is supported
-        if (navigator.share) {
-            await navigator.share({
-                title: 'Share Example',
-                text: 'Check out this content!',
-                url: 'https://example.com'
-            });
-        } else {
-            alert('Web Share API is not supported in this browser');
+if (document.getElementById('shareButton')) {
+    document.getElementById('shareButton').addEventListener('click', async () => {
+        try {
+            // Check if the Web Share API is supported
+            if (navigator.share) {
+                await navigator.share({
+                    title: 'Share Example',
+                    text: 'Check out this content!',
+                    url: 'https://example.com'
+                });
+            } else {
+                alert('Web Share API is not supported in this browser');
+            }
+        } catch (error) {
+            console.error('Error sharing:', error.message);
         }
-    } catch (error) {
-        console.error('Error sharing:', error.message);
-    }
-});
+    });
+}
 
 const deleteBtn = document.getElementById("deleteBtn");
 
