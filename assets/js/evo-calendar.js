@@ -1029,6 +1029,7 @@
 
             if (data.date instanceof Array) {
                 for (var j=0; j < data.date.length; j++) {
+                    console.log(data.date[j])
                     if(isDateValid(data.date[j])) {
                         data.date[j] = _.formatDate(new Date(data.date[j]), _.options.format);
                     }
@@ -1051,7 +1052,7 @@
                 if(_.isValidDate(date)) {
                     return true;
                 } else {
-                    console.log("%c Event named: \""+data.name+"\" has invalid date ", "color:white;font-weight:bold;background-color:#e21d1d;");
+                    console.log("%c Event named: \""+data.name+"\" has invalid date : "+data.date, "color:white;font-weight:bold;background-color:#e21d1d;");
                 }
                 return false;
             }

@@ -10,6 +10,7 @@ use App\Altius\Modele\Repository\CommentRepository;
 use App\Altius\Modele\Repository\LikeRepository;
 use App\Altius\Modele\Repository\EventImageRepository;
 use App\Altius\Modele\Repository\EventRepository;
+use DateTime;
 use Exception;
 use finfo;
 
@@ -21,8 +22,12 @@ class ControleurPublication extends ControleurGenerique
     static function createPublication(): void {
         $imageRepository = new EventImageRepository();
         $userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
-        $datePosted = date('Y-m-d H:i:s');
-        $newPublication = new Event($datePosted, $_POST["eventDate"], $_POST["description"], $userID, $_POST["title"], $_POST["town"], $_POST["address"], (int)$_POST['zip'], $_POST['eventTime']);
+        $format = 'Y-m-d H:i:s';
+        $datePosted = date($format);
+        $dateParts = explode('/', $_POST["eventDate"]);
+        $reformattedDate = $dateParts[2] . '-' . $dateParts[1] . '-' . $dateParts[0];
+
+        $newPublication = new Event($datePosted, $reformattedDate, $_POST["description"], $userID, $_POST["title"], $_POST["town"], $_POST["address"], (int)$_POST['zip'], $_POST['eventTime']);
         $newPublication = (new EventRepository())->create($newPublication);
 
         $imageSources = $_POST['imageSrc'];
@@ -53,7 +58,7 @@ class ControleurPublication extends ControleurGenerique
             file_put_contents($targetPath, $binaryData);
             $imageRepository->create(new Image($targetPath, $newPublication->getID()));
         }
-        self::afficherDefaultPage();
+        ControleurCalendrier::afficherDefaultPage();
     }
 
     static function deletePublication() : void {
@@ -65,7 +70,6 @@ class ControleurPublication extends ControleurGenerique
             $imageRepository->deleteByID(array($image->getPathToImage()));
         }
         $publicationRepository->deleteByID(array($_POST["publicationID"]));
-        self::afficherDefaultPage();
     }
 
     static function editPublication() : void  {
@@ -93,16 +97,5 @@ class ControleurPublication extends ControleurGenerique
             "comments"=>$comments, "answers"=>$answers, "connectedUserPublications"=>$connectedUserPublications,
             "images"=>$images);
     }
-    static function afficherDefaultPage(): void {
-        $info = self::getInfo();
-        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"homePage.php","publications"=>$info["publications"],
-            "nbLikes"=>$info["nbLikes"],
-            "publicationsLikedByConnectedUser"=>$info["publicationsLikedByConnectedUser"],
-            "comments"=>$info["comments"],
-            "answers"=>$info["answers"],
-            "connectedUserPublications"=>$info["connectedUserPublications"],
-            "images"=>$info["images"],
-            "js" => HomePageCSSLoader::getJSImports(),
-            "css" => HomePageCSSLoader::getCSSImports()));
-    }
+
 }
