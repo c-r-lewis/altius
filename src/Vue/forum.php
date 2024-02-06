@@ -79,6 +79,7 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                         }
                         ?>
 
+                        <?php if(ConnexionUtilisateur::estConnecte()):?>
                         <form method="post" action="?controleur=commentaire&action=addComment" enctype="multipart/form-data">
                             <div class="form-outline p-3 rounded">
                                 <label class="form-label" for="message" style="visibility: hidden">Message</label>
@@ -91,6 +92,7 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                                 </div>
                             </div>
                         </form>
+                        <?php endif;?>
                     </div>
                 </div>
             </div>
