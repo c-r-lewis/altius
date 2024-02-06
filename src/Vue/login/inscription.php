@@ -1,17 +1,3 @@
-<!-- Il s'agit d'une vue indépendante de vue générale -->
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Altius</title>
-    <link rel="icon" type="image/png" href="../assets/images/logo.png"/>
-    <link type="text/css" rel="stylesheet" href="../assets/css/login.css">
-    <link type="text/css" rel="stylesheet" href="../assets/css/bootstrap.css">
-</head>
-<body>
 <div class="container" style="margin-top: 70px">
     <!-- Messages flash -->
     <?php
@@ -38,7 +24,7 @@
                         <div class="col-12">
                             <div class="text-center mb-4">
                                 <a href="?">
-                                    <img src="../../assets/images/logo.png" alt="" width="100">
+                                    <img src="../../../assets/images/logo.png" alt="" width="100">
                                 </a>
                             </div>
                         </div>
@@ -139,6 +125,3 @@
         </div>
     </div>
 </div>
-<script src="../../assets/js/bootstrap.bundle.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
-</html>

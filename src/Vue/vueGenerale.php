@@ -54,6 +54,7 @@ if (!isset($pageConnexion)) {
                             </svg>
                         </a>
                     </li>
+                    <?php if (ConnexionUtilisateur::estConnecte()):?>
                     <!-- Navbar dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -65,19 +66,14 @@ if (!isset($pageConnexion)) {
                         </a>
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
-                            <?php
-                            if (ConnexionUtilisateur::estConnecte())
-                                echo '<li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
-                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>';
-
-                            else echo '<li><a class="dropdown-item" href="?controleur=utilisateur&action=afficherFormulaireConnexion">Connexion</a></li>
-                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=afficherPageInscription">Inscription</a></li>';
-                            ?>
+                            <li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
+                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>;
                         </ul>
                     </li>
-                    <?php elseif (!$pageConnexion):?>
+                    <?php endif;
+                    elseif (!$pageConnexion):?>
                     <li class="nav-item">
-                        <a class="btn btn-primary" href="../web/controleurFrontal.php?controleur=utilisateur&action=afficherDefaultPage">
+                        <a class="btn btn-primary" href="../web/controleurFrontal.php?controleur=utilisateur&action=afficherPageLogin">
                             Se connecter
                         </a>
                     </li>

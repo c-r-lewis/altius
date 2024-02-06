@@ -14,7 +14,12 @@ class ControleurUtilisateur extends ControleurGeneral{
 
     public static function afficherPageInscription()
     {
-        ControleurGeneral::afficherVue("inscription.php");
+        ControleurGeneral::afficherVue("VueGenerale.php", array("cheminVueBody"=>"login/inscription.php"));
+    }
+
+    public static function  afficherPageLogin() {
+        ControleurGeneral::afficherVue("VueGenerale.php", array("cheminVueBody"=>"login/connexion.php", "pageConnexion"=>true));
+
     }
 
     public static function seConnecter(): void {
