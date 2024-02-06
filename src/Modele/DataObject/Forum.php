@@ -67,10 +67,10 @@ class Forum extends AbstractDataObjectWithTime
     public function formatTableau(): array
     {
         return [
-            "forumID" => $this->forumID,
-            "title" => $this->title,
-            "description" => $this->description,
-            "eventID" => $this->eventID
+            "forumIDTag" => $this->forumID,
+            "titleTag" => $this->title,
+            "descriptionTag" => $this->description,
+            "eventIDTag" => $this->eventID
         ];
     }
 }

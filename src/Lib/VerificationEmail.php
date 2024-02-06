@@ -2,12 +2,13 @@
 namespace App\Altius\Lib;
 
 use App\Altius\Configuration\Configuration;
+use App\Altius\Modele\DataObject\AbstractDataObject;
 use App\Altius\Modele\DataObject\Utilisateur;
 use App\Altius\Modele\Repository\UtilisateurRepository;
 
 class VerificationEmail
 {
-    public static function envoiEmailValidation(Utilisateur $utilisateur): void
+    public static function envoiEmailValidation(AbstractDataObject|Utilisateur $utilisateur): void
     {
         $loginURL = rawurlencode($utilisateur->getLogin());
         $nonceURL = rawurlencode($utilisateur->getNonce());
@@ -21,10 +22,11 @@ class VerificationEmail
     public static function traiterEmailValidation($login, $nonce): bool
     {
         /* @var Utilisateur $utilisateur */
-        $utilisateur = (new UtilisateurRepository())->recupererParClePrimaire($login);
+        $utilisateur = (new UtilisateurRepository())->recupererParClePrimaire(["login"=>$login,"estSuppr"=>0]);
         if(isset($utilisateur) && $utilisateur->getNonce() == $nonce) {
             $utilisateur->setNonce("");
-            (new UtilisateurRepository())->unsetNonce($login);
+            $estSuppr = $utilisateur->getEstSuppr();
+            (new UtilisateurRepository())->unsetNonce($login,$estSuppr);
             return true;
         }
         return false;

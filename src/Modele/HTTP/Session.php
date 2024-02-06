@@ -53,7 +53,7 @@ class Session
         session_unset();     // unset $_SESSION variable for the run-time
         session_destroy();   // destroy session data in storage
         // Il faudra reconstruire la session au prochain appel de getInstance()
-        $this->instance = null;
+        self::$instance = null;
     }
 
     private static function verifierDerniereActivite(): void{

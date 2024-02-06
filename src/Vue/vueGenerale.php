@@ -65,8 +65,14 @@ if (!isset($pageConnexion)) {
                         </a>
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
-                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Se déconnecter</a></li>
+                            <?php
+                            if (ConnexionUtilisateur::estConnecte())
+                                echo '<li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
+                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>';
+
+                            else echo '<li><a class="dropdown-item" href="?controleur=utilisateur&action=afficherFormulaireConnexion">Connexion</a></li>
+                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=afficherPageInscription">Inscription</a></li>';
+                            ?>
                         </ul>
                     </li>
                     <?php elseif (!$pageConnexion):?>
@@ -129,6 +135,7 @@ if (!isset($pageConnexion)) {
         <script defer src="../assets/js/createPublicationPopup.js"></script>
         <script src="../assets/js/publicationInfoPopup.js"></script>
         <script src="../assets/js/bootstrap.bundle.js"></script>
+        <script src="../assets/js/parametres.js"></script>
         <?= /** @var string $js */ $js ?? "" ?>
 
         <!-- Script pour loader le calendrier -->

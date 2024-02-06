@@ -16,6 +16,7 @@ class UtilisateurRepository extends AbstractRepository
     protected function getNomsColonnes(): array
     {
         return array(
+            "idUser",
             "login",
             "email",
             "region",
@@ -23,13 +24,14 @@ class UtilisateurRepository extends AbstractRepository
             "statut",
             "ville",
             "numeroTelephone",
-            "nonce"
+            "nonce",
+            "estSuppr"
         );
     }
 
     protected function getClePrimaire(): array
     {
-        return array("login");
+        return array("login","estSuppr");
     }
 
     public function ajouterAmis():void{
@@ -50,23 +52,53 @@ class UtilisateurRepository extends AbstractRepository
         $requetePreparee->execute(array(":login1" => $_SESSION['login'], ":login2" => $_POST['login']));
     }
 
-    public function unsetNonce(string $login): void
+    public function unsetNonce(string $login,int $estSuppr): void
     {
-        $sql = "UPDATE User SET nonce = '' WHERE login = :login";
+        $sql = "UPDATE User SET nonce = '' WHERE login = :login AND estSuppr = :estSuppr";
         $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $requetePreparee->execute(array(":login" => $login));
+        $requetePreparee->execute(array(":login" => $login,"estSuppr"=>$estSuppr));
     }
 
     protected function construireDepuisTableau(array $objetFormatTableau): Utilisateur
     {
-        return new Utilisateur( $objetFormatTableau["login"],
+        return new Utilisateur( $objetFormatTableau["idUser"],
+            $objetFormatTableau["login"],
             $objetFormatTableau["email"],
             $objetFormatTableau["region"],
             $objetFormatTableau["motDePasse"],
             $objetFormatTableau["statut"],
             $objetFormatTableau['ville'],
             $objetFormatTableau['numeroTelephone'],
-            $objetFormatTableau['nonce']
+            $objetFormatTableau['nonce'],
+            $objetFormatTableau['estSuppr']
         );
+    }
+
+    public static function loginEstUtilise(string $login) : bool{
+        $sql = "SELECT loginEstUtiliser(:login) FROM DUAL;";
+        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $values = array("login"=>$login);
+        $pdoStatment->execute($values);
+        $res = $pdoStatment->fetchColumn();
+        return $res==1;
+    }
+
+    public static function getMaxId() : int{
+        $sql = "SELECT MAX(idUser) FROM User;";
+        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->query($sql);
+        return $pdoStatment->fetchColumn();
+    }
+
+    public  function create(AbstractDataObject $object): AbstractDataObject
+    {
+        $nomColonnes= $this->getNomsColonnes();
+        $sql = "CALL ajouterUser(";
+        foreach ($nomColonnes as $nomColonne){
+            $sql.=":$nomColonne"."Tag, ";
+        }
+        $sql = substr($sql,0,-2).");";
+        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatment->execute($object->formatTableau());
+        return $object;
     }
 }

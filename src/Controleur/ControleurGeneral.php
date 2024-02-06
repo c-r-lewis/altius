@@ -6,6 +6,7 @@ namespace App\Altius\Controleur;
 use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Lib\MessageFlash;
 use App\Altius\Modele\CSSLoader\HomePageCSSLoader;
+use App\Altius\Modele\Repository\UtilisateurRepository;
 
 class ControleurGeneral extends ControleurGenerique
 {
@@ -31,6 +32,7 @@ class ControleurGeneral extends ControleurGenerique
     }
 
     public static function afficherParametres(){
-        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"parametres.html"]);
+        if(ConnexionUtilisateur::estConnecte())
+        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"parametres.php","utilisateur"=>(new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte(),"estSuppr"=>0])]);
     }
 }

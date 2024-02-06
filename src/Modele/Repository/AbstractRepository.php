@@ -43,21 +43,25 @@ abstract class AbstractRepository
         return $object;
     }
 
-    public function recupererParClePrimaire(string $valeurClePrimaire): ?AbstractDataObject
+    /** Pré-requis : @var array $valeurClePrimaire est sous la forme
+     *  $valeurClePrimaire[nom de la clé]=valeur et l'ordre doit être le même
+     * que getClePrimaire()
+     */
+
+    public function recupererParClePrimaire(array $valeurClePrimaire): ?AbstractDataObject
     {
         $sql = "SELECT * FROM " . $this->getNomTable() . " WHERE ";
         $clesPrimaires = $this->getClePrimaire();
-        foreach ($clesPrimaires as $clePrimaire) {
-            $sql .= "$clePrimaire AND ";
+        $values = array();
+        for ($i=0;$i<count($clesPrimaires);$i++) {
+            $clePrimaire=$clesPrimaires[$i];
+            $values[$clePrimaire]=$valeurClePrimaire[$clePrimaire];
+            $sql .= "$clePrimaire = :$clePrimaire AND ";
         }
         $sql = substr($sql, 0, -4);
-
-        $sql .= "= :clePrimaireTag;";
-
+        $sql.=";";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $values = array(
-            "clePrimaireTag" => $valeurClePrimaire
-        );
+
         $pdoStatement->execute($values);
         $objetFormatTableau = $pdoStatement->fetch();
         if ($objetFormatTableau == null) {
@@ -101,11 +105,29 @@ abstract class AbstractRepository
     public function mettreAJour(AbstractDataObject $object): void {
         $sql = "UPDATE " . $this->getNomTable() . " SET ";
         foreach ($this->getNomsColonnes() as $nomColonne) {
-            $sql .= $nomColonne . " = :" . $nomColonne . ", ";
+            $sql .= $nomColonne . " = :" . $nomColonne . "Tag, ";
         }
         $sql = substr($sql, 0, -2) . " WHERE " . $this->getClePrimaire()[0]
-            . " = :" . $this->getClePrimaire()[0];
+            . " = :" . $this->getClePrimaire()[0]."Tag";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $pdoStatement->execute($object->formatTableau());
+    }
+
+    //Pré requi : @param $clePrimaire est sous la forme de $clePrimaire[nomCle]=valeur
+    // et garder le meme ordre que getClePrimaire
+
+    public  function modifierValeurAttribut(string $attribut, string $valeur,array $clePrimaire) : void {
+        $sql = "UPDATE ".$this->getNomTable()." SET ".$attribut." = :valeur WHERE ";
+        $clesPrimaires=$this->getClePrimaire();
+        $values = array();
+        for ($i = 0;$i<count($clesPrimaires);$i++){
+            $sql.=$clesPrimaires[$i]." =:$clesPrimaires[$i] AND ";
+            $values[$clesPrimaires[$i]]=$clePrimaire[$clesPrimaires[$i]];
+        }
+        $sql = substr($sql, 0, -4);
+        $values["valeur"]=$valeur;
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute($values);
     }
 }
