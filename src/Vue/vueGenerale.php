@@ -65,7 +65,7 @@ if (!isset($pageConnexion)) {
                         </a>
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
-                            <?php use \App\Altius\Lib\ConnexionUtilisateur;
+                            <?php
                             if (ConnexionUtilisateur::estConnecte())
                                 echo '<li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
                             <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>';
