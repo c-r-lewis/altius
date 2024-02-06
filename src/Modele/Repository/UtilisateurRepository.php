@@ -31,7 +31,7 @@ class UtilisateurRepository extends AbstractRepository
 
     protected function getClePrimaire(): array
     {
-        return array("login");
+        return array("login","estSuppr");
     }
 
     public function ajouterAmis():void{
@@ -52,11 +52,11 @@ class UtilisateurRepository extends AbstractRepository
         $requetePreparee->execute(array(":login1" => $_SESSION['login'], ":login2" => $_POST['login']));
     }
 
-    public function unsetNonce(string $login): void
+    public function unsetNonce(string $login,int $estSuppr): void
     {
-        $sql = "UPDATE User SET nonce = '' WHERE login = :login";
+        $sql = "UPDATE User SET nonce = '' WHERE login = :login AND estSuppr = :estSuppr";
         $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $requetePreparee->execute(array(":login" => $login));
+        $requetePreparee->execute(array(":login" => $login,"estSuppr"=>$estSuppr));
     }
 
     protected function construireDepuisTableau(array $objetFormatTableau): Utilisateur
