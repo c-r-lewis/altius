@@ -67,7 +67,7 @@
                                     <div class="col-10 justify-content-center d-flex position-relative my-3 p-0">
                                         <?php for($i=0; $i<sizeof($images[$publication->getID()]); $i++):?>
                                             <div class="carousel-image-main carousel-image-main<?=$publication->getID()?> <?php if ($i!=0) echo 'd-none';?>" id="slideMain<?=$i+1?>">
-                                                <img src="<?=$images[$publication->getID()][$i]->getPathToImage()?>" alt="Image"/>
+                                                <img class="img-fluid" src="<?=$images[$publication->getID()][$i]->getPathToImage()?>" alt="Image"/>
                                             </div>
                                         <?php endfor;?>
                                     </div>
