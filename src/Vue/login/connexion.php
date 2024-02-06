@@ -1,34 +1,5 @@
-<!-- Il s'agit d'une vue indépendante de vue générale -->
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Altius</title>
-    <link rel="icon" type="image/png" href="../assets/images/logo.png"/>
-    <link type="text/css" rel="stylesheet" href="../../assets/css/login.css">
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
-</head>
-<body class="bg-light">
 
 <div class="container mt-5">
-    <?php
-    /** @var string[][] $messagesFlash */
-    foreach ($messagesFlash as $type => $messagesFlashPourUnType) {
-        // $type est l'une des valeurs suivantes : "success", "info", "warning", "danger"
-        // $messagesFlashPourUnType est la liste des messages flash d'un type
-        foreach ($messagesFlashPourUnType as $messageFlash) {
-            echo <<< HTML
-            <div class="alert alert-$type">
-               $messageFlash
-            </div>
-            HTML;
-        }
-    }
-    ?>
-</div>
 <p>En attendant que le site soit mis sur un serveur, on peut valider un compte par ce lien:</p>
 <a href="?controleur=utilisateur&action=validerMail&login=votreLogin&nonce=votreNonce">?controleur=utilisateur&action=validerMail&login=votreLogin&nonce=votreNoncegit </a>
 <div class="py-3 py-md-4 py-xl-8 d-flex align-items-center">
@@ -40,7 +11,7 @@
                         <div class="col-12">
                             <div class="text-center mb-4">
                                 <a href="?">
-                                    <img src="../../assets/images/logo.png" alt="" width="100">
+                                    <img src="../../../assets/images/logo.png" alt="" width="100">
                                 </a>
                             </div>
                         </div>
@@ -97,7 +68,5 @@
         </div>
     </div>
 </div>
-<script src="../assets/js/bootstrap.bundle.js"></script>
-</body>
-</html>
+
 

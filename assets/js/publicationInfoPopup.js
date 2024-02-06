@@ -157,22 +157,24 @@ function hideAnswers(commentID) {
 }
 
 
-document.getElementById('shareButton').addEventListener('click', async () => {
-    try {
-        // Check if the Web Share API is supported
-        if (navigator.share) {
-            await navigator.share({
-                title: 'Share Example',
-                text: 'Check out this content!',
-                url: 'https://example.com'
-            });
-        } else {
-            alert('Web Share API is not supported in this browser');
+if (document.getElementById('shareButton')) {
+    document.getElementById('shareButton').addEventListener('click', async () => {
+        try {
+            // Check if the Web Share API is supported
+            if (navigator.share) {
+                await navigator.share({
+                    title: 'Share Example',
+                    text: 'Check out this content!',
+                    url: 'https://example.com'
+                });
+            } else {
+                alert('Web Share API is not supported in this browser');
+            }
+        } catch (error) {
+            console.error('Error sharing:', error.message);
         }
-    } catch (error) {
-        console.error('Error sharing:', error.message);
-    }
-});
+    });
+}
 
 const deleteBtn = document.getElementById("deleteBtn");
 
