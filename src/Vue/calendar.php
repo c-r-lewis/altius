@@ -84,7 +84,7 @@
                                     <span class="stand-out" style="font-weight: bold">Date évènement : </span>
                                     <span class="stand-out"><?=$publication->getEventDate()?></span>
                                     <span class="stand-out" style="font-weight: bold">Horaire évènement :</span>
-                                    <span class="stand-out"><?=$publication->getTime()?></span>
+                                    <span class="stand-out"><?=substr($publication->getTime(), 0, 5)?></span>
                                     <span class="stand-out" style="font-weight: bold">Lieu évènement :</span>
                                 </div>
                                 <!-- Interact buttons -->
