@@ -21,13 +21,17 @@
                         <!-- Dropdown for edit and delete options -->
                         <?php if ($connectedUserPublications[$publication->getID()]): ?>
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton<?= $publication->getID() ?>" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton<?=$publication->getID() ?>" data-bs-toggle="dropdown" aria-expanded="false">
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton<?= $publication->getID() ?>">
-                                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Modifier
+                                        </a>
+                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('deleteForm<?= $publication->getID() ?>').submit();">
-                                            Delete
+                                            Supprimer
                                         </a>
                                         <form id="deleteForm<?= $publication->getID() ?>" action="../web/controleurFrontal.php" method="post" style="display: none;">
                                             <input type="hidden" name="controleur" value="publication"/>
