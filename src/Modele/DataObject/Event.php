@@ -110,6 +110,21 @@ class Event extends AbstractDataObjectWithTime
         return $this->time;
     }
 
+    public function getTown(): string
+    {
+        return $this->town;
+    }
+
+    public function getZip(): int
+    {
+        return $this->zip;
+    }
+
+    public function getAddress(): string
+    {
+        return $this->address;
+    }
+
 
 
 
