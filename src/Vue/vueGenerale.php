@@ -15,6 +15,7 @@ if (!isset($pageConnexion)) {
         <title>Altius</title>
         <link rel="icon" type="image/png" href="../assets/images/logo.png"/>
         <link href="../assets/css/bootstrap.css" rel="stylesheet">
+        <link href="../assets/css/accueil.css" rel="stylesheet">
         <?= /* @var ?string $css */ $css ?? "" ?>
     </head>
     <body>
