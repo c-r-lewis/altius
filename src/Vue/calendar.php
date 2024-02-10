@@ -16,45 +16,32 @@
         <div class="modal fade" id="<?=$publication->getID()?>">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="<?=$publication->getID()?>"><span class="moderately-bold"><?=$publication->getUserID() ?></span><span
-                                    class="grey">&nbsp;-&nbsp;<?= $publication->calculateTime()?></span></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="card-header d-flex bg-transparent border border-0 align-items-center justify-content-between px-1">
+                        <div><?=htmlspecialchars($publication->getTitle()) ?></div>
+                        <!-- Dropdown for edit and delete options -->
+                        <?php if ($connectedUserPublications[$publication->getID()]): ?>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton<?= $publication->getID() ?>" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton<?= $publication->getID() ?>">
+                                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('deleteForm<?= $publication->getID() ?>').submit();">
+                                            Delete
+                                        </a>
+                                        <form id="deleteForm<?= $publication->getID() ?>" action="../web/controleurFrontal.php" method="post" style="display: none;">
+                                            <input type="hidden" name="controleur" value="publication"/>
+                                            <input type="hidden" name="action" value="deletePublication"/>
+                                            <input type="hidden" name="publicationID" value="<?= $publication->getID() ?>"/>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class="modal-body">
                         <!-- Conteneur des posts -->
                         <article class="card mb-3 border border-0" style="max-width: 30rem;">
-                            <div class="card-header d-flex bg-transparent border border-0 justify-content-between px-1">
-                                <div>
-                                    <?=htmlspecialchars($publication->getTitle()) ?>
-                                </div>
-                                <!-- User can delete or modify post -->
-                                <?php if ($connectedUserPublications[$publication->getID()]): ?>
-                                    <a id="showEditBtn" role="button" class="nav-link" data-bs-toggle="modal"
-                                       data-bs-target="#popupEdit">
-                                        &#8230;
-                                    </a>
-                                    <div class="modal fade" id="popupEdit" tabindex="=-1" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered rounded" style="max-width: 300px;">
-                                            <div class="modal-content rounded">
-                                                <div class="card">
-                                                    <form action="../web/controleurFrontal.php" method="post" id="editForm">
-                                                        <ul class="list-group list-group-flush rounded">
-                                                            <li class="list-group-item link-danger btn-behaviour d-flex justify-content-center" id="deleteBtn">Supprimer</li>
-                                                            <li class="list-group-item d-flex justify-content-center" id="editBtn">
-                                                                Editer
-                                                            </li>
-                                                        </ul>
-                                                        <input type="hidden" name="controleur" value="publication"/>
-                                                        <input type="hidden" name="action" value="deletePublication"/>
-                                                        <input type="hidden" name="publicationID" value="<?= $publication->getID() ?>"/>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
                             <!-- Carousel -->
                             <div class="container-fluid">
                                 <div class="row">

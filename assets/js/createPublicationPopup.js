@@ -19,7 +19,7 @@ function loadCreatePublicationContent() {
     title.classList.add('justify-content-center');
 
     // Fetch the content of the PHP file
-    fetch('../../src/Vue/publication/uploadImage.php')
+    fetch('../src/Vue/publication/uploadImage.php')
         .then(response => response.text())
         .then(htmlContent => {
             // Replace the content of the container with the fetched HTML
