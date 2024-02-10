@@ -111,7 +111,7 @@ if (!isset($pageConnexion)) {
                     <div class="card">
                         <div class="card-header d-flex justify-content-center" id="newPublicationTitle">
                             <div>
-                                Créer une nouvelle publication
+                                Partager un évènement
                             </div>
                             <input class="link-primary btn p-0 ms-5" type="submit" id="submitBtn" value="Créer" style="display: none;">
                             <button class="link-primary btn p-0 ms-5" id="nextBtn" style="display: none;" onclick="addDescriptionToEvent()">Suivant</button>
