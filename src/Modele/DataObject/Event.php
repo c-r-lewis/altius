@@ -105,6 +105,12 @@ class Event extends AbstractDataObjectWithTime
         $this->id = $ID;
     }
 
+    public function getTime(): string
+    {
+        return $this->time;
+    }
+
+
 
 
 

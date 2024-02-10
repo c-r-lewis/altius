@@ -81,7 +81,11 @@
                             </div>
                             <div class="card-body px-1">
                                 <div class="row">
+                                    <span class="stand-out" style="font-weight: bold">Date évènement : </span>
                                     <span class="stand-out"><?=$publication->getEventDate()?></span>
+                                    <span class="stand-out" style="font-weight: bold">Horaire évènement :</span>
+                                    <span class="stand-out"><?=$publication->getTime()?></span>
+                                    <span class="stand-out" style="font-weight: bold">Lieu évènement :</span>
                                 </div>
                                 <!-- Interact buttons -->
                                 <div class="row">
