@@ -98,4 +98,16 @@ class ControleurPublication extends ControleurGenerique
             "images"=>$images);
     }
 
+    static function loadUploadImageContent() {
+        require __DIR__ . "/../Vue/publication/uploadImage.php";
+    }
+
+    static function loadAddOtherImages() {
+        require __DIR__ . "/../Vue/publication/addOtherImages.php";
+    }
+
+    static function loadCreatePublication() {
+        require __DIR__ . "/../Vue/publication/createPublication.php";
+    }
+
 }

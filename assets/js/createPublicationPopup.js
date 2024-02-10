@@ -18,23 +18,34 @@ function loadCreatePublicationContent() {
     title.classList.remove('justify-content-between');
     title.classList.add('justify-content-center');
 
-    // Fetch the content of the PHP file
-    fetch('../src/Vue/publication/uploadImage.php')
+    // Prepare the data to be sent in the POST request
+    const formData = new FormData();
+    formData.append('action', 'loadUploadImageContent');
+    formData.append('controleur', 'publication');
+
+    // Fetch the content through the controleurFrontal.php with a POST request
+    fetch('../web/controleurFrontal.php', {
+        method: 'POST',
+        body: formData
+    })
         .then(response => response.text())
         .then(htmlContent => {
             // Replace the content of the container with the fetched HTML
             container.innerHTML = htmlContent;
             fileInput = document.getElementById("newImage");
-            fileInput.addEventListener('change',loadMultipleImageChoice);
+            fileInput.addEventListener('change', loadMultipleImageChoice);
+            console.log(fileInput);
         })
         .catch(error => {
-            console.error('Error fetching PHP file:', error);
+            console.error('Error fetching content through controleurFrontal:', error);
         });
 }
+
 
 var nbImages = 1
 function loadMultipleImageChoice() {
     if (fileInput.files.length > 0) {
+        console.log(fileInput);
         const container = document.getElementById("createContainer");
 
         const title = document.getElementById("newPublicationTitle");
@@ -44,9 +55,17 @@ function loadMultipleImageChoice() {
         const nextBtn = document.getElementById('nextBtn');
         nextBtn.style.display = 'inline-block';
 
+        // Prepare the data to be sent in the POST request
+        const formData = new FormData();
+        formData.append('action', 'loadAddOtherImages');
+        formData.append('controleur', 'publication');
+
 
         // Fetch the content of the PHP file
-        fetch('../src/Vue/publication/addOtherImages.php')
+        fetch('../web/controleurFrontal.php', {
+            method: 'POST',
+            body: formData
+        })
             .then(response => response.text())
             .then(htmlContent => {
                 // Replace the content of the container with the fetched HTML
@@ -75,7 +94,6 @@ function loadMultipleImageChoice() {
                     const img3 = imgContainer.cloneNode(true);
                     img3.style.display = 'none'
                     fileInputContainer.appendChild(img3)
-
 
 
                     // Add on click listeners
@@ -184,8 +202,17 @@ function addDescriptionToEvent() {
         document.getElementById('leftButtonCreate').style.display = 'none'
 
 
+        // Prepare the data to be sent in the POST request
+        const formData = new FormData();
+        formData.append('action', 'loadCreatePublication');
+        formData.append('controleur', 'publication');
+
+
         // Fetch the content of the PHP file
-        fetch('../src/Vue/publication/createPublication.php')
+        fetch('../web/controleurFrontal.php', {
+            method: 'POST',
+            body: formData
+        })
             .then(response => response.text())
             .then(htmlContent => {
                 // Replace the content of the container with the fetched HTML
