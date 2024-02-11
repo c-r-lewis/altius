@@ -11,6 +11,17 @@
  * 
  */
 
+// Your input date as a string
+const today = new Date()
+
+
+// Options to define the output format
+const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+// Convert the Date object into the desired format
+let formattedDate = today.toLocaleDateString('en-US', options);
+let dateSelected = false;
+
 ;(function(factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
@@ -572,6 +583,12 @@
             markup += '<div class="calendar-events">'+
                             '<div class="event-header"><p></p></div>'+
                             '<div class="event-list"></div>'+
+                            '<button class="btn" style="color: white" onclick="loadCreatePublicationContentWithDate()">' +
+                                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-plus-circle" viewBox="0 0 16 16">\n' +
+                                '  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>\n' +
+                                '  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>\n' +
+                                '</svg>' + '                   Ajouter un évènement' +
+                '           </button>'+
                         '</div>';
 
             // --- Finally, build it now! --- //
@@ -940,6 +957,7 @@
         isSameDate = _.$active.date === date;
         // Set new active date
         _.$active.date = date;
+        formattedDate = date;
         _.$active.event_date = date;
         // Remove active class to all
         _.$elements.innerEl.find('[data-date-val]').removeClass('calendar-active');
@@ -1045,7 +1063,9 @@
             // add to date's indicator
             _.addEventIndicator(data);
             // add to event list IF active.event_date === data.date
-            if (_.$active.event_date === data.date) _.addEventList(data);
+            if (_.$active.event_date === data.date) {
+                _.addEventList(data);
+            }
             // _.$elements.innerEl.find("[data-date-val='" + data.date + "']")
 
             function isDateValid(date) {
@@ -1118,3 +1138,39 @@
     };
 
 }));
+
+function loadCreatePublicationContentWithDate() {
+    currentSlideIndex = 1;
+    dateSelected = true;
+    // Convert the string into a Date object
+    const date = new Date(formattedDate);
+
+    // Extract day, month, and year from the Date object
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    // Ensure day and month are in two-digit format
+    const dayFormatted = day < 10 ? '0' + day : day;
+    const monthFormatted = month < 10 ? '0' + month : month;
+
+    formattedDate = dayFormatted + '/' + monthFormatted + '/' + year;
+
+    showModal();
+}
+
+const myModal = new bootstrap.Modal(document.getElementById('popupCreate'), {
+    keyboard: false
+});
+
+function showModal() {
+    const myModal = new bootstrap.Modal(document.getElementById('popupCreate'), {
+        keyboard: false
+    });
+    myModal.show();
+}
+
+
+myModal.addEventListener('hidden.bs.modal', function (event) {
+    dateSelected = false;
+});

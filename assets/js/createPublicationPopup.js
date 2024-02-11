@@ -9,6 +9,7 @@ document.getElementById('popupCreate').addEventListener('show.bs.modal', functio
     currentSlideIndex = 1;
 });
 
+
 var fileInput;
 
 function loadCreatePublicationContent() {
@@ -266,6 +267,10 @@ function addDescriptionToEvent() {
                 rightBtn.addEventListener('click', goToNextSlide);
                 const leftBtn = document.getElementById('leftButtonCreate')
                 leftBtn.addEventListener('click', goToPrevSlide);
+
+                if (dateSelected) {
+                    document.getElementById('date').value = formattedDate;
+                }
 
             })
             .catch(error => {
