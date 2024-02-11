@@ -36,14 +36,12 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                             $messageHTML = "";
                             if ($pathToImage != "") {
                                 $imageHTML = <<< HTML
-                                <div class="bg-image">
-                                    <img src="$pathToImage" style="border-radius: 15px; width: 80%" alt="image">
-                                </div>
+                                    <img src="$pathToImage" style="border-radius: 15px; width: 70%" alt="image">
                                 HTML;
                             }
                             if ($comment != "") {
                                 $messageHTML = <<< HTML
-                                    <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                    <div class="p-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
                                         <p class="small mb-0">$comment</p>
                                     </div>
                                 HTML;
@@ -55,22 +53,26 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                                 echo <<< HTML
                                 <div class="text-end" style="margin-right: 60px"><cite style="font-size: 13px">$userCommentID</cite></div>
                                 <div class="d-flex flex-row justify-content-end mb-4">
-                                    <div class="ms-3" style="border-radius: 15px;">
-                                        $imageHTML
+                                    <div class="ms-3 d-flex flex-column align-items-end" style="border-radius: 15px;">
+                                        <div class="d-flex justify-content-end">
+                                            $imageHTML
+                                        </div>
                                         $messageHTML
                                     </div>
                                     <img src="../assets/images/profilepicture.png"
-                                         alt="avatar 1" style="width: 45px; height: 100%;">
+                                         alt="avatar 1" style="width: 45px; height: 45px;">
                                 </div>
                                 HTML;
                             } else {
                                 echo <<< HTML
-                                <div class="text-start" style="margin-left: 90px"><cite style="font-size: 13px">$userCommentID</cite></div>
+                                <div class="text-start" style="margin-left: 60px"><cite style="font-size: 13px">$userCommentID</cite></div>
                                 <div class="d-flex flex-row justify-content-start mb-4">
                                     <img src="../assets/images/profilepicture.png"
                                          alt="avatar 1" style="width: 45px; height: 45px;">
-                                    <div class="ms-3" style="border-radius: 15px;">
-                                        $imageHTML
+                                    <div class="ms-3 d-flex flex-column align-items-start" style="border-radius: 15px;">
+                                        <div class="d-flex justify-content-start">
+                                            $imageHTML
+                                        </div>
                                         $messageHTML
                                     </div>
                                 </div>

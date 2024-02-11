@@ -6,8 +6,14 @@
         </form>
     </div>
 
+    <!-- Pour ajouter un nouveau forum -->
+    <div class="mt-5 text-center">
+        <p>Vous ne trouvez pas la réponse à votre question ? Créez un nouveau Forum !</p>
+        <a href="?controleur=forum&action=afficherCreerUnNouveauForum" class="btn btn-primary">Créez un nouveau Forum</a>
+    </div>
+
     <!-- Body -->
-    <div class="d-flex flex-column" style="margin-top: 50px">
+    <div class="d-flex flex-column mb-5" style="margin-top: 50px">
         <?php
         /** @var array $forums */
         foreach ($forums as $forum) {

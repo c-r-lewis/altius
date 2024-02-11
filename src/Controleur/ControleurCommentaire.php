@@ -16,7 +16,6 @@ class ControleurCommentaire extends ControleurGeneral
             if (ConnexionUtilisateur::getLoginUtilisateurConnecte() != "") {
                 $idCom = CommentRepository::addComment($_POST);
                 $uploadedFileName = $_FILES['image']['name'];
-                var_dump($_FILES);
                 if (isset($_FILES["image"]) && is_uploaded_file($_FILES['image']['tmp_name'])) {
                     if ($_FILES["image"]["error"] === UPLOAD_ERR_OK) {
                         // File is uploaded and error-free

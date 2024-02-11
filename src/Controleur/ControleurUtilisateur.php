@@ -14,11 +14,11 @@ class ControleurUtilisateur extends ControleurGeneral{
 
     public static function afficherPageInscription()
     {
-        ControleurGeneral::afficherVue("VueGenerale.php", array("cheminVueBody"=>"login/inscription.php"));
+        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"login/inscription.php"));
     }
 
     public static function  afficherPageLogin() {
-        ControleurGeneral::afficherVue("VueGenerale.php", array("cheminVueBody"=>"login/connexion.php", "pageConnexion"=>true));
+        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"login/connexion.php", "pageConnexion"=>true));
 
     }
 
@@ -31,22 +31,22 @@ class ControleurUtilisateur extends ControleurGeneral{
                 if (MotDePasse::verifier($_POST['mdp2'], $utilisateur->getMotDePasse())) {
                     if (VerificationEmail::aValideEmail($utilisateur)) {
                         ConnexionUtilisateur::connecter($_POST['login']);
-                        ControleurCalendrier::afficherDefaultPage();
+                        ControleurGeneral::afficherDefaultPage();
                     } else {
                        MessageFlash::ajouter("warning", "Veuillez valider votre email avant d'accéder au site.");
-                       ControleurGeneral::afficherDefaultPage();
+                       ControleurUtilisateur::afficherPageLogin();
                     }
                 } else {
                     MessageFlash::ajouter("warning", "Mot de passe incorrect.");
-                    ControleurGeneral::afficherDefaultPage();
+                    ControleurUtilisateur::afficherPageLogin();
                 }
             } else {
                 MessageFlash::ajouter("warning", "Utilisateur inconnu.");
-                ControleurGeneral::afficherDefaultPage();
+                ControleurUtilisateur::afficherPageLogin();
             }
         } else {
             MessageFlash::ajouter("warning", "Veuillez remplir tous les champs.");
-            ControleurGeneral::afficherDefaultPage();
+            ControleurUtilisateur::afficherPageLogin();
         }
     }
 

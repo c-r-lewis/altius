@@ -56,4 +56,10 @@ class EventRepository extends AbstractRepository
         $pdostatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         return $pdostatement->fetchAll();
     }
+
+    public static function getAllEventsTitle(): array {
+        $sql = "SELECT publicationID, title FROM EVENTS WHERE eventDate > NOW() ORDER BY title ASC";
+        $pdostatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
+        return $pdostatement->fetchAll();
+    }
 }
