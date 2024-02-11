@@ -31,7 +31,7 @@ class ControleurUtilisateur extends ControleurGeneral{
                 if (MotDePasse::verifier($_POST['mdp2'], $utilisateur->getMotDePasse())) {
                     if (VerificationEmail::aValideEmail($utilisateur)) {
                         ConnexionUtilisateur::connecter($_POST['login']);
-                        ControleurCalendrier::afficherDefaultPage();
+                        ControleurGeneral::afficherDefaultPage();
                     } else {
                        MessageFlash::ajouter("warning", "Veuillez valider votre email avant d'accéder au site.");
                        ControleurUtilisateur::afficherPageLogin();
