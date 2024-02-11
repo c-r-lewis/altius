@@ -18,8 +18,8 @@ class Forum extends AbstractDataObjectWithTime
         $this->eventID = $eventID;
     }
 
-    public static function createForumWithID(int $forumID, string $title, string $description, int $eventID): Forum {
-        $forum = new self($title, $description, $eventID);
+    public static function createForumWithID(int $forumID, string $title, string $description, ?int $eventID): Forum {
+        $forum = new self($title, $description, $eventID == null ? 0 : $eventID);
         $forum->forumID = $forumID;
         return $forum;
     }
