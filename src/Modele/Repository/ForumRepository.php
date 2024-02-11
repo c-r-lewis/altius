@@ -42,6 +42,16 @@ class ForumRepository extends AbstractRepository
         return $requete->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function addForum(array $forum): void
+    {
+        $eventID = $forum["event"] == "noEvent" ? null : $forum["event"];
+        $requete = ConnexionBaseDeDonnee::getPdo()->prepare("INSERT INTO FORUMS (title, description, eventID) VALUES (:title, :description, :eventID)");
+        $requete->bindParam(':title', $forum["title"]);
+        $requete->bindParam(':description', $forum["desc"]);
+        $requete->bindParam(':eventID', $eventID);
+        $requete->execute();
+    }
+
     protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject
     {
         return Forum::createForumWithID($objetFormatTableau["forumID"], $objetFormatTableau["title"], $objetFormatTableau["description"], $objetFormatTableau["eventID"]);
