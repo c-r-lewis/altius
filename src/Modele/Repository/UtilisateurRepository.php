@@ -34,20 +34,14 @@ class UtilisateurRepository extends AbstractRepository
         return array("login","estSuppr");
     }
 
-    public function ajouterAmis():void{
-        $sql = "INSERT INTO FRIENDS (user_login_1, user_login_2, status) VALUES (:login1, :login2, 'en attente')";
+    public function refuserAmi():void{
+        $sql = "UPDATE FRIENDS SET status = 'refusée' WHERE user_login_1 = :login1 AND user_login_2 = :login2";
         $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $requetePreparee->execute(array(":login1" => $_SESSION['login'], ":login2" => $_POST['login']));
     }
 
-    public function refuserAmis():void{
-        $sql = "INSERT INTO FRIENDS WHERE user_login_1 = :login1 AND user_login_2 = :login2 VALUE(:login1, :login2,'refuser')";
-        $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $requetePreparee->execute(array(":login1" => $_SESSION['login'], ":login2" => $_POST['login']));
-    }
-
-    public function accepterAmis():void{
-        $sql = "INSERT INTO FRIENDS WHERE user_login_1 = :login1 AND user_login_2 = :login2 VALUE('accepter')";
+    public function accepterAmi() : void{
+        $sql = "UPDATE FRIENDS SET status = 'acceptée' WHERE user_login_1 = :login1 AND user_login_2 = :login2";
         $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $requetePreparee->execute(array(":login1" => $_SESSION['login'], ":login2" => $_POST['login']));
     }
@@ -59,7 +53,7 @@ class UtilisateurRepository extends AbstractRepository
         $requetePreparee->execute(array(":login" => $login,"estSuppr"=>$estSuppr));
     }
 
-    protected function construireDepuisTableau(array $objetFormatTableau): Utilisateur
+    protected function construireDepuisTableau(array $objetFormatTableau): AbstractDataObject
     {
         return new Utilisateur( $objetFormatTableau["idUser"],
             $objetFormatTableau["login"],

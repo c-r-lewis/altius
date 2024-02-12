@@ -42,8 +42,8 @@ class ConnexionBaseDeDonnee {
     // appelé qu'une seule fois.
     // L'unique instance crée est stockée dans l'attribut $instance
     private static function getInstance() : ConnexionBaseDeDonnee {
-        // L'attribut statique $pdo s'obtient avec la syntaxe ConnexionBaseDeDonnee::$pdo
-        // au lieu de $this->pdo pour un attribut non statique
+        // L'attribut statique $pdo s'obtient avec la syntaxe ConnexionBaseDeDonnee:$pdo
+        // au lieu de $this→pdo pour un attribut non statique
         if (is_null(ConnexionBaseDeDonnee::$instance))
             // Appel du constructeur
             ConnexionBaseDeDonnee::$instance = new ConnexionBaseDeDonnee();

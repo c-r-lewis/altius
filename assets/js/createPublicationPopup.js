@@ -1,6 +1,6 @@
 
 // Carousel logic
-var currentSlideIndex;
+let currentSlideIndex;
 
 
 // Listener on create event popup
@@ -9,8 +9,7 @@ document.getElementById('popupCreate').addEventListener('show.bs.modal', functio
     currentSlideIndex = 1;
 });
 
-
-var fileInput;
+let fileInput;
 
 function loadCreatePublicationContent() {
     const container = document.getElementById("createContainer");
@@ -19,34 +18,23 @@ function loadCreatePublicationContent() {
     title.classList.remove('justify-content-between');
     title.classList.add('justify-content-center');
 
-    // Prepare the data to be sent in the POST request
-    const formData = new FormData();
-    formData.append('action', 'loadUploadImageContent');
-    formData.append('controleur', 'publication');
-
-    // Fetch the content through the controleurFrontal.php with a POST request
-    fetch('../web/controleurFrontal.php', {
-        method: 'POST',
-        body: formData
-    })
+    // Fetch the content of the PHP file
+    fetch('../../src/Vue/publication/uploadImage.php')
         .then(response => response.text())
         .then(htmlContent => {
             // Replace the content of the container with the fetched HTML
             container.innerHTML = htmlContent;
             fileInput = document.getElementById("newImage");
-            fileInput.addEventListener('change', loadMultipleImageChoice);
-            console.log(fileInput);
+            fileInput.addEventListener('change',loadMultipleImageChoice);
         })
         .catch(error => {
-            console.error('Error fetching content through controleurFrontal:', error);
+            console.error('Error fetching PHP file:', error);
         });
 }
 
-
-var nbImages = 1
+let nbImages = 1
 function loadMultipleImageChoice() {
     if (fileInput.files.length > 0) {
-        console.log(fileInput);
         const container = document.getElementById("createContainer");
 
         const title = document.getElementById("newPublicationTitle");
@@ -56,17 +44,9 @@ function loadMultipleImageChoice() {
         const nextBtn = document.getElementById('nextBtn');
         nextBtn.style.display = 'inline-block';
 
-        // Prepare the data to be sent in the POST request
-        const formData = new FormData();
-        formData.append('action', 'loadAddOtherImages');
-        formData.append('controleur', 'publication');
-
 
         // Fetch the content of the PHP file
-        fetch('../web/controleurFrontal.php', {
-            method: 'POST',
-            body: formData
-        })
+        fetch('../src/Vue/publication/addOtherImages.php')
             .then(response => response.text())
             .then(htmlContent => {
                 // Replace the content of the container with the fetched HTML
@@ -95,6 +75,7 @@ function loadMultipleImageChoice() {
                     const img3 = imgContainer.cloneNode(true);
                     img3.style.display = 'none'
                     fileInputContainer.appendChild(img3)
+
 
 
                     // Add on click listeners
@@ -203,17 +184,8 @@ function addDescriptionToEvent() {
         document.getElementById('leftButtonCreate').style.display = 'none'
 
 
-        // Prepare the data to be sent in the POST request
-        const formData = new FormData();
-        formData.append('action', 'loadCreatePublication');
-        formData.append('controleur', 'publication');
-
-
         // Fetch the content of the PHP file
-        fetch('../web/controleurFrontal.php', {
-            method: 'POST',
-            body: formData
-        })
+        fetch('../src/Vue/publication/createPublication.php')
             .then(response => response.text())
             .then(htmlContent => {
                 // Replace the content of the container with the fetched HTML
@@ -233,44 +205,32 @@ function addDescriptionToEvent() {
                     fileInput.append(clone);
                 });
 
+                // Add listener to submit button
                 submitButton.addEventListener('click', function() {
+                    const fileInputDiv = document.getElementById("fileInputContainer");
                     const form = document.getElementById("createPublicationForm");
 
-                    // Check if the form is valid
-                    if (!form.checkValidity()) {
-                        form.reportValidity(); // This will show the browser's default error messages
-                        return; // Prevent form submission
-                    }
-
-                    const fileInputDiv = document.getElementById("fileInputContainer");
-
-                    // Clear any previously added hidden inputs
-                    const oldInputs = form.querySelectorAll('.hidden-image-src');
-                    oldInputs.forEach(input => input.remove());
-
-                    // Find all images in fileInputDiv and append them as hidden inputs
+                    // Find all images in fileInputDiv
                     const images = fileInputDiv.querySelectorAll('img');
                     images.forEach((img, index) => {
+                        // Create a hidden input for each image
                         const hiddenInput = document.createElement('input');
                         hiddenInput.setAttribute('type', 'hidden');
                         hiddenInput.setAttribute('name', 'imageSrc[' + index + ']');
                         hiddenInput.setAttribute('value', img.src);
-                        hiddenInput.classList.add('hidden-image-src');
+                        hiddenInput.classList.add('hidden-image-src'); // Add a class for easy removal
+
+                        // Append the hidden input to the form
                         form.appendChild(hiddenInput);
                     });
 
                     form.submit();
                 });
 
-
                 const rightBtn = document.getElementById('rightButtonCreate')
                 rightBtn.addEventListener('click', goToNextSlide);
                 const leftBtn = document.getElementById('leftButtonCreate')
                 leftBtn.addEventListener('click', goToPrevSlide);
-
-                if (dateSelected) {
-                    document.getElementById('date').value = formattedDate;
-                }
 
             })
             .catch(error => {
@@ -314,17 +274,6 @@ function goToPrevSlide() {
     }
     showArrow('right')
     goToSlide(currentSlideIndex-1)
-}
-
-function validateDate(input) {
-    const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
-    if (!datePattern.test(input.value)) {
-        // Handle invalid date format
-        input.setCustomValidity("Date must be in jj/mm/aaaa format");
-    } else {
-        // Clear custom validity message
-        input.setCustomValidity("");
-    }
 }
 
 

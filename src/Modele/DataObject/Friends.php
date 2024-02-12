@@ -2,6 +2,8 @@
 
 namespace App\Altius\Modele\DataObject;
 
+use App\Altius\Modele\Repository\ConnexionBaseDeDonnee;
+
 class Friends extends AbstractDataObject
 {
 
@@ -29,6 +31,14 @@ class Friends extends AbstractDataObject
             return $this->id;
         }
 
+        public function getLoginParId(int $id): string
+        {
+            $sql = "SELECT login FROM User WHERE idUser = :id";
+            $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+            $requetePreparee->execute(array(":id" => $id));
+            $resultat = $requetePreparee->fetch();
+            return $resultat['login'];
+        }
         public function getUserLogin1(): string
         {
             return $this->user_login_1;

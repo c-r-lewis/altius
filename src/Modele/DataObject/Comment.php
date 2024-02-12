@@ -13,17 +13,16 @@ class Comment extends AbstractDataObjectWithTime
     private int $commentID;
 
 
-    public function __construct(string $userID, string $comment, string $datePosted, int $publicationID, ?int $replyToComment)
+    public function __construct(string $userID, string $comment, string $datePosted, ?int $replyToComment)
     {
         parent::__construct($datePosted);
         $this->userID = $userID;
         $this->comment = $comment;
-        $this->publicationID = $publicationID;
         $this->replyToCommentID = $replyToComment;
     }
 
-    public static function createCommentWithID(int $commentID, string $userID, string $comment, string $datePosted, int $publicationID, ?int $replyToComment): Comment {
-        $comment = new self($userID, $comment, $datePosted, $publicationID, $replyToComment);
+    public static function createCommentWithID(int $commentID, string $userID, string $comment, string $datePosted, ?int $replyToComment): Comment {
+        $comment = new self($userID, $comment, $datePosted, $replyToComment);
         $comment->commentID = $commentID;
         return $comment;
     }
