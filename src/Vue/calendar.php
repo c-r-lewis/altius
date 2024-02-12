@@ -11,7 +11,7 @@
 <div id="calendarInfo">
     <div id="calendar" style="min-height: 100vh; margin-top: 70px"></div>
 
-    <?php foreach ($publications as $publication) : ?>
+    <?php foreach ($publications as $publication) :?>
         <!-- Modal -->
         <div class="modal fade" id="<?=$publication->getID()?>">
             <div class="modal-dialog">
@@ -168,7 +168,7 @@
                             </div>
                         </div>
                         <?php
-                        if (in_array($publication, $publicationsLikedByConnectedUser)) : ?>
+                        if (in_array($publication->getID(), $publicationsLikedByConnectedUser)) :?>
                         <script>
                             document.addEventListener("DOMContentLoaded", function () {
                                 fillHeart(<?=$publication->getID()?>);

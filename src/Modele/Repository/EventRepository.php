@@ -46,7 +46,7 @@ class EventRepository extends AbstractRepository
         $pdoStatement->execute(array ('userIDTag'=>$userID));
         $likes = [];
         foreach ($pdoStatement as $objectFormatTableau) {
-            $likes[] = $this->construireDepuisTableau($objectFormatTableau);
+            $likes[] = ($this->construireDepuisTableau($objectFormatTableau))->getID();
         }
         return $likes;
     }

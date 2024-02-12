@@ -42,6 +42,7 @@ class ControleurPublication extends ControleurGenerique
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             $mime_type = $finfo->buffer($binaryData);
 
+            // TODO: redirect error with flash message
             // Create a suitable file extension based on the MIME type
             $extension = match ($mime_type) {
                 'image/jpeg' => 'jpg',

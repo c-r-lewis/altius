@@ -1171,6 +1171,6 @@ function showModal() {
 }
 
 
-myModal.addEventListener('hidden.bs.modal', function (event) {
+document.getElementById('popupCreate').addEventListener('hidden.bs.modal', function (event) {
     dateSelected = false;
 });
