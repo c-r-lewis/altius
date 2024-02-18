@@ -70,7 +70,7 @@ if (!isset($pageConnexion)) {
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
-                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>;
+                            <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>
                         </ul>
                     </li>
                     <?php endif;
