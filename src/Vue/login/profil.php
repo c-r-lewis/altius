@@ -1,20 +1,24 @@
+<?php
+/** @var array $dataUser */
+?>
+
 <section class="container">
     <!-- Heads -->
     <div class="d-flex align-items-center">
         <img src="../assets/images/profilepicture.png" alt="Profile Picture" style="width: 200px; height: 200px; margin-right: 5%">
         <div>
-            <h1>Pseudo</h1>
+            <h1><?= htmlspecialchars($dataUser['login'] ?? "") ?></h1>
             <div class="d-flex align-items-center justify-content-evenly">
-                <p>Nb publications</p>
-                <p style="margin-left: 50px;">Nb Amis?</p>
+                <p><?= htmlspecialchars($dataUser['nbEvents'] ?? "") ?> Évènements créés</p>
+                <p style="margin-left: 50px;"><?= htmlspecialchars($dataUser['nbAmis'] ?? "") ?> Amis</p>
             </div>
-            <p>Statut</p>
-            <p>Description</p>
+            <p><?= htmlspecialchars($dataUser['statut'] ?? "") ?></p>
+            <p><?= htmlspecialchars($dataUser['description'] ?? "") ?></p>
         </div>
 
     </div>
-    <div class="mt-5 text-center">
-        <h2>Mes publications</h2>
+    <div class="mt-5 mb-5 text-center">
+        <h2>Mes publications d'évènements</h2>
         <div class="row row-cols-1 row-cols-md-2 g-4">
             <div class="col">
                 <div class="card">

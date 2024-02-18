@@ -101,4 +101,16 @@ class UtilisateurRepository extends AbstractRepository
         $pdoStatment->execute($object->formatTableau());
         return $object;
     }
+
+    public function getProfileData(string $login): array{
+        $sql = "SELECT idUser, login, statut, u.description, COUNT(userID) AS nbEvents, COUNT(id_user_2) AS nbAmis 
+                FROM User u 
+                LEFT JOIN EVENTS e ON u.login = e.userID
+                LEFT JOIN FRIENDS f ON u.idUser = f.id_user_1
+                WHERE login = :login
+                GROUP BY idUser, login, statut, u.description;";
+        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatment->execute(array("login"=>$login));
+        return $pdoStatment->fetchAll();
+    }
 }

@@ -37,7 +37,19 @@ class ControleurGeneral extends ControleurGenerique
     }
 
     public static function afficherProfil(){
-        if(ConnexionUtilisateur::estConnecte())
-        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"login/profil.php"]);
+        if(ConnexionUtilisateur::estConnecte()) {
+            try {
+                $dataUser = (new UtilisateurRepository())->getProfileData(ConnexionUtilisateur::getLoginUtilisateurConnecte())[0];
+            } catch (\Exception $e) {
+                MessageFlash::ajouter("danger", "Ceci n'est pas censé arriver");
+                self::afficherDefaultPage();
+                return;
+            }
+//            var_dump($dataUser);
+            self::afficherVue("vueGenerale.php",["cheminVueBody"=>"login/profil.php", "dataUser"=>$dataUser]);
+        } else {
+            MessageFlash::ajouter("warning", "Vous devez être connecté pour accéder à cette page");
+            self::afficherDefaultPage();
+        }
     }
 }
