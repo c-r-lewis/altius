@@ -38,7 +38,7 @@ if (!isset($pageConnexion)) {
                             <a class="nav-link active" aria-current="page" href="?">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier">Evènements</a>
+                            <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier">Évènements</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="?controleur=forum&action=afficherDefaultPage">Forums</a>
@@ -69,6 +69,7 @@ if (!isset($pageConnexion)) {
                         </a>
                         <!-- Dropdown menu -->
                         <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="?controleur=general&action=afficherProfil">Profil</a></li>
                             <li><a class="dropdown-item" href="?controleur=general&action=afficherParametres">Paramètres</a></li>
                             <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>
                         </ul>
@@ -76,7 +77,7 @@ if (!isset($pageConnexion)) {
                     <?php endif;
                     elseif (!$pageConnexion):?>
                     <li class="nav-item">
-                        <a class="btn btn-primary" href="../web/controleurFrontal.php?controleur=utilisateur&action=afficherPageLogin">
+                        <a class="btn btn-primary" href="?controleur=utilisateur&action=afficherPageLogin">
                             Se connecter
                         </a>
                     </li>

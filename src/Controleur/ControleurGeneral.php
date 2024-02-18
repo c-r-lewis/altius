@@ -35,4 +35,9 @@ class ControleurGeneral extends ControleurGenerique
         if(ConnexionUtilisateur::estConnecte())
         self::afficherVue("vueGenerale.php",["cheminVueBody"=>"parametres.php","utilisateur"=>(new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte(),"estSuppr"=>0])]);
     }
+
+    public static function afficherProfil(){
+        if(ConnexionUtilisateur::estConnecte())
+        self::afficherVue("vueGenerale.php",["cheminVueBody"=>"login/profil.php"]);
+    }
 }
