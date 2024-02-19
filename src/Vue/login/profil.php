@@ -1,5 +1,6 @@
 <?php
 /** @var array $dataUser */
+/** @var array $publications */
 ?>
 
 <section class="container">
@@ -15,47 +16,28 @@
             <p><?= htmlspecialchars($dataUser['statut'] ?? "") ?></p>
             <p><?= htmlspecialchars($dataUser['description'] ?? "") ?></p>
         </div>
-
     </div>
     <div class="mt-5 mb-5 text-center">
-        <h2>Mes publications d'évènements</h2>
+        <h2>Mes publications d'évènement</h2>
         <div class="row row-cols-1 row-cols-md-2 g-4">
-            <div class="col">
-                <div class="card">
-                    <img src="../assets/images/logo.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="../assets/images/logo.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="../assets/images/logo.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="../assets/images/logo.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    </div>
-                </div>
-            </div>
+            <?php
+                foreach ($publications as $publication) {
+                    $titre = htmlspecialchars($publication['title']);
+                    $description = htmlspecialchars($publication['description']);
+                    $path = htmlspecialchars($publication['pathToImage'] ?? "");
+                    echo <<< HTML
+                        <div class="col">
+                            <div class="card">
+                                <img src="$path" class="card-img-top" alt="Pas d'image">
+                                <div class="card-body">
+                                    <h5 class="card-title">$titre</h5>
+                                    <p class="card-text">$description</p>
+                                </div>
+                            </div>
+                        </div>
+                    HTML;
+                }
+            ?>
         </div>
     </div>
 </section>

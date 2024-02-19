@@ -62,4 +62,11 @@ class EventRepository extends AbstractRepository
         $pdostatement = ConnexionBaseDeDonnee::getPdo()->query($sql);
         return $pdostatement->fetchAll();
     }
+
+    public function getByUserID(string $userID): array {
+        $sql = "SELECT * FROM EVENTS e LEFT JOIN IMAGES_PUBLICATIONS ip ON e.publicationID = ip.publicationID WHERE userID = :userIDTag";
+        $pdostatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdostatement->execute(array('userIDTag'=>$userID));
+        return $pdostatement->fetchAll();
+    }
 }
