@@ -25,25 +25,27 @@ if (!isset($pageConnexion)) {
         <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
             <!-- Container wrapper -->
             <div class="container-fluid">
-                <!-- Navbar brand -->
-                <a class="navbar-brand" href="?">
-                    <img src="../assets/images/logo.png" height="40" alt="" loading="lazy" />
-                </a>
+                <div class="d-flex align-items-center">
+                    <!-- Navbar brand -->
+                    <a class="navbar-brand" href="?">
+                        <img src="../assets/images/logo.png" height="40" alt="" loading="lazy" />
+                    </a>
 
-                <!-- Collapsible wrapper -->
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left links -->
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier">Évènements</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?controleur=forum&action=afficherDefaultPage">Forums</a>
-                        </li>
-                    </ul>
+                    <!-- Collapsible wrapper -->
+                    <div>
+                        <!-- Left links -->
+                        <ul class="mb-2 mb-lg-0 d-flex" style="list-style-type: none">
+                            <li style="margin-left: -10px">
+                                <a class="nav-link active" aria-current="page" href="?">Accueil</a>
+                            </li>
+                            <li style="margin-left: 15px">
+                                <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier">Évènements</a>
+                            </li>
+                            <li style="margin-left: 15px">
+                                <a class="nav-link active" aria-current="page" href="?controleur=forum&action=afficherDefaultPage">Forums</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- Left links -->
@@ -57,7 +59,6 @@ if (!isset($pageConnexion)) {
                             </svg>
                         </a>
                     </li>
-                    <?php if (ConnexionUtilisateur::estConnecte()):?>
                     <!-- Navbar dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -74,8 +75,7 @@ if (!isset($pageConnexion)) {
                             <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>
                         </ul>
                     </li>
-                    <?php endif;
-                    elseif (!$pageConnexion):?>
+                    <?php elseif (!$pageConnexion):?>
                     <li class="nav-item">
                         <a class="btn btn-primary" href="?controleur=utilisateur&action=afficherPageLogin">
                             Se connecter
