@@ -32,7 +32,9 @@ class ForumRepository extends AbstractRepository
            SELECT f.forumID, f.title, f.description, f.eventID, COUNT(commentID) AS nbMessage FROM FORUMS f
            LEFT JOIN COMMENTS ON f.forumID = COMMENTS.forumID
            WHERE LOWER(f.title) LIKE :motcle OR LOWER(f.description) LIKE :motcle
-           GROUP BY f.forumID, f.title, f.description, f.eventID");
+           GROUP BY f.forumID, f.title, f.description, f.eventID
+           ORDER BY nbMessage DESC
+           LIMIT 20");
 
         $motcleParam = '%' . strtolower($research) . '%';
         $requete->bindParam(':motcle', $motcleParam, PDO::PARAM_STR);

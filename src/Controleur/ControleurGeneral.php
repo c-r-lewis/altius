@@ -6,6 +6,7 @@ namespace App\Altius\Controleur;
 use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Lib\MessageFlash;
 use App\Altius\Modele\CSSLoader\HomePageCSSLoader;
+use App\Altius\Modele\Repository\EventRepository;
 use App\Altius\Modele\Repository\UtilisateurRepository;
 
 class ControleurGeneral extends ControleurGenerique
@@ -34,5 +35,24 @@ class ControleurGeneral extends ControleurGenerique
     public static function afficherParametres(){
         if(ConnexionUtilisateur::estConnecte())
         self::afficherVue("vueGenerale.php",["cheminVueBody"=>"parametres.php","utilisateur"=>(new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte(),"estSuppr"=>0])]);
+    }
+
+    public static function afficherProfil(){
+        if(ConnexionUtilisateur::estConnecte()) {
+            try {
+                $dataUser = (new UtilisateurRepository())->getProfileData(ConnexionUtilisateur::getLoginUtilisateurConnecte())[0];
+                $publications = (new EventRepository())->getByUserID($dataUser['login']);
+            } catch (\Exception $e) {
+                MessageFlash::ajouter("danger", "Ceci n'est pas censé arriver");
+                self::afficherDefaultPage();
+                return;
+            }
+//            var_dump($dataUser);
+//            var_dump($publications);
+            self::afficherVue("vueGenerale.php",["cheminVueBody"=>"login/profil.php", "dataUser"=>$dataUser, "publications"=>$publications]);
+        } else {
+            MessageFlash::ajouter("warning", "Vous devez être connecté pour accéder à cette page");
+            self::afficherDefaultPage();
+        }
     }
 }
