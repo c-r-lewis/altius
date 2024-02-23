@@ -125,4 +125,32 @@ class FriendsRepository extends AbstractRepository
         $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
         $requetePreparee->execute(array("idUserDemande"=>$idUserDemande,"idUserDemandeur"=>$idUserDemandeur));
     }
+
+    public function getNbAmis(int $idUser) : int{
+        $sql = "SELECT COUNT(id_user_demande) FROM FRIENDS WHERE id_user_demandeur = :idUser AND status ='accepter' ";
+        $values = array("idUser"=>$idUser);
+        $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $requetePreparee->execute($values);
+
+        $result=$requetePreparee->fetchAll()[0][0];
+
+        $sql = "SELECT COUNT(id_user_demandeur) FROM FRIENDS WHERE id_user_demande = :idUser AND status ='accepter'";
+        $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $requetePreparee->execute($values);
+
+        $result+=$requetePreparee->fetchAll()[0][0];
+         return $result;
+    }
+
+    public function getNbAmisCommun(int $idUser1, int $idUser2): int{
+        $amisUser1 = self::getAmis($idUser1);
+        $amisUser2 = self::getAmis($idUser2);
+        $compteur = 0;
+        foreach ($amisUser1 as $ami1){
+            foreach ($amisUser2 as $ami2){
+                if ($ami1["idUser"]==$ami2["idUser"]) $compteur+=1;
+            }
+        }
+        return $compteur;
+    }
 }

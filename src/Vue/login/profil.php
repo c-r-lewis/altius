@@ -1,8 +1,10 @@
 <?php
 /** @var array $dataUser */
-/** @var array $publications
- * @var bool $estUserCo
- * @var int $idUserCo*/
+/** @var array $publications */
+/** @var bool $estUserCo */
+/** @var int $idUserCo */
+/** @var int $nbAmis */
+/** @var int $nbEvents */
 ?>
 
 <section class="container-fluid p-4 border">
@@ -22,8 +24,8 @@
                 <div>
                     <h1><?= htmlspecialchars($dataUser['login'] ?? "") ?></h1>
                     <div class="d-flex align-items-center justify-content-evenly">
-                        <p><?= htmlspecialchars($dataUser['nbEvents'] ?? "") ?> Évènements créés</p>
-                        <p style="margin-left: 50px;"><?= htmlspecialchars($dataUser['nbAmis'] ?? "") ?> Amis</p>
+                        <p><?= htmlspecialchars($nbEvents) ?> Évènements créés</p>
+                        <p style="margin-left: 50px;"><?= htmlspecialchars($nbAmis) ?> Amis</p>
                     </div>
                     <p><?= htmlspecialchars($dataUser['statut'] ?? "") ?></p>
                     <p><?= htmlspecialchars($dataUser['description'] ?? "") ?></p>

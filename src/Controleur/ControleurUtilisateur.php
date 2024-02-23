@@ -221,7 +221,14 @@ class ControleurUtilisateur extends ControleurGeneral{
             $idUser1 = (new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser();
             $resultatRecherche = (new UtilisateurRepository())->rechercherByLogin($_POST["recherche"]);
             if(is_null($resultatRecherche)) $envoie[] = "aucun nom ne correspond";
-            else $envoie=$resultatRecherche;
+            else {
+                $envoie = array();
+                for($i=0;$i<count($resultatRecherche);$i++){
+                    $envoie[$i][0]=$resultatRecherche[$i][0];
+                    $envoie[$i][1]=$resultatRecherche[$i][1];
+                    $envoie[$i][2]=(new FriendsRepository())->getNbAmisCommun((new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser(),$resultatRecherche[$i][1]);
+                }
+            }
 
             self::afficherVue("vueGenerale.php",["cheminVueBody"=>"rechercheAmis/vueResultatRecherche.php","resultat"=>$envoie,"idUser1"=>$idUser1]);
         }

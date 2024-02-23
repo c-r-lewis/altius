@@ -69,4 +69,11 @@ class EventRepository extends AbstractRepository
         $pdostatement->execute(array('userIDTag'=>$userID));
         return $pdostatement->fetchAll();
     }
+
+    public function getNbEventsPostedByUser(string $userID): int {
+        $sql = "SELECT COUNT(*) FROM EVENTS WHERE userID = :userIDTag";
+        $pdostatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdostatement->execute(array('userIDTag'=>$userID));
+        return $pdostatement->fetch()[0];
+    }
 }

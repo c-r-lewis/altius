@@ -30,7 +30,9 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                         foreach ($messages as $message) {
                             $comment = htmlspecialchars($message["comment"] ?? "");
                             $login = htmlspecialchars($message["login"] ?? "");
+                            $loginUrl = urldecode($message["login"]);
                             $idUser = $message["userID"];
+                            $idUserUrl = urldecode($message['userID']);
                             $datePosted = htmlspecialchars($message["datePosted"] ?? "");
                             $pathToImage = htmlspecialchars($message["pathToImage"] ?? "");
                             $imageHTML = "";
@@ -60,16 +62,16 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                                         </div>
                                         $messageHTML
                                     </div>
-                                    <img src="../assets/images/profilepicture.png"
-                                         alt="avatar 1" style="width: 45px; height: 45px;">
+                                    <a href="?controleur=general&action=afficherProfil&idUser=$idUserUrl&login=$loginUrl"><img src="../assets/images/profilepicture.png"
+                                         alt="avatar 1" style="width: 45px; height: 45px;"></a>
                                 </div>
                                 HTML;
                             } else {
                                 echo <<< HTML
                                 <div class="text-start" style="margin-left: 60px"><cite style="font-size: 13px">$login</cite></div>
                                 <div class="d-flex flex-row justify-content-start mb-4">
-                                    <img src="../assets/images/profilepicture.png"
-                                         alt="avatar 1" style="width: 45px; height: 45px;">
+                                    <a href="?controleur=general&action=afficherProfil&idUser=$idUserUrl&login=$loginUrl"><img src="../assets/images/profilepicture.png"
+                                         alt="avatar 1" style="width: 45px; height: 45px;"></a>
                                     <div class="ms-3 d-flex flex-column align-items-start" style="border-radius: 15px;">
                                         <div class="d-flex justify-content-start">
                                             $imageHTML

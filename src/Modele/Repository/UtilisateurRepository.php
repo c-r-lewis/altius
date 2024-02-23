@@ -105,15 +105,12 @@ class UtilisateurRepository extends AbstractRepository
         return $object;
     }
 
-    public function getProfileData(string $login,int $idUser): array{
-        $sql = "SELECT idUser, login, statut, u.description, COUNT(userID) AS nbEvents, COUNT(id_user_demandeur) AS nbAmis 
+    public function getProfileData(int $idUser): array{
+        $sql = "SELECT idUser, login, statut, u.description
                 FROM User u 
-                LEFT JOIN EVENTS e ON u.login = e.userID
-                LEFT JOIN FRIENDS f ON u.idUser = f.id_user_demande
-                WHERE login = :login and idUser =:idUser
-                GROUP BY idUser, login, statut, u.description;";
+                WHERE idUser =:idUser;";
         $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $pdoStatement->execute(array("login"=>$login,"idUser"=>$idUser));
+        $pdoStatement->execute(array("idUser"=>$idUser));
         return $pdoStatement->fetchAll()[0];
     }
 

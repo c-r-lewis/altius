@@ -25,6 +25,7 @@
                     $idUrl= urldecode($listeDemandeAmis[$i]->getId());
                     $idUserUrl = urldecode($listeLoginAndIdDemandeur[$i][1]);
                     $loginUrl=urldecode($listeLoginAndIdDemandeur[$i][0]);
+                    $nbAmisCommunHtml = htmlspecialchars($listeLoginAndIdDemandeur[$i][2]);
                     ?>
                     <div class="friend-request-card">
                         <div class="user-profile">
@@ -33,7 +34,7 @@
                             </div>
                             <div class="user-details">
                                 <h2><?= $loginHTML ?></h2>
-                                <h2> [X] amis en commun</h2>
+                                <h2> <?= $nbAmisCommunHtml ?> amis en commun</h2>
                             </div>
                         </div>
                         <div class="friend-request-actions">

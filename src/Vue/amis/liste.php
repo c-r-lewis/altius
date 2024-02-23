@@ -24,6 +24,7 @@
                         $loginUrl=urldecode($login["login"]);
                         $idAmis = urldecode($login["id"]);
                         $idUserUrl = urldecode($login["idUser"]);
+                        $nbAmisCommunHtml = htmlspecialchars($login[3]);
                         echo '<div class="friend-request-card">
                         <div class="user-profile">
                             <div class="profile-picture">
@@ -31,7 +32,7 @@
                             </div>
                             <div class="user-details">
                                 <h2>'.$loginHTML.'</h2>
-                                <h2> [X] amis en commun</h2>
+                                <h2>'.$nbAmisCommunHtml.' amis en commun</h2>
                             </div>
                         </div>
                         <div class="friend-request-actions">

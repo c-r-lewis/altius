@@ -45,25 +45,37 @@ class ControleurGeneral extends ControleurGenerique
             if (!isset($_GET["idUser"])||!isset($_GET["login"])) {
                 $estUserCo = true;
                 try {
-                    $dataUser = (new UtilisateurRepository())->getProfileData(ConnexionUtilisateur::getLoginUtilisateurConnecte(),(new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser());
-                    $publications = (new EventRepository())->getByUserID($dataUser['login']);
+                    $dataUser = (new UtilisateurRepository())->getProfileData((new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser());
+                    $publications = (new EventRepository())->getByUserID($dataUser['idUser']);
+                    $nbAmis = (new FriendsRepository())->getNbAmis($dataUser['idUser']);
+                    $nbEvents = (new EventRepository())->getNbEventsPostedByUser($dataUser['idUser']);
                 } catch (\Exception $e) {
                     MessageFlash::ajouter("danger", "Ceci n'est pas censé arriver");
                     self::afficherDefaultPage();
                     return;
                 }
             } else {
-                $estUserCo = false;
+                if($_GET["login"]==ConnexionUtilisateur::getLoginUtilisateurConnecte()&& $_GET["idUser"]==(new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser())
+                $estUserCo = true;
+                else $estUserCo=false;
                 try {
-                    $dataUser = (new UtilisateurRepository())->getProfileData($_GET["login"],$_GET["idUser"]);
+                    $dataUser = (new UtilisateurRepository())->getProfileData($_GET["idUser"]);
                     $publications = (new EventRepository())->getByUserID($dataUser['login']);
+                    $nbAmis = (new FriendsRepository())->getNbAmis($_GET['idUser']);
+                    $nbEvents = (new EventRepository())->getNbEventsPostedByUser($_GET['idUser']);
                 } catch (\Exception $e) {
                     MessageFlash::ajouter("danger", "Ceci n'est pas censé arriver");
                     self::afficherDefaultPage();
                     return;
                 }
             }
-            self::afficherVue("vueGenerale.php", ["cheminVueBody" => "login/profil.php", "dataUser" => $dataUser, "publications" => $publications,"estUserCo"=>$estUserCo,"idUserCo"=>$idUserCo]);
+            self::afficherVue("vueGenerale.php", ["cheminVueBody" => "login/profil.php",
+                "dataUser" => $dataUser,
+                "publications" => $publications,
+                "estUserCo"=>$estUserCo,
+                "idUserCo"=>$idUserCo,
+                "nbAmis" => $nbAmis,
+                "nbEvents" => $nbEvents]);
         } else {
             MessageFlash::ajouter("warning", "Vous devez être connecté pour accéder à cette page");
             self::afficherDefaultPage();
@@ -74,6 +86,11 @@ class ControleurGeneral extends ControleurGenerique
         if(ConnexionUtilisateur::estConnecte()){
             $listeAmis = (new FriendsRepository())->getAmis(UtilisateurRepository::getIdByloginNonSuppr(ConnexionUtilisateur::getLoginUtilisateurConnecte()));
             if($listeAmis==null) $listeAmis[]="Vous n'avez pas d'amis";
+            else {
+                for($i=0;$i<count($listeAmis);$i++){
+                    $listeAmis[$i][3]=(new FriendsRepository())->getNbAmisCommun((new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser(),$listeAmis[$i]["idUser"]);
+                }
+            }
             self::afficherVue("vueGenerale.php",["cheminVueBody"=>"amis/liste.php","logins"=>$listeAmis]);
         }else self::afficherDefaultPage();
     }
@@ -87,6 +104,7 @@ class ControleurGeneral extends ControleurGenerique
                 $utilisateur = (new UtilisateurRepository())->recupererParClePrimaire(["idUser"=>$listeDemandeAmis[$i]->getIdUserDemandeur()]);
                 $listeLoginAndIdDemandeur[$i][]=$utilisateur->getLogin();
                 $listeLoginAndIdDemandeur[$i][]=$utilisateur->getIdUser();
+                $listeLoginAndIdDemandeur[$i][2]=(new FriendsRepository())->getNbAmisCommun((new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser(),$utilisateur->getIdUser());
             }
             self::afficherVue("vueGenerale.php",["cheminVueBody"=>"demandeAmis.php","listeDemandeAmis"=>$listeDemandeAmis,"listeLoginAndIdDemandeur"=>$listeLoginAndIdDemandeur]);
         }else self::afficherDefaultPage();
