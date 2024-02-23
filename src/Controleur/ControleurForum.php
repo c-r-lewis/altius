@@ -7,6 +7,7 @@ use App\Altius\Lib\MessageFlash;
 use App\Altius\Modele\Repository\CommentRepository;
 use App\Altius\Modele\Repository\EventRepository;
 use App\Altius\Modele\Repository\ForumRepository;
+use App\Altius\Modele\Repository\UtilisateurRepository;
 
 class ControleurForum extends ControleurGenerique
 {
@@ -54,7 +55,8 @@ class ControleurForum extends ControleurGenerique
         $idForum = $_GET["id"];
         ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"forum.php",
             "res" => CommentRepository::getCommentsByForum($idForum),
-            "forum" => (new ForumRepository())->recupererParClePrimaire(["forumID"=>$idForum])));
+            "forum" => (new ForumRepository())->recupererParClePrimaire(["forumID"=>$idForum]),
+            "userID" =>(new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser()));
     }
 
     static function afficherDefaultPage(): void {

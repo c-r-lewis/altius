@@ -4,9 +4,9 @@ use App\Altius\Modele\DataObject\Event;
 
 /** @var array $res */
 /** @var Event $forum */
+/** @var string $userID */
 $forumID = $res[0];
 $messages = $res[1];
-$userID = ConnexionUtilisateur::getLoginUtilisateurConnecte();
 
 $title = htmlspecialchars($forum->getTitle() ?? "Pas de titre");
 $description = htmlspecialchars($forum->getDescription() ?? "Pas de description");
@@ -29,7 +29,8 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                         <?php
                         foreach ($messages as $message) {
                             $comment = htmlspecialchars($message["comment"] ?? "");
-                            $userCommentID = htmlspecialchars($message["userID"] ?? "");
+                            $login = htmlspecialchars($message["login"] ?? "");
+                            $idUser = $message["userID"];
                             $datePosted = htmlspecialchars($message["datePosted"] ?? "");
                             $pathToImage = htmlspecialchars($message["pathToImage"] ?? "");
                             $imageHTML = "";
@@ -49,9 +50,9 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
 
                             // Si l'utilisateur est celui qui a posté le message, on affiche le message à droite sinon à gauche
                             // Avec l'image de profil à gauche ou à droite
-                            if ($userCommentID == $userID) {
+                            if ($idUser == $userID) {
                                 echo <<< HTML
-                                <div class="text-end" style="margin-right: 60px"><cite style="font-size: 13px">$userCommentID</cite></div>
+                                <div class="text-end" style="margin-right: 60px"><cite style="font-size: 13px">$login</cite></div>
                                 <div class="d-flex flex-row justify-content-end mb-4">
                                     <div class="ms-3 d-flex flex-column align-items-end" style="border-radius: 15px;">
                                         <div class="d-flex justify-content-end">
@@ -65,7 +66,7 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                                 HTML;
                             } else {
                                 echo <<< HTML
-                                <div class="text-start" style="margin-left: 60px"><cite style="font-size: 13px">$userCommentID</cite></div>
+                                <div class="text-start" style="margin-left: 60px"><cite style="font-size: 13px">$login</cite></div>
                                 <div class="d-flex flex-row justify-content-start mb-4">
                                     <img src="../assets/images/profilepicture.png"
                                          alt="avatar 1" style="width: 45px; height: 45px;">

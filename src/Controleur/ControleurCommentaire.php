@@ -7,6 +7,7 @@ use App\Altius\Lib\MessageFlash;
 use App\Altius\Modele\DataObject\Comment;
 use App\Altius\Modele\Repository\CommentImageRepository;
 use App\Altius\Modele\Repository\CommentRepository;
+use App\Altius\Modele\Repository\UtilisateurRepository;
 
 class ControleurCommentaire extends ControleurGeneral
 {

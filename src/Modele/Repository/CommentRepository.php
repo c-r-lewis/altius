@@ -62,7 +62,8 @@ class CommentRepository extends AbstractRepository
     }
     */
     public static function getCommentsByForum($forumID) : array {
-        $sql = "SELECT userID, comment, datePosted, replyToCommentID, pathToImage FROM COMMENTS c 
+        $sql = "SELECT userID, login, comment, datePosted, replyToCommentID, pathToImage FROM COMMENTS c 
+        JOIN User u ON u.idUser = c.userID
         LEFT JOIN IMAGES_COMMENTS i ON c.commentID = i.commentID 
         WHERE forumID = :forumIDTag 
         ORDER BY c.commentID ASC";
