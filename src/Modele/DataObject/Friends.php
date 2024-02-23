@@ -6,21 +6,31 @@ class Friends extends AbstractDataObject
 {
 
         private int $id;
-        private string $user_login_1;
-        private string $user_login_2;
+        private string $id_user_demande;
+        private string $id_user_demandeur;
         private string $status;
 
-        public function __construct(string $datePosted, string $user_login_1, string $user_login_2, string $status) {
-            $this->user_login_1 = $user_login_1;
-            $this->user_login_2 = $user_login_2;
-            $this->status = $status;
-        }
-        public function formatTableau(): array
+    /**
+     * @param int $id
+     * @param string $id_user_demande
+     * @param string $id_user_demandeur
+     * @param string $status
+     */
+    public function __construct(int $id, string $id_user_demande, string $id_user_demandeur, string $status)
+    {
+        $this->id = $id;
+        $this->id_user_demande = $id_user_demande;
+        $this->id_user_demandeur = $id_user_demandeur;
+        $this->status = $status;
+    }
+
+
+    public function formatTableau(): array
         {
             return [
                 "idTag"=>$this->id,
-                "user_login_1Tag"=>$this->user_login_1,
-                "user_login_2Tag"=>$this->user_login_2,
+                "id_user_demandeTag"=>$this->id_user_demande,
+                "id_user_demandeurTag"=>$this->id_user_demandeur,
                 "statusTag"=>$this->status];
         }
 
@@ -29,14 +39,14 @@ class Friends extends AbstractDataObject
             return $this->id;
         }
 
-        public function getUserLogin1(): string
+        public function getIdUserDemande(): string
         {
-            return $this->user_login_1;
+            return $this->id_user_demande;
         }
 
-        public function getUserLogin2(): string
+        public function getIdUserDemandeur(): string
         {
-            return $this->user_login_2;
+            return $this->id_user_demandeur;
         }
 
         public function getStatus(): string

@@ -6,6 +6,7 @@ use App\Altius\Lib\MotDePasse;
 use App\Altius\Lib\VerificationEmail;
 use App\Altius\Modele\DataObject\Utilisateur;
 use App\Altius\Modele\HTTP\Session;
+use App\Altius\Modele\Repository\FriendsRepository;
 use App\Altius\Modele\Repository\UtilisateurRepository;
 use App\Altius\Lib\MessageFlash;
 
@@ -25,7 +26,7 @@ class ControleurUtilisateur extends ControleurGeneral{
     public static function seConnecter(): void {
         if (isset($_POST['login']) && isset($_POST['mdp2'])) {
             $utilisateurRepo = new UtilisateurRepository();
-            $utilisateur = $utilisateurRepo->recupererParClePrimaire(["login"=>$_POST['login'],"estSuppr"=>0]);
+            $utilisateur = $utilisateurRepo->recupererLoginNonSupprimer($_POST['login']);
             /* @var Utilisateur $utilisateur */
             if ($utilisateur !== null && !$utilisateur->estSuppr()) {
                 if (MotDePasse::verifier($_POST['mdp2'], $utilisateur->getMotDePasse())) {
@@ -95,7 +96,7 @@ class ControleurUtilisateur extends ControleurGeneral{
     public static function modifierLogin() : void{
         $patern = '/\S/';
         if (ConnexionUtilisateur::estConnecte()){
-            $utilisateur= (new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte(),"estSuppr"=>0]);
+            $utilisateur= (new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte());
             if (!UtilisateurRepository::loginEstUtilise($_POST["ModifLogin"])){
                 $utilisateur->setLogin($_POST["ModifLogin"]);
                 (new UtilisateurRepository())->modifierValeurAttribut("login",$_POST["ModifLogin"],["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte(),"estSuppr"=>0]);
@@ -161,7 +162,7 @@ class ControleurUtilisateur extends ControleurGeneral{
     public static function modifierEmail() : void{
         if (ConnexionUtilisateur::estConnecte()){
             if (filter_var($_POST["ModifMail"],FILTER_VALIDATE_EMAIL)){
-                $utilisateur=(new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte(),"estSuppr"=>0]);
+                $utilisateur=(new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte());
                 $utilisateur->setNonce(VerificationEmail::genererNonceAleatoire());
                 $utilisateur->setEmail($_POST["ModifMail"]);
                 (new UtilisateurRepository())->mettreAJour($utilisateur);
@@ -180,7 +181,7 @@ class ControleurUtilisateur extends ControleurGeneral{
 
     public static function modifierMotDePasse() : void{
         if (ConnexionUtilisateur::estConnecte()){
-            $utilisateur = (new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte(),"estSuppr"=>0]);
+            $utilisateur = (new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte());
             if (MotDePasse::verifier($_POST['mdp1'],$utilisateur->getMotDePasse())){
                 if ($_POST["mdp2"]==$_POST["mdp3"]){
                     $mdpHache  = MotDePasse::hacher($_POST["mdp2"]);
@@ -203,14 +204,27 @@ class ControleurUtilisateur extends ControleurGeneral{
 
     public static function supprimerCompte() : void{
         if (ConnexionUtilisateur::estConnecte()){
-            $utilisateur = (new UtilisateurRepository())->recupererParClePrimaire(["login"=>ConnexionUtilisateur::getLoginUtilisateurConnecte(),"estSuppr"=>0]);
+            $utilisateur = (new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte());
             $utilisateur->setEstSuppr(1);
             (new UtilisateurRepository())->mettreAJour($utilisateur);
             MessageFlash::ajouter("success","Votre compte a bien été supprimé");
             ConnexionUtilisateur::deconnecter();
         }else{
             MessageFlash::ajouter("danger","Vous n'êtes pas connecté");
+            self::afficherListeAmis();
         }
         self::afficherDefaultPage();
     }
+
+    public static function selectionParRecherche() : void{
+        if(ConnexionUtilisateur::estConnecte()){
+            $idUser1 = (new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser();
+            $resultatRecherche = (new UtilisateurRepository())->rechercherByLogin($_POST["recherche"]);
+            if(is_null($resultatRecherche)) $envoie[] = "aucun nom ne correspond";
+            else $envoie=$resultatRecherche;
+
+            self::afficherVue("vueGenerale.php",["cheminVueBody"=>"rechercheAmis/vueResultatRecherche.php","resultat"=>$envoie,"idUser1"=>$idUser1]);
+        }
+    }
+
 }

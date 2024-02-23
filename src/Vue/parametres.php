@@ -29,114 +29,123 @@ echo <<<HTML
   </div>
 </div>
 
-<article class="container border rounded-4 p-4" xmlns="http://www.w3.org/1999/html">
+<article class="row container border rounded-4 p-4" xmlns="http://www.w3.org/1999/html">
+    <aside class="col-md-2 p-3 flex-shrink-0 bg-white sidebar overflow-y-scroll">
+        <ul class="list-unstyled ps-0 nav-pills ">
+            <li class=" nav-item mb-3"><a class="nav-link" href="?controleur=general&action=afficherProfil">Profil</a></li>
+            <li class="nav-item mb-3"><a class="nav-link" href="?controleur=general&action=afficherParametres">Paramètre</a></li>
+            <li class="nav-item mb-3"><a class="nav-link" href="?controleur=utilisateur&action=afficherListeAmis">Liste d'amis</a></li>
+            <li class="nav-item mb-3"><a class="nav-link" href="?controleur=general&action=afficherListeDemandeAmis">Demande d'amis</a></li>
+        </ul>
+    </aside>
 
-    <h1>Paramètres</h1>
-    <div class="list-group">
-        <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierLogin">
-            <div class="form-label row">
-                <label class="col-md-3"> Login actuel</label>
-                <div class="col-md-9">
-                    <span>$loginHTML</span>
+    <div class="col">
+        <h1>Paramètres</h1>
+        <div class="list-group">
+            <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierLogin">
+                <div class="form-label row">
+                    <label class="col-md-3"> Login actuel</label>
+                    <div class="col-md-9">
+                        <span>$loginHTML</span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-label row">
-                <label class="col-md-3" for="ModifLogin">nouveau login</label>
-                <div class="col-md-9">
-                    <input  id="ModifLogin" name="ModifLogin" type="text">
+                <div class="form-label row">
+                    <label class="col-md-3" for="ModifLogin">nouveau login</label>
+                    <div class="col-md-9">
+                        <input  id="ModifLogin" name="ModifLogin" type="text">
+                    </div>
                 </div>
-            </div>
-            <button class="form-label">Enregistrer</button>
-        </form>
-        <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierStatut">
-            <div class="form-label row">
-                <label class="col-md-3">Votre statut</label>
-                <div class="col-md-9">
-                    <span>$statutHTML</span>
+                <button class="form-label">Enregistrer</button>
+            </form>
+            <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierStatut">
+                <div class="form-label row">
+                    <label class="col-md-3">Votre statut</label>
+                    <div class="col-md-9">
+                        <span>$statutHTML</span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-label row">
-                <label class="col-md-3" for="ModifStatut">Nouveau statut</label>
-                <div id="statut" class="col-md-9">
-                    <select id="ModifStatut" name="ModifStatut" onchange="creerChampsAutre()">
-                        <option value="Statut de l'utilisateur">Statut de l'utilisateur</option>
-                        <option value="Organisateur">Organisateur</option>
-                        <option value="PMR">PMR</option>
-                        <option id="autre" value="autre">Autre...</option>
-                    </select>
+                <div class="form-label row">
+                    <label class="col-md-3" for="ModifStatut">Nouveau statut</label>
+                    <div id="statut" class="col-md-9">
+                        <select id="ModifStatut" name="ModifStatut" onchange="creerChampsAutre()">
+                            <option value="Statut de l'utilisateur">Statut de l'utilisateur</option>
+                            <option value="Organisateur">Organisateur</option>
+                            <option value="PMR">PMR</option>
+                            <option id="autre" value="autre">Autre...</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
         
-            <button class="form-label">Enregistrer</button>    
-        </form>
-        <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierVille">
-            <div class="form-label row">   
-                <label class="col-md-3">Ville de résidence actuelle</label>
-                <div class="col-md-9">
-                    <span>$villeHTML</span>
+                <button class="form-label">Enregistrer</button>    
+            </form>
+            <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierVille">
+                <div class="form-label row">   
+                    <label class="col-md-3">Ville de résidence actuelle</label>
+                    <div class="col-md-9">
+                        <span>$villeHTML</span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-label row">
-                <label class="col-md-3" for="ModifVilleResidence">Nouvelle ville de résidence</label>
-                <div class="col-md-9">
-                    <input id="ModifVilleResidence" name="ModifVilleResidence" type="search" placeholder="Ville de Résidence">
+                <div class="form-label row">
+                    <label class="col-md-3" for="ModifVilleResidence">Nouvelle ville de résidence</label>
+                    <div class="col-md-9">
+                        <input id="ModifVilleResidence" name="ModifVilleResidence" type="search" placeholder="Ville de Résidence">
+                    </div>
                 </div>
-            </div>
     
-            <button>Enregistrer</button>
+                <button>Enregistrer</button>
     
-        </form>
-        <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierEmail">
-            <div class="form-label row">
-                <label class="col-md-3">Votre adresse mail </label>
-                <div class="col-md-9">
-                    <span>$emailHTML</span>
+            </form>
+            <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierEmail">
+                <div class="form-label row">
+                    <label class="col-md-3">Votre adresse mail </label>
+                    <div class="col-md-9">
+                        <span>$emailHTML</span>
+                    </div>
                 </div>
-            </div>
-            <div class="form-label row">
-                <label class="col-md-3" for="ModifMail">Nouvelle adresse mail</label>
-                <div class="col-md-9">
-                    <input id="ModifMail" name="ModifMail" type="email">
+                <div class="form-label row">
+                    <label class="col-md-3" for="ModifMail">Nouvelle adresse mail</label>
+                    <div class="col-md-9">
+                        <input id="ModifMail" name="ModifMail" type="email">
+                    </div>
                 </div>
-            </div>
             
-            <button>Enregistrer</button>
-        </form>
-        <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierMotDePasse">
-            <div class="form-label row">
-                <label class="col-md-3" for="mdp1">Ancien mot de passe</label>
-                <div class="col-md-9">
-                    <input type="password" id="mdp1" name="mdp1">
+                <button>Enregistrer</button>
+            </form>
+            <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierMotDePasse">
+                <div class="form-label row">
+                    <label class="col-md-3" for="mdp1">Ancien mot de passe</label>
+                    <div class="col-md-9">
+                        <input type="password" id="mdp1" name="mdp1">
+                    </div>
                 </div>
-            </div>
-            <div class="form-label row">
-                <label class="col-md-3" for="mdp2">Nouveau mot de passe</label>
-                <div class="col-md-9">
-                    <input type="password" id=mdp2 name="mdp2">
+                <div class="form-label row">
+                    <label class="col-md-3" for="mdp2">Nouveau mot de passe</label>
+                    <div class="col-md-9">
+                        <input type="password" id=mdp2 name="mdp2">
+                    </div>
                 </div>
-            </div>
-            <div class="form-label row">
-                <label class="col-md-3" for="mdp3"> Confirmer le mot de passe</label>
-                <div class="col-md-9">
-                    <input id="mdp3" type="password" name="mdp3">
+                <div class="form-label row">
+                    <label class="col-md-3" for="mdp3"> Confirmer le mot de passe</label>
+                    <div class="col-md-9">
+                        <input id="mdp3" type="password" name="mdp3">
+                    </div>
                 </div>
-            </div>
         
-            <button> Enregistrer</button>
-        </form>
-        <div class="list-group-item">
-            <div class="form-label">
-                <p>
-                    <label for="deleteAccount" id="labelDeleteAccount">Supprimer mon Compte</label
-                </p>
-            </div>
-            <div class="form-label">
-                <p>
-                    <button id="deleteAccount" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#exampleModal">Supprimer</button>
-                </p>
+                <button> Enregistrer</button>
+            </form>
+            <div class="list-group-item">
+                <div class="form-label">
+                    <p>
+                        <label for="deleteAccount" id="labelDeleteAccount">Supprimer mon Compte</label
+                    </p>
+                </div>
+                <div class="form-label">
+                    <p>
+                        <button id="deleteAccount" name="deleteAccount" data-bs-toggle="modal" data-bs-target="#exampleModal">Supprimer</button>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-
 </article>
 HTML;

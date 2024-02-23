@@ -2,6 +2,7 @@
 
 namespace App\Altius\Modele\Repository;
 
+use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Modele\DataObject\AbstractDataObject;
 use App\Altius\Modele\DataObject\Utilisateur;
 
@@ -31,7 +32,20 @@ class UtilisateurRepository extends AbstractRepository
 
     protected function getClePrimaire(): array
     {
-        return array("login","estSuppr");
+        return array("idUser");
+    }
+
+    public function recupererLoginNonSupprimer(string $login) : ?Utilisateur{
+        $sql = "SELECT * FROM ". $this->getNomTable()." WHERE login =:login AND estSuppr=0;";
+
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+
+        $pdoStatement->execute(["login"=>$login]);
+        $objetFormatTableau = $pdoStatement->fetch();
+        if ($objetFormatTableau == null) {
+            return null;
+        }
+        return $this->construireDepuisTableau($objetFormatTableau);
     }
 
     public function ajouterAmis():void{
@@ -40,17 +54,6 @@ class UtilisateurRepository extends AbstractRepository
         $requetePreparee->execute(array(":login1" => $_SESSION['login'], ":login2" => $_POST['login']));
     }
 
-    public function refuserAmis():void{
-        $sql = "INSERT INTO FRIENDS WHERE user_login_1 = :login1 AND user_login_2 = :login2 VALUE(:login1, :login2,'refuser')";
-        $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $requetePreparee->execute(array(":login1" => $_SESSION['login'], ":login2" => $_POST['login']));
-    }
-
-    public function accepterAmis():void{
-        $sql = "INSERT INTO FRIENDS WHERE user_login_1 = :login1 AND user_login_2 = :login2 VALUE('accepter')";
-        $requetePreparee = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $requetePreparee->execute(array(":login1" => $_SESSION['login'], ":login2" => $_POST['login']));
-    }
 
     public function unsetNonce(string $login,int $estSuppr): void
     {
@@ -102,15 +105,31 @@ class UtilisateurRepository extends AbstractRepository
         return $object;
     }
 
-    public function getProfileData(string $login): array{
-        $sql = "SELECT idUser, login, statut, u.description, COUNT(userID) AS nbEvents, COUNT(id_user_2) AS nbAmis 
+    public function getProfileData(string $login,int $idUser): array{
+        $sql = "SELECT idUser, login, statut, u.description, COUNT(userID) AS nbEvents, COUNT(id_user_demandeur) AS nbAmis 
                 FROM User u 
                 LEFT JOIN EVENTS e ON u.login = e.userID
-                LEFT JOIN FRIENDS f ON u.idUser = f.id_user_1
-                WHERE login = :login
+                LEFT JOIN FRIENDS f ON u.idUser = f.id_user_demande
+                WHERE login = :login and idUser =:idUser
                 GROUP BY idUser, login, statut, u.description;";
+        $pdoStatement = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatement->execute(array("login"=>$login,"idUser"=>$idUser));
+        return $pdoStatement->fetchAll()[0];
+    }
+
+    public static function getIdByloginNonSuppr(string $login) : int{
+        $sql = "SELECT idUser FROM User WHERE login =:login AND estSuppr=0;";
         $pdoStatment = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
-        $pdoStatment->execute(array("login"=>$login));
-        return $pdoStatment->fetchAll();
+        $pdoStatment->execute(["login"=>$login]);
+        return $pdoStatment->fetch()[0];
+    }
+
+    public function rechercherByLogin(string $recherche) : ?array{
+        $sql = "SELECT login,idUser FROM User WHERE login LIKE :recherche;";
+        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatment->execute(["recherche"=>'%'.$recherche.'%']);
+        $result= $pdoStatment->fetchAll();
+        if (empty($result)) return null;
+        return $result;
     }
 }

@@ -15,25 +15,31 @@
 
                 <h1>Demandes d'amis</h1>
                 <?php /** @var Friends[] $listeDemandeAmis
-                * @var array $listeLoginDemandeur
+                * @var array $listeLoginAndIdDemandeur
                 */
 
                 use App\Altius\Modele\DataObject\Friends;
 
-                for ($i=0;$i<count($listeDemandeAmis);$i++): ?>
+                for ($i=0;$i<count($listeDemandeAmis);$i++):
+                    $loginHTML=htmlspecialchars($listeLoginAndIdDemandeur[$i][0]);
+                    $idUrl= urldecode($listeDemandeAmis[$i]->getId());
+                    $idUserUrl = urldecode($listeLoginAndIdDemandeur[$i][1]);
+                    $loginUrl=urldecode($listeLoginAndIdDemandeur[$i][0]);
+                    ?>
                     <div class="friend-request-card">
                         <div class="user-profile">
                             <div class="profile-picture">
                                 <img src="../../assets/images/inconnu-pp.png" alt="">
                             </div>
                             <div class="user-details">
-                                <h2><?= $listeLoginDemandeur[$i]?></h2>
+                                <h2><?= $loginHTML ?></h2>
                                 <h2> [X] amis en commun</h2>
                             </div>
                         </div>
                         <div class="friend-request-actions">
-                            <button class="button" id="button-primary">Confirmer</button>
-                            <button class="button" id="button-secondary">Supprimer</button>
+                            <a class="nav-link button" href="?controleur=friends&action=accepterDemande&id=<?=$idUrl?>" id="button-primary">Accepter</a>
+                            <a class="nav-link button" href="?controleur=friends&action=refuserDemande&id=<?=$idUrl?>" id="button-secondary">Refuser</a>
+                            <a class="nav-link button" href="?controleur=general&action=afficherProfil&idUser=<?=$idUserUrl?>&login=<?=$loginUrl?>" id="button-secondary">Voir Profil</a>
                         </div>
                     </div>
                 <?php endfor; ?>

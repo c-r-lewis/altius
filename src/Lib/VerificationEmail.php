@@ -22,7 +22,7 @@ class VerificationEmail
     public static function traiterEmailValidation($login, $nonce): bool
     {
         /* @var Utilisateur $utilisateur */
-        $utilisateur = (new UtilisateurRepository())->recupererParClePrimaire(["login"=>$login,"estSuppr"=>0]);
+        $utilisateur = (new UtilisateurRepository())->recupererLoginNonSupprimer($login);
         if(isset($utilisateur) && $utilisateur->getNonce() == $nonce) {
             $utilisateur->setNonce("");
             $estSuppr = $utilisateur->getEstSuppr();
