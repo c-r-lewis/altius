@@ -14,9 +14,11 @@ class VerificationEmail
         $nonceURL = rawurlencode($utilisateur->getNonce());
         $URLAbsolue = Configuration::getURLAbsolue();
         $lienValidationMail = "$URLAbsolue?action=validerMail&controleur=utilisateur&login=$loginURL&nonce=$nonceURL";
-        $corpsEmail = "<a href=\"$lienValidationMail\">Validation</a>";
+        $corpsEmail = "Bonjour,\n\n Merci pour votre inscription sur AltiusAsso.fr.
+        \n\nPour confirmer votre inscription, copiez/collez ce lien dans votre navigateur :\n
+        $lienValidationMail \n\n Nous vous remercions et vous souhaitons une argéable expérience sur notre site.";
 
-        mail($utilisateur->getEmail(), "Mail validation", $corpsEmail);
+        mail($utilisateur->getEmail(), "Altiusasso - confirmez votre email", $corpsEmail);
     }
 
     public static function traiterEmailValidation($login, $nonce): bool

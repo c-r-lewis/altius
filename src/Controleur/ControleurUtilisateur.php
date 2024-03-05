@@ -70,6 +70,7 @@ class ControleurUtilisateur extends ControleurGeneral{
                 $utlisateur->setNonce(VerificationEmail::genererNonceAleatoire());
                 (new UtilisateurRepository())->create($utlisateur);
                 VerificationEmail::envoiEmailValidation($utlisateur);
+                MessageFlash::ajouter("success", "Un email vous a été envoyé pour confirmer votre inscription.");
                 ControleurGeneral::afficherDefaultPage();
             }else{
                 MessageFlash::ajouter("danger","Login déjà existant");

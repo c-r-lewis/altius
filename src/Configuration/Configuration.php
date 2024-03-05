@@ -37,7 +37,6 @@ class Configuration {
     }
 
     static public function getURLAbsolue() : string {
-        return "localhost:8080/";
-        // TODO: Modifier l'URL absolue
+        return "altiusasso.fr";
     }
 }

@@ -1,7 +1,5 @@
 
 <div class="container mt-5">
-<p>En attendant que le site soit mis sur un serveur, on peut valider un compte par ce lien:</p>
-<a href="?controleur=utilisateur&action=validerMail&login=votreLogin&nonce=votreNonce">?controleur=utilisateur&action=validerMail&login=votreLogin&nonce=votreNoncegit </a>
 <div class="py-3 py-md-4 py-xl-8 d-flex align-items-center">
     <div class="container">
         <div class="row justify-content-md-center">
@@ -68,5 +66,4 @@
         </div>
     </div>
 </div>
-
-
+</div>
