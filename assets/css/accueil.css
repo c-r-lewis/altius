@@ -3,7 +3,7 @@ article {
 }
 
 body {
-    background-image: url("../images/accueilImage.jpg");
+    background-image: url("../images/accueilImage2.png");
     background-attachment:fixed;
     background-repeat: no-repeat;
     background-size:70%;
@@ -11,7 +11,7 @@ body {
     background-position-y: bottom;
 }
 @media (max-width: 700px){
-    #accueil {background-image:none;}
+    #accueil {background-image: none;}
     .mt-5:nth-child(2) {margin-top: 0 !important;}
 }
 
