@@ -12,8 +12,12 @@ body {
 }
 
 @media (max-width: 700px){
-    body {background-image:none;}
+    body {background-size:490px;}
     .mt-5:nth-child(2) {margin-top: 0 !important;}
+}
+
+@media (max-width:490px) {
+    body {background-position-x: center; background-size:98%}
 }
 
 button {
@@ -30,8 +34,7 @@ button:hover {
 }
 
 .container {
-    <!--background-color: rgb(207, 242, 224, 0.9);-->
-    border-radius: 20px;
+    border-radius: 5%;
 }
 
 .container > * {
