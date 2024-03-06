@@ -62,16 +62,19 @@ class Event extends AbstractDataObjectWithTime
         return $this->datePosted;
     }
 
-    public function getEventDate() : string {
-        $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
-        $formatter->setPattern("EEE d MMM");
+    public function getEventDate(): string {
         try {
             $date = new DateTime($this->eventDate);
-            return $formatter->format($date);
+            // Format the date to French format "EEE d MMM" equivalent
+            setlocale(LC_TIME, 'fr_FR', 'French');
+            // Note: PHP's date format is slightly different from IntlDateFormatter's
+            return strftime('%a %d %b', $date->getTimestamp());
         } catch (Exception $e) {
+            // Consider logging the error or handling it as appropriate for your application
         }
         return "";
     }
+
 
 
     public function getEventDateAsNumerical() : string
