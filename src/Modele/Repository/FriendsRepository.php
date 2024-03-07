@@ -51,8 +51,10 @@ class FriendsRepository extends AbstractRepository
 
     public function sontAmis(int $idUser1 , int $idUser2): bool{
         $amis = self::getAmis($idUser1);
-        foreach ($amis as $ami){
-            if ($ami["idUser"]==$idUser2) return true;
+        if ($amis != null) {
+            foreach ($amis as $ami){
+                if ($ami["idUser"]==$idUser2) return true;
+            }
         }
         return false;
     }

@@ -42,6 +42,7 @@
                                 </ul>
                             </div>
                         <?php endif; ?>
+                        <!-- End of dropdown for edit and delete -->
                     </div>
                     <div class="modal-body">
                         <!-- Conteneur des posts -->
@@ -70,6 +71,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- End of carousel -->
+                            <!-- Card body -->
                             <div class="card-body px-1">
                                 <div class="row">
                                     <span class="stand-out" style="font-weight: bold">Date évènement : </span>
@@ -100,22 +103,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p class="card-text nbLikes<?= $publication->getID(); ?>"><?= $nbLikes[$publication->getID()] ?>
-                                    J'aime</p>
+                                <!-- End of interact buttons -->
+                                <p class="card-text nbLikes<?=$publication->getID()?>"><?=$nbLikes[$publication->getID()]?>
+                                    J'aime
+                                </p>
                             </div>
+                            <!-- End of card body -->
                             <div class="card-footer bg-transparent"></div>
-                            <p class="card-text"><?= $publication->getDescription() ?></p>
+                            <p class="card-text"><?=$publication->getDescription()?></p>
                         </article>
+
                         <!-- Comments popup -->
-                        <div class="modal fade comment-popup" id="popup<?= $publication->getID(); ?>" tabindex="-1" aria-hidden="true">
+                        <div class="modal fade comment-popup" id="popup<?=$publication->getID()?>" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="container">
                                         <div class="row">
-                                            <div class="col-4 d-flex align-items-center justify-content-center border-end">
-                                                <img src="<?php //$publication->getPathToImage() ?>" class="img-fluid"
-                                                     alt="Image évènement">
-                                            </div>
                                             <div class="col-8 p-0 d-flex flex-column">
                                                 <div class="modal-header">
                                                     <div class="modal-title" id="popupLabel"><?= $publication->getTitle() ?>&nbsp;-&nbsp;<?= $publication->getEventDate() ?></div>
@@ -167,15 +170,17 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- End comments popup -->
                         <?php
                         if (in_array($publication->getID(), $publicationsLikedByConnectedUser)) :?>
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function () {
-                                fillHeart(<?=$publication->getID()?>);
-                            });
-                        </script>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    fillHeart(<?=$publication->getID()?>);
+                                });
+                            </script>
                         <?php endif;?>
                     </div>
+                    <!-- End of modal body -->
                 </div>
             </div>
         </div>

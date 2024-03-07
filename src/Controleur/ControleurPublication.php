@@ -77,6 +77,7 @@ class ControleurPublication extends ControleurGenerique
             $imageRepository->deleteByID(array($image->getPathToImage()));
         }
         $publicationRepository->deleteByID(array($_POST["publicationID"]));
+        ControleurCalendrier::afficherDefaultPage();
     }
 
     static function editPublication() : void  {
