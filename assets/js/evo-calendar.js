@@ -22,7 +22,7 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
 let formattedDate = today.toLocaleDateString('en-US', options);
 let dateSelected = false;
 
-(function(factory) {
+;(function(factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
@@ -450,31 +450,31 @@ let dateSelected = false;
         // IF sidebarToggler: set event listener: toggleSidebar
         if(_.options.sidebarToggler) {
             _.$elements.sidebarToggler
-            .off('click.evocalendar')
-            .on('click.evocalendar', _.toggleSidebar);
+                .off('click.evocalendar')
+                .on('click.evocalendar', _.toggleSidebar);
         }
 
         // IF eventListToggler: set event listener: toggleEventList
         if(_.options.eventListToggler) {
             _.$elements.eventListToggler
-            .off('click.evocalendar')
-            .on('click.evocalendar', _.toggleEventList);
+                .off('click.evocalendar')
+                .on('click.evocalendar', _.toggleEventList);
         }
 
         // set event listener for each month
         _.$elements.sidebarEl.find('[data-month-val]')
-        .off('click.evocalendar')
-        .on('click.evocalendar', _.selectMonth);
+            .off('click.evocalendar')
+            .on('click.evocalendar', _.selectMonth);
 
         // set event listener for year
         _.$elements.sidebarEl.find('[data-year-val]')
-        .off('click.evocalendar')
-        .on('click.evocalendar', _.selectYear);
+            .off('click.evocalendar')
+            .on('click.evocalendar', _.selectYear);
 
         // set event listener for every event listed
         _.$elements.eventEl.find('[data-event-index]')
-        .off('click.evocalendar')
-        .on('click.evocalendar', _.selectEvent);
+            .off('click.evocalendar')
+            .on('click.evocalendar', _.selectEvent);
     };
 
     // v1.0.0 - Destroy event listeners
@@ -487,30 +487,30 @@ let dateSelected = false;
         // IF sidebarToggler: remove event listener: toggleSidebar
         if(_.options.sidebarToggler) {
             _.$elements.sidebarToggler
-            .off('click.evocalendar');
+                .off('click.evocalendar');
         }
 
         // IF eventListToggler: remove event listener: toggleEventList
         if(_.options.eventListToggler) {
             _.$elements.eventListToggler
-            .off('click.evocalendar');
+                .off('click.evocalendar');
         }
 
         // remove event listener for each day
         _.$elements.innerEl.find('.calendar-day').children()
-        .off('click.evocalendar')
+            .off('click.evocalendar')
 
         // remove event listener for each month
         _.$elements.sidebarEl.find('[data-month-val]')
-        .off('click.evocalendar');
+            .off('click.evocalendar');
 
         // remove event listener for year
         _.$elements.sidebarEl.find('[data-year-val]')
-        .off('click.evocalendar');
+            .off('click.evocalendar');
 
         // remove event listener for every event listed
         _.$elements.eventEl.find('[data-event-index]')
-        .off('click.evocalendar');
+            .off('click.evocalendar');
     };
 
     // v1.0.0 - Calculate days (incl. monthLength, startingDays based on :firstDayOfWeekName)
@@ -537,12 +537,11 @@ let dateSelected = false;
     }
 
     // v1.0.0 - Build the bones! (incl. sidebar, inner, events), called once in every initialization
-    EvoCalendar.prototype.buildTheBones = async function() {
+    EvoCalendar.prototype.buildTheBones = function() {
         var _ = this;
         _.calculateDays();
 
         if (!_.$elements.calendarEl.html()) {
-
             var markup;
 
             // --- BUILDING MARKUP BEGINS --- //
@@ -580,10 +579,17 @@ let dateSelected = false;
             markup += '</tr></table>'+
                 '</div>';
 
-
-            // Events
-            const calendarMarkup = await buildCalendarMarkup();
-            markup += calendarMarkup;
+            // events
+            markup += '<div class="calendar-events">'+
+                '<div class="event-header"><p></p></div>'+
+                '<div class="event-list"></div>'+
+                '<button class="btn" style="color: white" onclick="loadCreatePublicationContentWithDate()">' +
+                '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-plus-circle" viewBox="0 0 16 16">\n' +
+                '  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>\n' +
+                '  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>\n' +
+                '</svg>' + '                   Ajouter un évènement' +
+                '           </button>'+
+                '</div>';
 
             // --- Finally, build it now! --- //
             _.$elements.calendarEl.html(markup);
@@ -638,7 +644,7 @@ let dateSelected = false;
                         eventAdder(_.options.calendarEvents[i])
                     }
                 }
-            }
+            };
         }
         function eventAdder(event) {
             hasEventToday = true;
@@ -723,31 +729,31 @@ let dateSelected = false;
         _.$elements.innerEl.find('.calendar-body').remove(); // Clear days
 
         markup += '<tr class="calendar-body">';
-                    var day = 1;
-                    for (var i = 0; i < 9; i++) { // this loop is for is weeks (rows)
-                        for (var j = 0; j < _.$label.days.length; j++) { // this loop is for weekdays (cells)
-                            if (day <= _.monthLength && (i > 0 || j >= _.startingDay)) {
-                                var dayClass = "calendar-day";
-                                if (_.$label.days[j] === _.initials.weekends.sat || _.$label.days[j] === _.initials.weekends.sun) {
-                                    dayClass += ' --weekend'; // add '--weekend' to sat sun
-                                }
-                                markup += '<td class="'+dayClass+'">';
-
-                                var thisDay = _.formatDate(_.$label.months[_.$active.month]+' '+day+' '+_.$active.year, _.options.format);
-                                markup += '<div class="day" role="button" data-date-val="'+thisDay+'">'+day+'</div>';
-                                day++;
-                            } else {
-                                markup += '<td>';
-                            }
-                            markup += '</td>';
-                        }
-                        if (day > _.monthLength) {
-                            break; // stop making rows if we've run out of days
-                        } else {
-                            markup += '</tr><tr class="calendar-body">'; // add if not
-                        }
+        var day = 1;
+        for (var i = 0; i < 9; i++) { // this loop is for is weeks (rows)
+            for (var j = 0; j < _.$label.days.length; j++) { // this loop is for weekdays (cells)
+                if (day <= _.monthLength && (i > 0 || j >= _.startingDay)) {
+                    var dayClass = "calendar-day";
+                    if (_.$label.days[j] === _.initials.weekends.sat || _.$label.days[j] === _.initials.weekends.sun) {
+                        dayClass += ' --weekend'; // add '--weekend' to sat sun
                     }
-                    markup += '</tr>';
+                    markup += '<td class="'+dayClass+'">';
+
+                    var thisDay = _.formatDate(_.$label.months[_.$active.month]+' '+day+' '+_.$active.year, _.options.format);
+                    markup += '<div class="day" role="button" data-date-val="'+thisDay+'">'+day+'</div>';
+                    day++;
+                } else {
+                    markup += '<td>';
+                }
+                markup += '</td>';
+            }
+            if (day > _.monthLength) {
+                break; // stop making rows if we've run out of days
+            } else {
+                markup += '</tr><tr class="calendar-body">'; // add if not
+            }
+        }
+        markup += '</tr>';
         _.$elements.innerEl.find('.calendar-table').append(markup);
 
         if(_.options.todayHighlight) {
@@ -756,8 +762,8 @@ let dateSelected = false;
 
         // set event listener for each day
         _.$elements.innerEl.find('.calendar-day').children()
-        .off('click.evocalendar')
-        .on('click.evocalendar', _.selectDate)
+            .off('click.evocalendar')
+            .on('click.evocalendar', _.selectDate)
 
         var selectedDate = _.$elements.innerEl.find("[data-date-val='" + _.$active.date + "']");
 
@@ -844,8 +850,8 @@ let dateSelected = false;
     };
 
     /****************
-    *    METHODS    *
-    ****************/
+     *    METHODS    *
+     ****************/
 
     // v1.0.0 - Build event indicator on each date
     EvoCalendar.prototype.buildEventIndicator = function() {
@@ -1168,20 +1174,3 @@ function showModal() {
 document.getElementById('popupCreate').addEventListener('hidden.bs.modal', function (event) {
     dateSelected = false;
 });
-
-async function buildCalendarMarkup() {
-    const formData = new FormData();
-    formData.append('action', 'addEventWithDateButton');
-    formData.append('controleur', 'publication');
-
-    try {
-        const response = await fetch('../web/controleurFrontal.php', {
-            method: 'POST',
-            body: formData
-        });
-        return await response.json();
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return "";
-    }
-}
