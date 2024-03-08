@@ -91,7 +91,7 @@ if (!isset($pageConnexion)) {
         </nav>
         <!-- Navbar -->
 
-        <div class="container" style="margin-top: 70px">
+        <div class="container" style="margin-top: 88px">
             <!-- Messages flash -->
             <?php
             /** @var string[][] $messagesFlash */
