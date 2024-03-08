@@ -2,13 +2,15 @@ article {
     padding: 1rem 1rem 1rem 1.5rem;
 }
 
-body {
-    background-image: url("../images/accueilImage2.png");
-    background-attachment:fixed;
-    background-repeat: no-repeat;
-    background-size:50%;
-    background-position-x: right;
-    background-position-y: bottom;
+@media (min-width: 1000px) {
+    body {
+        background-image: url("../images/accueilImage2.png");
+        background-attachment:fixed;
+        background-repeat: no-repeat;
+        background-size:100%;
+        background-position-x: right;
+        background-position-y: top;
+    }
 }
 @media (max-width: 700px){
     #accueil {background-image: none;}
