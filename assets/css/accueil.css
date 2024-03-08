@@ -4,7 +4,7 @@ article {
 
 @media (min-width: 1000px) {
     body {
-        background-image: url("../images/accueilImage2.png");
+        background-image: url("../images/fondImageAccueil.png");
         background-attachment:fixed;
         background-repeat: no-repeat;
         background-size:100%;
