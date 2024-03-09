@@ -23,73 +23,74 @@ if (!isset($pageConnexion)) {
     <body>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-            <!-- Container wrapper -->
             <div class="container-fluid">
-                <div class="d-flex align-items-center">
-                    <!-- Navbar brand -->
-                    <a class="navbar-brand" href="?">
-                        <img src="../assets/images/logo.png" height="40" alt="" loading="lazy" />
-                    </a>
-
-                    <!-- Collapsible wrapper -->
-                    <div>
-                        <!-- Left links -->
-                        <ul class="mb-2 mb-lg-0 d-flex" style="list-style-type: none">
-                            <li style="margin-left: -10px">
-                                <a class="nav-link active" aria-current="page" href="?">Accueil</a>
-                            </li>
-                            <li style="margin-left: 15px">
-                                <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier">Évènements</a>
-                            </li>
-                            <li style="margin-left: 15px">
-                                <a class="nav-link active" aria-current="page" href="?controleur=forum&action=afficherDefaultPage">Forums</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Left links -->
-                <ul class="navbar-nav mb-0 d-flex flex-row">
+                <!-- Navbar brand -->
+                <a class="navbar-brand" href="?">
+                    <img src="../assets/images/logo.png" height="40" alt="" loading="lazy" />
+                </a>
+                <!-- Toggle button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- Collapsible wrapper -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Left links -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="?">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier">Évènements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="?controleur=forum&action=afficherDefaultPage">Forums</a>
+                        </li>
+                    </ul>
+                    <!-- Right links end -->
                     <?php if(ConnexionUtilisateur::estConnecte()):?>
-                        <li class="nav-item">
-                            <a class="nav-link px-1" role="button" href="?controleur=general&action=afficherRechercheAmis">
-                                <img src="../assets/images/ajoutAmi.png" width="25" height="25" alt="image ajout">
+                        <div class="ms-auto d-flex flex-lg-row justify-content-end" id="connectedUserMenu">
+                            <!-- Logged in user menu -->
+                            <li class="nav-item">
+                                <a class="nav-link px-1" role="button" href="?controleur=general&action=afficherRechercheAmis">
+                                    <img src="../assets/images/ajoutAmi.png" width="25" height="25" alt="image ajout">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link px-1" role="button" data-bs-toggle="modal" data-bs-target="#popupCreate">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                    </svg>
+                                </a>
+                            </li>
+                            <!-- Navbar dropdown -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                                    </svg>
+                                </a>
+                                <!-- Dropdown menu -->
+                                <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="?controleur=general&action=afficherProfil">Profil</a></li>
+                                    <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>
+                                </ul>
+                            </li>
+                            <!-- End logged in user menu -->
+                        </div>
+                    <!-- Logged out user menu -->
+                    <?php elseif (!$pageConnexion): ?>
+                        <div class="d-flex justify-content-end">
+                            <a class="btn btn-primary" href="?controleur=utilisateur&action=afficherPageLogin">
+                                Se connecter
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link px-1" role="button" data-bs-toggle="modal" data-bs-target="#popupCreate">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                </svg>
-                            </a>
-                        </li>
-                        <!-- Navbar dropdown -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                                </svg>
-                            </a>
-                            <!-- Dropdown menu -->
-                            <ul class="dropdown-menu dropdown-menu-end p-1" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="?controleur=general&action=afficherProfil">Profil</a></li>
-                                <li><a class="dropdown-item" href="?controleur=utilisateur&action=seDeconnecter">Déconnexion</a></li>
-                            </ul>
-                        </li>
-                    <?php elseif (!$pageConnexion):?>
-                    <li class="nav-item">
-                        <a class="btn btn-primary" href="?controleur=utilisateur&action=afficherPageLogin">
-                            Se connecter
-                        </a>
-                    </li>
+                        </div>
                     <?php endif;?>
-                </ul>
+                </div>
             </div>
         </nav>
-        <!-- Navbar -->
 
         <div class="container" style="margin-top: 70px">
             <!-- Messages flash -->

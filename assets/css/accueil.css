@@ -15,6 +15,10 @@ body {
     .mt-5:nth-child(2) {margin-top: 0 !important;}
 }
 
+#connectedUserMenu li {
+    list-style-type: none;
+}
+
 button {
     margin: 10px;
     background-color: #b2e3dc;
