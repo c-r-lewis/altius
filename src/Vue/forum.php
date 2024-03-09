@@ -12,7 +12,7 @@ $title = htmlspecialchars($forum->getTitle() ?? "Pas de titre");
 $description = htmlspecialchars($forum->getDescription() ?? "Pas de description");
 ?>
 
-<section class="mt-5">
+<section style="margin-top: 100px">
     <div class="container py-5">
         <div class="row d-flex justify-content-center">
             <div class="col-sm-10 col-md-8 col-lg-10 col-xl-10">

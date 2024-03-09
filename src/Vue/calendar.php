@@ -9,7 +9,7 @@
 /** @var array $images */
 ?>
 <div id="calendarInfo">
-    <div id="calendar" style="min-height: 100vh; margin-top: 70px"></div>
+    <div id="calendar" style="min-height: 100vh; margin-top: 100px"></div>
 
     <?php foreach ($publications as $publication) :?>
         <!-- Modal -->

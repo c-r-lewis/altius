@@ -85,13 +85,14 @@ class ControleurUtilisateur extends ControleurGeneral{
     public static function validerMail() : void{
         if (isset($_GET['login']) && isset($_GET['nonce'])) {
             if (VerificationEmail::traiterEmailValidation($_GET['login'], $_GET['nonce'])) {
-                ControleurGeneral::afficherDefaultPage();
+                MessageFlash::ajouter("success", "Votre email a été confirmé !");
             } else {
-                self::afficherVueErreur("Erreur de validation");
+                MessageFlash::ajouter("warning", "Erreur de validation");
             }
         } else {
-            self::afficherVueErreur("Erreur de validation");
+            MessageFlash::ajouter("warning", "Erreur de validation");
         }
+        ControleurGeneral::afficherDefaultPage();
     }
 
     public static function modifierLogin() : void{

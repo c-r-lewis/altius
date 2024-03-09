@@ -2,16 +2,17 @@ article {
     padding: 1rem 1rem 1rem 1.5rem;
 }
 
-body {
-    background-image: url("../images/accueilImage.jpg");
-    background-attachment:fixed;
-    background-repeat: no-repeat;
-    background-size:70%;
-    background-position-x: right;
-    background-position-y: bottom;
+@media (min-width: 1000px) {
+    body {
+        background-image: url("../images/fondImageAccueil.png");
+        background-attachment:fixed;
+        background-repeat: no-repeat;
+        background-size:100%;
+        background-position-x: right;
+        background-position-y: top;
+    }
 }
 @media (max-width: 700px){
-    #accueil {background-image:none;}
     .mt-5:nth-child(2) {margin-top: 0 !important;}
 }
 
