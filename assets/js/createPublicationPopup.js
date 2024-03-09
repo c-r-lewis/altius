@@ -25,7 +25,7 @@ function loadCreatePublicationContent() {
     formData.append('controleur', 'publication');
 
     // Fetch the content through the controleurFrontal.php with a POST request
-    fetch('../web/controleurFrontal.php', {
+    fetch('controleurFrontal.php', {
         method: 'POST',
         body: formData
     })

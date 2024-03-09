@@ -37,6 +37,6 @@ class Configuration {
     }
 
     static public function getURLAbsolue() : string {
-        return "altiusasso.fr";
+        return "https://altiusasso.fr/web/controleurFrontal.php";
     }
 }

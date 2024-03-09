@@ -1,4 +1,4 @@
-<section class="container">
+<section class="container" style="margin-top: 150px">
     <div>
         <form class="d-flex" role="search" method="POST" action="?controleur=forum&action=afficherListeForum">
             <input class="form-control me-2" name="research" type="search" placeholder="Rechercher" aria-label="Search">

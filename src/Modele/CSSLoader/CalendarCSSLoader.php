@@ -15,7 +15,7 @@ class CalendarCSSLoader extends CSSLoader{
         return <<< HTML
             <!-- jQuery -->
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-        <script src="../assets/js/evo-calendar.js"></script>
+        <script src="../assets/js/evocalendar.js"></script>
         HTML;
     }
 }

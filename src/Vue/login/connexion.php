@@ -51,8 +51,8 @@
                     <div class="row">
                         <div class="col-12">
                             <hr class="mt-4 mb-2 border-secondary-subtle">
-                            <div class="d-flex gap-2 flex-column flex-md-row justify-content-md-center">
-                                <a href="?controleur=utilisateur&action=afficherPageInscription" class="link-primary text-decoration-none">S'inscrire</a>
+                            <div class="d-flex gap-2 flex-column flex-md-row justify-content-center">
+                                <a href="?controleur=utilisateur&action=afficherPageInscription" class="link-primary text-decoration-none text-center">S'inscrire</a>
                             </div>
                         </div>
                     </div>
