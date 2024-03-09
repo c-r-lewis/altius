@@ -29,7 +29,7 @@ if (!isset($pageConnexion)) {
     <body>
     <!-- Loader -->
     <div id="loader-overlay" style="display: none;">
-        <img src="../assets/images/logo.png" class="spinner"/>
+        <img src="../assets/images/logo.png" alt="Veuillez patienter..." class="spinner"/>
     </div>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
@@ -50,7 +50,7 @@ if (!isset($pageConnexion)) {
                             <a class="nav-link active" aria-current="page" href="?">Accueil</a>
                         </li>
                         <li class="nav-item" id="calendarBtn">
-                            <a class="nav-link active" aria-current="page" href="" id="calendarBtn">Évènements</a>
+                            <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier" id="calendarBtn">Évènements</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="?controleur=forum&action=afficherDefaultPage">Forums</a>

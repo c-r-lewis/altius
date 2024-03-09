@@ -1,15 +1,26 @@
-function showLoader() {
-    document.getElementById('loader-overlay').style.display = 'block';
-}
 
-document.getElementById('publications').addEventListener('click', function(event) {
+function showLoader(event) {
     // Prevent the default link behavior
     event.preventDefault();
 
-    showLoader();
+    document.getElementById('loader-overlay').style.display = 'block';
 
     // Load the page
-    window.location.href = this.querySelector('a').getAttribute('href');
+    if (event.target.tagName !== "A") {
+        console.log(event);
+        window.location.href = this.querySelector('a').getAttribute('href');
+    }
+    else {
+        window.location.href = event.target.href;
+    }
+}
+
+document.getElementById('publications').addEventListener('click', function(event) {
+    showLoader(event);
+});
+
+document.getElementById('calendarBtn').addEventListener('click', function(event) {
+    showLoader(event);
 });
 
 // Hide the loader when the page has finished loading
