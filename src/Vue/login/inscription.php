@@ -66,25 +66,25 @@
 
                             <!-- Ville de résidence -->
                             <div class="col-12">
-                                <label for="ville" class="form-label">Ville de résidence <span class="text-danger">*</span></label>
+                                <label for="ville" class="form-label">Ville de résidence</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="ville" id="ville" required>
+                                    <input type="text" class="form-control" name="ville" id="ville">
                                 </div>
                             </div>
 
                             <!-- Région de résidence -->
                             <div class="col-12">
-                                <label for="region_id" class="form-label">Région de résidence <span class="text-danger">*</span></label>
+                                <label for="region_id" class="form-label">Région de résidence</label>
                                 <div class="input-group">
-                                    <input type="tel" class="form-control" name="region" id="region_id" required>
+                                    <input type="tel" class="form-control" name="region" id="region_id">
                                 </div>
                             </div>
 
                             <!-- Numéro de téléphone -->
                             <div class="col-12">
-                                <label for="pnumber" class="form-label">Numéro de téléphone <span class="text-danger">*</span></label>
+                                <label for="pnumber" class="form-label">Numéro de téléphone</label>
                                 <div class="input-group">
-                                    <input type="tel" class="form-control" name="numeroTelephone" id="pnumber" required>
+                                    <input type="tel" class="form-control" name="numeroTelephone" id="pnumber">
                                 </div>
                             </div>
 
