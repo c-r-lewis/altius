@@ -35,7 +35,7 @@ if (!isset($pageConnexion)) {
         <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
             <div class="container-fluid">
                 <!-- Navbar brand -->
-                <a class="navbar-brand" href="?">
+                <a class="navbar-brand" href="?" id="navbarBrand">
                     <img src="../assets/images/logo.png" height="40" alt="" loading="lazy" />
                 </a>
                 <!-- Toggle button -->
@@ -47,13 +47,13 @@ if (!isset($pageConnexion)) {
                     <!-- Left links -->
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?">Accueil</a>
+                            <a class="nav-link active" aria-current="page" href="?" id="homeBtn">Accueil</a>
                         </li>
                         <li class="nav-item" id="calendarBtn">
                             <a class="nav-link active" aria-current="page" href="?controleur=calendrier&action=afficherCalendrier" id="calendarBtn">Évènements</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="?controleur=forum&action=afficherDefaultPage">Forums</a>
+                            <a class="nav-link active" aria-current="page" href="?controleur=forum&action=afficherDefaultPage" id="forumBtn">Forums</a>
                         </li>
                     </ul>
                     <!-- Right links end -->
