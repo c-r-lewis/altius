@@ -3,6 +3,7 @@ namespace App\Altius\Controleur;
 
 use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Lib\MotDePasse;
+use App\Altius\Lib\Token;
 use App\Altius\Lib\VerificationEmail;
 use App\Altius\Modele\DataObject\Utilisateur;
 use App\Altius\Modele\HTTP\Session;
@@ -20,7 +21,10 @@ class ControleurUtilisateur extends ControleurGeneral{
 
     public static function  afficherPageLogin() {
         ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"login/connexion.php", "pageConnexion"=>true));
+    }
 
+    public static function afficherMotDePasseOublie() {
+        ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody" => "login/motDePasseOublie.php"));
     }
 
     public static function seConnecter(): void {
@@ -93,6 +97,58 @@ class ControleurUtilisateur extends ControleurGeneral{
             MessageFlash::ajouter("warning", "Erreur de validation");
         }
         ControleurGeneral::afficherDefaultPage();
+    }
+
+    /*
+     * En gros ça crée un token pour l'utilisateur qui demande le reset,
+     * puis quand la page de redéfinition est demandée, on utilise ce token pour identifier l'utilisateur
+     * On fait ça par sécurité, parce que si on envoyait un lien du style "?login=abc" on pourrait très facilement
+     * pirater les comptes de n'importe qui. Le token permet de brouiller les pistes.
+     */
+    public static function envoyerMotDePasseOublie() : void {
+        if (isset($_POST['login'])) {
+            try {
+                $token = (new UtilisateurRepository())->addToken($_POST['login']);
+                Token::envoiEmailMotDePasse($_POST['login'], $token);
+                MessageFlash::ajouter("success", "Un email vous a été envoyé.");
+            } catch (\Exception) {
+                MessageFlash::ajouter("danger", "Nous avons rencontré une erreur. Si cette erreur persiste, contactez le service client.");
+            }
+        }
+         else {
+             MessageFlash::ajouter("danger", "Veuillez renseigner votre login.");
+         }
+         self::afficherPageLogin();
+    }
+
+    public static function afficherModifierMdp() {
+        if (isset($_GET['token'])) {
+            ControleurGeneral::afficherVue("vueGenerale.php", ["cheminVueBody" => "login/modifierSonMdp.php", "token" => $_GET['token']]);
+        } else {
+            MessageFlash::ajouter("danger", "Veuillez renseigner un token valide.");
+            ControleurGeneral::afficherDefaultPage();
+        }
+    }
+
+    public static function modifierMdp() {
+        if (isset($_POST["token"]) && isset($_POST["mdp1"]) && isset($_POST['mdp2'])){
+            if ($_POST["mdp1"]==$_POST["mdp2"]){
+                try {
+                    $mdpHache  = MotDePasse::hacher($_POST["mdp2"]);
+                    (new UtilisateurRepository())->updatePasswordForToken($mdpHache, $_POST['token']);
+                    MessageFlash::ajouter("success","Votre mot de passe a bien été mis à jour");
+                } catch (\Exception) {
+                    MessageFlash::ajouter("danger", "Une erreur est survenue.");
+                }
+                ControleurGeneral::afficherDefaultPage();
+            }else{
+                MessageFlash::ajouter("danger","Les mots de passes ne sont pas identiques.");
+                ControleurGeneral::afficherDefaultPage();
+            }
+        } else {
+            MessageFlash::ajouter("danger", "Veuillez renseigner tous les champs.");
+            ControleurGeneral::afficherDefaultPage();
+        }
     }
 
     public static function modifierLogin() : void{
