@@ -149,8 +149,10 @@ class FriendsRepository extends AbstractRepository
         $amisUser2 = self::getAmis($idUser2);
         $compteur = 0;
         foreach ($amisUser1 as $ami1){
-            foreach ($amisUser2 as $ami2){
-                if ($ami1["idUser"]==$ami2["idUser"]) $compteur+=1;
+            if($amisUser2 != null) {
+                foreach ($amisUser2 as $ami2){
+                    if ($ami1["idUser"]==$ami2["idUser"]) $compteur+=1;
+                }
             }
         }
         return $compteur;

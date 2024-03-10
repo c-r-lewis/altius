@@ -1,3 +1,7 @@
 body {
     background-color: #eefbef;
 }
+
+#researchResults li:hover {
+    background-color: #d7d8d9;
+}
