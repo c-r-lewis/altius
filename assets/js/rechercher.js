@@ -19,7 +19,7 @@ function emptyResults() {
         if (document.activeElement !== searchBar) {
             researchResults.innerHTML = '';
         }
-    }, 100);
+    }, 300);
 }
 function getResults(event) {
     event.preventDefault();
