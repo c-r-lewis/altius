@@ -1,10 +1,25 @@
 const searchBar = document.getElementById('searchBar');
 const researchResults = document.getElementById('researchResults');
+const findContent = document.getElementById('findContent');
+const sendBtn = document.getElementById('sendBtn');
+const results = document.getElementById('results');
 
 searchBar.addEventListener('input', getResults);
+searchBar.addEventListener('blur', emptyResults);
+
+sendBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    chooseUser(searchBar.value);
+})
 
 function emptyResults() {
-    researchResults.innerHTML = '';
+    // Delay clearing the results to allow for click events to be processed
+    setTimeout(() => {
+        // Check if the search bar is no longer focused
+        if (document.activeElement !== searchBar) {
+            researchResults.innerHTML = '';
+        }
+    }, 300);
 }
 function getResults(event) {
     event.preventDefault();
@@ -25,7 +40,10 @@ function getResults(event) {
                 const node = document.createElement('li');
                 node.classList.add('list-group-item');
                 node.textContent = result.login;
-                node.addEventListener('click', ()=>chooseUser(result.login));
+                node.addEventListener('click', ()=> {
+                    console.log('node clicked');
+                    chooseUser(result.login);
+                });
                 researchResults.appendChild(node);
             });
         })
@@ -42,6 +60,9 @@ function chooseUser(login) {
     })
         .then(result => result.text())
         .then(htmlContent => {
-            document.body.innerHTML = htmlContent;
+            emptyResults();
+            searchBar.value = login;
+            findContent.innerHTML = htmlContent;
         })
 }
+

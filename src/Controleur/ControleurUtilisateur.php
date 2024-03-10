@@ -288,7 +288,19 @@ class ControleurUtilisateur extends ControleurGeneral{
                 }
             }
 
-            self::afficherVue("vueGenerale.php",["cheminVueBody"=>"rechercheAmis/vueResultatRecherche.php","resultat"=>$envoie,"idUser1"=>$idUser1]);
+            $resultat = $envoie;
+            ob_start();
+
+            include(__DIR__ . "/../Vue/rechercheAmis/vueResultatRecherche.php");
+
+
+            // Get the contents of the output buffer
+            $content = ob_get_clean();
+
+            // Echo the content, which is now stored in the $content variable
+            echo $content;
+
+            //self::afficherVue("rechercheAmis/vueResultatRecherche.php",["resultat"=>$envoie,"idUser1"=>$idUser1]);
         }
     }
 

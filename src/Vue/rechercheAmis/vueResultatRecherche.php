@@ -1,14 +1,4 @@
-<div class="d-flex justify-content-center mb-5">
-    <form class="container-md d-flex justify-content-around mt-2" method="post" action="?controleur=utilisateur&action=selectionParRecherche">
-        <div class="container">
-            <input class="form-control" type="text" name="recherche" placeholder="Recherche...">
-        </div>
-        <button class="btn btn-primary" type="submit">Envoyer</button>
-    </form>
-</div>
-<link type="text/css" rel="stylesheet" href="../assets/css/amitie.css">
-<link href="../assets/css/researchFriends.css" rel="stylesheet">
-<div class="container">
+<div class="container d-flex flex-column">
     <div class="column">
         <h1>Résultat Recherche</h1>
         <?php
