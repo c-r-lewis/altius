@@ -1,4 +1,5 @@
 const homePagePublicationsBtn = document.getElementById('publications');
+
 function showLoader(event) {
     // Prevent the default link behavior
     event.preventDefault();
@@ -7,7 +8,6 @@ function showLoader(event) {
 
     // Load the page
     if (event.target.tagName === "IMG") {
-        console.log(event);
         window.location.href = event.target.parentNode.href;
     }
     else if(event.target.tagName !== "A") {
@@ -47,5 +47,9 @@ document.getElementById('navbarBrand').addEventListener('click', function(event)
 
 // Hide the loader when the page has finished loading
 window.addEventListener('load', function() {
-    document.getElementById('loader-overlay').style.display = 'none';
+    hideLoader();
 });
+
+function hideLoader() {
+    document.getElementById('loader-overlay').style.display = 'none';
+}

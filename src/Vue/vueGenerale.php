@@ -23,7 +23,7 @@ if (!isset($pageConnexion)) {
     </head>
     <body>
         <!-- Loader -->
-        <div id="loader-overlay" style="display: none;">
+        <div id="loader-overlay" style="display: none">
             <img src="../assets/images/logo.png" alt="Veuillez patienter..." class="spinner"/>
         </div>
         <!-- Navbar -->

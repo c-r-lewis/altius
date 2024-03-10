@@ -16,6 +16,14 @@ class ControleurFriends extends ControleurGeneral {
         }
     }
 
+    public static  function rechercherAmis() {
+        if(ConnexionUtilisateur::estConnecte()) {
+            if ($_POST['typed']) {
+                echo json_encode((new UtilisateurRepository())->rechercherByLogin($_POST['typed']));
+            }
+        }
+    }
+
 
     public static function supprimerAmis() : void {
         if(ConnexionUtilisateur::estConnecte()){
