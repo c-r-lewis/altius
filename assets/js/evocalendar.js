@@ -656,6 +656,8 @@ let dateSelected = false;
             markup += '</div>';
         }
         eventListEl.append(markup)
+
+        addEventButton();
     }
 
     // v1.0.0 - Add single event to event list
@@ -1176,21 +1178,28 @@ formData.append('action', 'verifyUserConnected');
 formData.append('controleur', 'utilisateur');
 
 // Make an AJAX request to check if the user is logged in
-fetch('../web/controleurFrontal.php', {
-    method: 'POST',
-    body: formData
-})
-    .then(response => response.text())
-    .then(answer => {
-        // If the user is logged in, add the "Ajouter un évènement" button to the event-list div
-        if (answer === '1') {
-            const button = document.createElement('button');
-            button.className = 'btn';
-            button.style.color = 'white';
-            button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-plus-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg> Ajouter un évènement';
-            button.addEventListener('click', loadCreatePublicationContentWithDate);
+function addEventButton() {
+    fetch('../web/controleurFrontal.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.text())
+        .then(answer => {
+            // If the user is logged in, add the "Ajouter un évènement" button to the event-list div
+            if (answer === '1') {
+                // Check if the button already exists to avoid duplicates
+                if ($('.calendar-events .add-event-btn').length === 0) {
+                    const button = document.createElement('button');
+                    button.className = 'btn add-event-btn'; // Add a class for the button for easier identification
+                    button.style.color = 'white';
+                    button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-plus-circle" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg> Ajouter un évènement';
+                    button.addEventListener('click', loadCreatePublicationContentWithDate);
 
-            const eventListDiv = document.querySelector('.calendar-events .event-list');
-            eventListDiv.appendChild(button);
-        }
-    });
+                    const eventContainer = document.querySelector('.calendar-events');
+                    const eventListDiv = document.querySelector('.calendar-events .event-list');
+                    // Insert the button after the event list
+                    eventListDiv.parentNode.insertBefore(button, eventListDiv.nextSibling);
+                }
+            }
+        });
+}
