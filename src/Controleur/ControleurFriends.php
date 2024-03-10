@@ -18,8 +18,8 @@ class ControleurFriends extends ControleurGeneral {
 
     public static  function rechercherAmis() {
         if(ConnexionUtilisateur::estConnecte()) {
-            if ($_POST['typedResult']) {
-                echo json_encode((new UtilisateurRepository())->rechercherByLogin($_POST['typedResult']));
+            if ($_POST['typed']) {
+                echo json_encode((new UtilisateurRepository())->rechercherByLogin($_POST['typed']));
             }
         }
     }
