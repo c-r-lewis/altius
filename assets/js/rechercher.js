@@ -19,7 +19,7 @@ function emptyResults() {
         if (document.activeElement !== searchBar) {
             researchResults.innerHTML = '';
         }
-    }, 300);
+    }, 100);
 }
 function getResults(event) {
     event.preventDefault();
@@ -35,7 +35,7 @@ function getResults(event) {
         .then(response => response.json())
         .then(results =>
         {
-            emptyResults();
+            researchResults.innerHTML = '';
             results.forEach(result => {
                 const node = document.createElement('li');
                 node.classList.add('list-group-item');
