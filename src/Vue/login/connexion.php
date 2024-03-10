@@ -60,7 +60,7 @@
             </div>
             <div class="row mt-2">
                 <div class="col-12 d-flex justify-content-center">
-                    <a href="#!" class="link-primary">Mot de passe oublié ?</a>
+                    <a href="?controleur=utilisateur&action=afficherMotDePasseOublie" class="link-primary">Mot de passe oublié ?</a>
                 </div>
             </div>
         </div>

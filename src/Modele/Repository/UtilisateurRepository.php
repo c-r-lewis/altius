@@ -3,6 +3,7 @@
 namespace App\Altius\Modele\Repository;
 
 use App\Altius\Lib\ConnexionUtilisateur;
+use App\Altius\Lib\Token;
 use App\Altius\Modele\DataObject\AbstractDataObject;
 use App\Altius\Modele\DataObject\Utilisateur;
 
@@ -130,4 +131,17 @@ class UtilisateurRepository extends AbstractRepository
         return $result;
     }
 
+    public function addToken($login) : string {
+        $sql = "UPDATE User SET token = ? WHERE login = ?";
+        $token = Token::getRandomStringRandomInt();
+        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatment->execute([$token, $login]);
+        return $token;
+    }
+
+    public function updatePasswordForToken($hackedPassword, $token) {
+        $sql = "UPDATE User SET motDePasse = ?, token = '' WHERE token = ?";
+        $pdoStatment = ConnexionBaseDeDonnee::getPdo()->prepare($sql);
+        $pdoStatment->execute([$hackedPassword, $token]);
+    }
 }
