@@ -62,4 +62,5 @@ class ControleurForum extends ControleurGenerique
     static function afficherDefaultPage(): void {
         self::afficherListeForum();
     }
+
 }

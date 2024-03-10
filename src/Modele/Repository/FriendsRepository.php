@@ -155,4 +155,5 @@ class FriendsRepository extends AbstractRepository
         }
         return $compteur;
     }
+
 }

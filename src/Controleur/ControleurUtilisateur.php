@@ -236,6 +236,7 @@ class ControleurUtilisateur extends ControleurGeneral{
         }
     }
 
+
     public static function verifyUserConnected() : void {
         echo ConnexionUtilisateur::estConnecte();
     }

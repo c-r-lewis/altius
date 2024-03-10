@@ -129,4 +129,5 @@ class UtilisateurRepository extends AbstractRepository
         if (empty($result)) return null;
         return $result;
     }
+
 }

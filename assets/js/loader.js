@@ -1,3 +1,5 @@
+
+
 const homePagePublicationsBtn = document.getElementById('publications');
 function showLoader(event) {
     // Prevent the default link behavior
