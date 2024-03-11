@@ -175,4 +175,8 @@ class Utilisateur extends AbstractDataObject
         return new Utilisateur($tableauFormulaire["idUser"], $tableauFormulaire['login'], $tableauFormulaire['email'],
             $tableauFormulaire['region'],$motDePasse,$tableauFormulaire['statut'],$tableauFormulaire['ville'],$tableauFormulaire['numeroTelephone'], "",$tableauFormulaire["estSuppr"]);
     }
+
+    public static function gererImagePP(string $imagePath){
+        echo $imagePath;
+    }
 }

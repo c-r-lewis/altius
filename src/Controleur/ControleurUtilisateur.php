@@ -65,25 +65,26 @@ class ControleurUtilisateur extends ControleurGeneral{
     }
 
     public static function creerUtilisateur() : void{
-        $valeurPost = $_POST;
-        if ($valeurPost["mdp1"]== $valeurPost["mdp2"]){
-            if(!UtilisateurRepository::loginEstUtilise($valeurPost["login"])) {
-                $valeurPost["idUser"]=UtilisateurRepository::getMaxId()+1;
-                $valeurPost["estSuppr"]=0;
-                $utlisateur = Utilisateur::construireDepuisFormulaire($valeurPost);
-                $utlisateur->setNonce(VerificationEmail::genererNonceAleatoire());
-                (new UtilisateurRepository())->create($utlisateur);
-                VerificationEmail::envoiEmailValidation($utlisateur);
-                MessageFlash::ajouter("success", "Un email vous a été envoyé pour confirmer votre inscription.");
-                ControleurGeneral::afficherDefaultPage();
-            }else{
-                MessageFlash::ajouter("danger","Login déjà existant");
-                self::afficherPageInscription();
-            }
-        }else {
-            MessageFlash::ajouter("danger","Les mots de passe ne correspondent pas");
-            self::afficherPageInscription();
-        }
+        if(!empty($_FILES["imagePP"])) Utilisateur::gererImagePP($_FILES["imagePP"]);
+//        $valeurPost = $_POST;
+//        if ($valeurPost["mdp1"]== $valeurPost["mdp2"]){
+//            if(!UtilisateurRepository::loginEstUtilise($valeurPost["login"])) {
+//                $valeurPost["idUser"]=UtilisateurRepository::getMaxId()+1;
+//                $valeurPost["estSuppr"]=0;
+//                $utlisateur = Utilisateur::construireDepuisFormulaire($valeurPost);
+//                $utlisateur->setNonce(VerificationEmail::genererNonceAleatoire());
+//                (new UtilisateurRepository())->create($utlisateur);
+//                VerificationEmail::envoiEmailValidation($utlisateur);
+//                MessageFlash::ajouter("success", "Un email vous a été envoyé pour confirmer votre inscription.");
+//                ControleurGeneral::afficherDefaultPage();
+//            }else{
+//                MessageFlash::ajouter("danger","Login déjà existant");
+//                self::afficherPageInscription();
+//            }
+//        }else {
+//            MessageFlash::ajouter("danger","Les mots de passe ne correspondent pas");
+//            self::afficherPageInscription();
+//        }
     }
 
     public static function validerMail() : void{

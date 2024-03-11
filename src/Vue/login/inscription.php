@@ -35,7 +35,7 @@
                             <div class="col-12">
                                 <label for="login" class="form-label">Login <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="login" id="login" required>
+                                    <input type="text" class="form-control" name="login" id="login">
                                 </div>
                             </div>
 
@@ -48,7 +48,7 @@
                                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
                                         </svg>
                                     </span>
-                                    <input type="email" class="form-control" name="email" id="email" required>
+                                    <input type="email" class="form-control" name="email" id="email">
                                 </div>
                             </div>
 
@@ -88,6 +88,15 @@
                                 </div>
                             </div>
 
+                            <!-- upload image pp -->
+                            <div class="col-12">
+                                <label for="ppId" class="form-label">image de profile</label>
+                                <div class="input-group">
+                                    <input type="file" id="ppId" class="form-control" name="imagePP" accept="image/png, image/jpeg">
+                                </div>
+                            </div>
+
+
                             <!-- Mot de Passe -->
                             <div class="col-12 mt-5">
                                 <label for="password" class="form-label">Mot de passe <span class="text-danger">*</span></label>
@@ -98,7 +107,7 @@
                                             <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
                                         </svg>
                                     </span>
-                                    <input type="password" class="form-control" name="mdp1" id="password" value="" required>
+                                    <input type="password" class="form-control" name="mdp1" id="password" value="">
                                 </div>
                             </div>
 
@@ -106,7 +115,7 @@
                             <div class="col-12">
                                 <label for="passwordconfirm" class="form-label">Confirmer le mot de passe <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" name="mdp2" id="passwordconfirm" value="" required>
+                                    <input type="password" class="form-control" name="mdp2" id="passwordconfirm" value="">
                                 </div>
                             </div>
 
