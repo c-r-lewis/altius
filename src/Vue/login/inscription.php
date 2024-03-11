@@ -90,9 +90,9 @@
 
                             <!-- upload image pp -->
                             <div class="col-12">
-                                <label for="ppId" class="form-label">image de profile</label>
+                                <label class="form-label">image de profile</label>
                                 <div class="input-group">
-                                    <input type="file" id="ppId" class="form-control" name="imagePP" accept="image/png, image/jpeg">
+                                    <input type="file" class="form-control" name="imagePP" accept="image/png, image/jpeg">
                                 </div>
                             </div>
 
