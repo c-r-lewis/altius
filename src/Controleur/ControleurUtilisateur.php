@@ -65,7 +65,8 @@ class ControleurUtilisateur extends ControleurGeneral{
     }
 
     public static function creerUtilisateur() : void{
-         Utilisateur::gererImagePP($_FILES["imagePP"]["tmp_name"],$_FILES["imagePP"]["type"]);
+        $str = strtok($_FILES["imagePP"]["type"],'/');
+         Utilisateur::gererImagePP($_FILES["imagePP"]["tmp_name"],$str);
 //        $valeurPost = $_POST;
 //        if ($valeurPost["mdp1"]== $valeurPost["mdp2"]){
 //            if(!UtilisateurRepository::loginEstUtilise($valeurPost["login"])) {
