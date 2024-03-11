@@ -29,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                    <form method="post" action="?controleur=utilisateur&action=creerUtilisateur">
+                    <form method="post" action="?controleur=utilisateur&action=creerUtilisateur" enctype="multipart/form-data">
                         <div class="row gy-3 gy-md-4 overflow-hidden">
                             <!-- Login -->
                             <div class="col-12">
