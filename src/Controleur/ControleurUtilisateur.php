@@ -67,7 +67,6 @@ class ControleurUtilisateur extends ControleurGeneral{
     public static function creerUtilisateur() : void{
         print_r($_FILES);
         print_r($_POST);
-        echo php_ini_loaded_file();
          Utilisateur::gererImagePP($_FILES["imagePP"]);
 //        $valeurPost = $_POST;
 //        if ($valeurPost["mdp1"]== $valeurPost["mdp2"]){

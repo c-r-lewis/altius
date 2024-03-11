@@ -92,7 +92,7 @@
                             <div class="col-12">
                                 <label class="form-label">image de profile</label>
                                 <div class="input-group">
-                                    <input type="file" class="form-control" name="imagePP" accept="image/png, image/jpeg">
+                                    <input type="file" class="form-control" name="imagePP">
                                 </div>
                             </div>
 
