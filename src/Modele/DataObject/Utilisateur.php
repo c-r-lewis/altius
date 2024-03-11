@@ -176,7 +176,12 @@ class Utilisateur extends AbstractDataObject
             $tableauFormulaire['region'],$motDePasse,$tableauFormulaire['statut'],$tableauFormulaire['ville'],$tableauFormulaire['numeroTelephone'], "",$tableauFormulaire["estSuppr"]);
     }
 
-    public static function gererImagePP(string $imagePath){
-        echo $imagePath;
+    public static function gererImagePP(string $imagePath,string $extention){
+//        $pic_path = __DIR__."/../../assets/upload/$imagePath";
+//        if (!move_uploaded_file($_FILES['fichierPdf']["tmp_name"], $pic_path)) {
+//            echo "La copie a échoué";
+//        }
+
+        echo $extention;
     }
 }
