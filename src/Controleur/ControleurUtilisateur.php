@@ -65,8 +65,15 @@ class ControleurUtilisateur extends ControleurGeneral{
     }
 
     public static function creerUtilisateur() : void{
-        $str =pathinfo($_FILES["imagePP"]["tmp_name"],PATHINFO_EXTENSION);
-         Utilisateur::gererImagePP($_FILES["imagePP"]["tmp_name"],$str);
+        $str =$_FILES["imagePP"]["type"]."/";
+        $strTab = [];
+        $tok = strtok($str,'/');
+        while ($tok!=false){
+            $strTab[] = $tok;
+            $tok = strtok('/');
+        }
+        print_r($strTab);
+         Utilisateur::gererImagePP($_FILES["imagePP"]["tmp_name"],$strTab[1]);
 //        $valeurPost = $_POST;
 //        if ($valeurPost["mdp1"]== $valeurPost["mdp2"]){
 //            if(!UtilisateurRepository::loginEstUtilise($valeurPost["login"])) {
