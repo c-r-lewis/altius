@@ -3,7 +3,7 @@ namespace App\Altius\Configuration;
 class Configuration {
 
     static private array $databaseConfiguration = array(
-        'hostname' => '193.203.168.39', // Hostname de Hostinger
+        'hostname' => '193.203.168.7', // Hostname de Hostinger
 
         // Nom de la base de données
         'database' => 'u604190744_test',
