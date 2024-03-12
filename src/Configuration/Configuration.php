@@ -10,9 +10,9 @@ class Configuration {
         // Port par défaut : 3306
         'port' => '3306',
 
-        'login' => 'u538958678_altius',
+        'login' => 'u604190744_dev',
         // Le mdp est le même quelque soit l'utilisateur
-        'password' => 'mJYYs75uWpv225'
+        'password' => 'tT4b9qJJA69s9x'
     );
 
     // getHostname(), getPort(), getDatabase() et getPassword().
