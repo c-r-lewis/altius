@@ -6,7 +6,7 @@ class Configuration {
         'hostname' => '193.203.168.39', // Hostname de Hostinger
 
         // Nom de la base de données
-        'database' => 'u538958678_altius',
+        'database' => 'u604190744_test',
         // Port par défaut : 3306
         'port' => '3306',
 
