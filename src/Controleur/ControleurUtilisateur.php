@@ -73,7 +73,7 @@ class ControleurUtilisateur extends ControleurGeneral{
             $tok = strtok('/');
         }
         print_r($strTab);
-         Utilisateur::gererImagePP($_FILES["imagePP"]["tmp_name"],$strTab[1]);
+         Utilisateur::gererImagePP($_FILES["imagePP"]["tmp_name"],$strTab[1],UtilisateurRepository::getMaxId());
 //        $valeurPost = $_POST;
 //        if ($valeurPost["mdp1"]== $valeurPost["mdp2"]){
 //            if(!UtilisateurRepository::loginEstUtilise($valeurPost["login"])) {
