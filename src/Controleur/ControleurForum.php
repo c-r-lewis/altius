@@ -53,10 +53,12 @@ class ControleurForum extends ControleurGenerique
 
     static function afficherForum() : void {
         $idForum = $_GET["id"];
+        if(ConnexionUtilisateur::estConnecte()) $userId = (new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser();
+        else $userId = null;
         ControleurGeneral::afficherVue("vueGenerale.php", array("cheminVueBody"=>"forum.php",
             "res" => CommentRepository::getCommentsByForum($idForum),
             "forum" => (new ForumRepository())->recupererParClePrimaire(["forumID"=>$idForum]),
-            "userID" =>(new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser()));
+            "userID" =>$userId));
     }
 
     static function afficherDefaultPage(): void {

@@ -64,12 +64,12 @@ $description = htmlspecialchars($forum->getDescription() ?? "Pas de description"
                                     </div>
                                     <a href="?controleur=general&action=afficherProfil&idUser=$idUserUrl&login=$loginUrl">
 HTML;
-                                /**@var $idUser1 **/
-                                    if (file_exists("../assets/uploads/pp/".$idUser1.".png")) {
-                                    $src = "../assets/uploads/pp/".$idUser1.".png";
+
+                                    if (file_exists("../assets/uploads/pp/".$idUserUrl.".png")) {
+                                    $src = "../assets/uploads/pp/".$idUserUrl.".png";
                                     echo '<img src="'.$src.'" alt="image de profil" style="width: 45px; height: 45px; margin: 5px;">';
-                                }else if(file_exists("../assets/uploads/pp/".$idUser1.".jpg")){
-                                    $src = "../assets/uploads/pp/".$idUser1.".jpg";
+                                }else if(file_exists("../assets/uploads/pp/".$idUserUrl.".jpg")){
+                                    $src = "../assets/uploads/pp/".$idUserUrl.".jpg";
                                     echo '<img src="'.$src.'" alt="image de profil" style="width: 45px; height: 45px; margin: 5px;">';
                                 }else{
                                     echo '<img src="../assets/images/profilepicture.png" alt="avatar 1" style="width: 45px; height: 45px; margin: 5px;">';
