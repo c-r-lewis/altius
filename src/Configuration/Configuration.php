@@ -6,13 +6,13 @@ class Configuration {
         'hostname' => '193.203.168.7', // Hostname de Hostinger
 
         // Nom de la base de données
-        'database' => 'u604190744_test',
+        'database' => 'u538958678_altius',
         // Port par défaut : 3306
         'port' => '3306',
 
-        'login' => 'u604190744_dev',
+        'login' => 'u538958678_altius',
         // Le mdp est le même quelque soit l'utilisateur
-        'password' => 'tT4b9qJJA69s9x'
+        'password' => 'mJYYs75uWpv225'
     );
 
     // getHostname(), getPort(), getDatabase() et getPassword().
