@@ -65,6 +65,23 @@ class ControleurUtilisateur extends ControleurGeneral{
     }
 
     public static function creerUtilisateur() : void{
+        $extension = array("png"=>"png","jpg"=>"jpg");
+        if (!empty($_FILES)){
+            $str =$_FILES["imagePP"]["name"].".";
+            $strTab = [];
+            $tok = strtok($str,'.');
+            while ($tok!=false){
+                $strTab[] = $tok;
+                $tok = strtok('.');
+            }
+            if (!isset($extension[$strTab[count($strTab)-1]])) {
+                MessageFlash::ajouter("warning", "format incorrect (format accepté : .png/.jpg");
+                self::afficherPageInscription();
+                return;
+            }
+        }else{
+            MessageFlash::ajouter("warning", "pas d'image sélectionnée");
+        }
         $valeurPost = $_POST;
         if ($valeurPost["mdp1"]== $valeurPost["mdp2"]){
             if(!UtilisateurRepository::loginEstUtilise($valeurPost["login"])) {
@@ -74,6 +91,7 @@ class ControleurUtilisateur extends ControleurGeneral{
                 $utlisateur->setNonce(VerificationEmail::genererNonceAleatoire());
                 (new UtilisateurRepository())->create($utlisateur);
                 VerificationEmail::envoiEmailValidation($utlisateur);
+                if(!empty($_FILES)) Utilisateur::gererImagePP($_FILES["imagePP"]["tmp_name"],$strTab[count($strTab)-1],UtilisateurRepository::getMaxId());
                 MessageFlash::ajouter("success", "Un email vous a été envoyé pour confirmer votre inscription.");
                 ControleurGeneral::afficherDefaultPage();
             }else{
@@ -225,10 +243,35 @@ class ControleurUtilisateur extends ControleurGeneral{
                 $utilisateur->setEmail($_POST["ModifMail"]);
                 (new UtilisateurRepository())->mettreAJour($utilisateur);
                 VerificationEmail::envoiEmailValidation($utilisateur);
-                MessageFlash::ajouter("success","Mail modifié avec succes. Un mmail de vérification vous a été envoyé");
+                MessageFlash::ajouter("success","Mail modifié avec succes. Un mail de vérification vous a été envoyé");
                 self::afficherParametres();
             }else{
                 MessageFlash::ajouter("danger","l'email est incorrect");
+                self::afficherParametres();
+            }
+        }else{
+            MessageFlash::ajouter("danger","Vous n'êtes pas connecté");
+            self::afficherDefaultPage();
+        }
+    }
+
+    public static function modifierImagePP() : void{
+        $extension  = array("png"=>"png", "jpg"=>"jpg");
+        if(ConnexionUtilisateur::estConnecte()) {
+            if (!empty($_FILES)) {
+                $str = $_FILES["ModifimagePP"]["name"] . ".";
+                $strTab = [];
+                $tok = strtok($str, '.');
+                while ($tok != false) {
+                    $strTab[] = $tok;
+                    $tok = strtok('.');
+                }
+                if (isset($extension[$strTab[count($strTab)-1]])) Utilisateur::gererImagePP($_FILES["ModifimagePP"]["tmp_name"], $strTab[count($strTab) - 1],strval((new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser()));
+                else{
+                    MessageFlash::ajouter("danger","votre image n'est pas au bon format (format accepté : .png/.jpg");
+                    self::afficherParametres();
+                }
+                MessageFlash::ajouter("success","votre image de profil a bien été modifiée");
                 self::afficherParametres();
             }
         }else{

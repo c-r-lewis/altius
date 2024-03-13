@@ -18,7 +18,18 @@
                 <div class="friend-request-card">
                     <div class="user-profile">
                         <div class="profile-picture">
-                            <img src="../../assets/images/inconnu-pp.png" alt="Profile Picture">
+                            <?php
+                            if (file_exists("../assets/uploads/pp/".$idUserUrl.".png")) {
+                                $src = "../assets/uploads/pp/".$idUserUrl.".png";
+                                echo '<img src="'.$src.'" alt="image de profil" style="width: 45px; height: 45px; margin: 5px;">';
+                            }else if(file_exists("../assets/uploads/pp/".$idUserUrl.".jpg")){
+                                $src = "../assets/uploads/pp/".$idUserUrl.".jpg";
+                                echo '<img src="'.$src.'" alt="image de profil">';
+                            }else{
+                                echo '<img src="../assets/images/inconnu-pp.png" alt="Profile Picture">       ';
+                            }
+
+                            ?>
                         </div>
                         <div class="user-details">
                             <h2><?= $loginHTML ?></h2>
@@ -26,7 +37,7 @@
                         </div>
                     </div>
                     <div class="friend-request-actions">
-                        <?php if (!(new FriendsRepository())->sontAmis($idUser1, $user[1])): ?>
+                        <?php if (!(new FriendsRepository())->sontAmis($idUser1, $user[1]) && $user[1] !=$idUser1): ?>
                             <a class="nav-link button" href="?controleur=friends&action=demanderAmis&idUser=<?= $idUserUrl ?>" id="button-primary">
                                 Demander en ami
                             </a>

@@ -111,6 +111,17 @@ echo <<<HTML
             
                 <button>Enregistrer</button>
             </form>
+            <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierImagePP" enctype="multipart/form-data">
+                <div class="form-label row">
+                    <label class="col-md-3" for="ModifMail">Nouvelle image de profil</label>
+                    <div class="col-md-9">
+                        <input type="file" class="form-control" name="ModifimagePP" accept="image/png, image/jpeg">
+                    </div>
+                </div>
+            
+                <button>Enregistrer</button>
+            </form>
+            
             <form class="list-group-item" method="post" action="?controleur=utilisateur&action=modifierMotDePasse">
                 <div class="form-label row">
                     <label class="col-md-3" for="mdp1">Ancien mot de passe</label>

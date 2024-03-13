@@ -20,7 +20,19 @@
         </aside>
         <div class="col">
             <div class="d-flex align-items-center">
-                <img src="../assets/images/profilepicture.png" alt="Profile Picture" style="width: 200px; height: 200px; margin-right: 5%">
+                <?php
+                    /**@var $idUser1 **/
+                $idUserUrl = urldecode($dataUser["idUser"]);
+                    if (file_exists("../assets/uploads/pp/".$idUserUrl.".png")) {
+                        $src = "../assets/uploads/pp/".$idUserUrl.".png";
+                        echo '<img src="'.$src.'" alt="image de profil" style="width: 200px; height: 200px; margin-right: 5%">';
+                    }else if(file_exists("../assets/uploads/pp/".$idUserUrl.".jpg")){
+                        $src = "../assets/uploads/pp/".$idUserUrl.".jpg";
+                        echo '<img src="'.$src.'" alt="image de profil" style="width: 200px; height: 200px; margin-right: 5%">';
+                    }else{
+                        echo '<img src="../assets/images/profilepicture.png" alt="Profile Picture" style="width: 200px; height: 200px; margin-right: 5%">';
+                    }
+                ?>
                 <div>
                     <h1><?= htmlspecialchars($dataUser['login'] ?? "") ?></h1>
                     <div class="d-flex align-items-center justify-content-evenly">

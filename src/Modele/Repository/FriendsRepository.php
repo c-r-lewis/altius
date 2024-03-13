@@ -148,6 +148,8 @@ class FriendsRepository extends AbstractRepository
         $amisUser1 = self::getAmis($idUser1);
         $amisUser2 = self::getAmis($idUser2);
         $compteur = 0;
+
+        if (is_null($amisUser1) || is_null($amisUser2)) return $compteur;
         foreach ($amisUser1 as $ami1){
             if($amisUser2 != null) {
                 foreach ($amisUser2 as $ami2){

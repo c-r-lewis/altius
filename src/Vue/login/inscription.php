@@ -29,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                    <form method="post" action="?controleur=utilisateur&action=creerUtilisateur">
+                    <form method="post" action="?controleur=utilisateur&action=creerUtilisateur" enctype="multipart/form-data">
                         <div class="row gy-3 gy-md-4 overflow-hidden">
                             <!-- Login -->
                             <div class="col-12">
@@ -87,6 +87,15 @@
                                     <input type="tel" class="form-control" name="numeroTelephone" id="pnumber">
                                 </div>
                             </div>
+
+                            <!-- upload image pp -->
+                            <div class="col-12">
+                                <label class="form-label">image de profile</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" name="imagePP">
+                                </div>
+                            </div>
+
 
                             <!-- Mot de Passe -->
                             <div class="col-12 mt-5">

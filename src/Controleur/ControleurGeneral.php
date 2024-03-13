@@ -6,6 +6,7 @@ namespace App\Altius\Controleur;
 use App\Altius\Lib\ConnexionUtilisateur;
 use App\Altius\Lib\MessageFlash;
 use App\Altius\Modele\CSSLoader\HomePageCSSLoader;
+use App\Altius\Modele\DataObject\Utilisateur;
 use App\Altius\Modele\Repository\EventRepository;
 use App\Altius\Modele\Repository\FriendsRepository;
 use App\Altius\Modele\Repository\UtilisateurRepository;
@@ -14,6 +15,7 @@ class ControleurGeneral extends ControleurGenerique
 {
 
     public static function afficherVue(string $cheminVue, array $parametres = []){
+        if (ConnexionUtilisateur::estConnecte()) $parametres ["idUser1"]= (new UtilisateurRepository())->recupererLoginNonSupprimer(ConnexionUtilisateur::getLoginUtilisateurConnecte())->getIdUser();
         extract($parametres);
         $messagesFlash = MessageFlash::lireTousMessages();
         require __DIR__ . "/../Vue/$cheminVue";

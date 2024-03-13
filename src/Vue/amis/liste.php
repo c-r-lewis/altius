@@ -25,21 +25,34 @@
                         $idAmis = urldecode($login["id"]);
                         $idUserUrl = urldecode($login["idUser"]);
                         $nbAmisCommunHtml = htmlspecialchars($login[3]);
-                        echo '<div class="friend-request-card">
+                        echo <<<HTML
+<div class="friend-request-card">
                         <div class="user-profile">
                             <div class="profile-picture">
-                                <img src="../../assets/images/inconnu-pp.png" alt="">
+HTML;
+                        if (file_exists("../../assets/uploads/pp/".$idAmis.".png")) {
+                            $src = "../../assets/uploads/pp/".$idAmis.".png";
+                            echo '<img src="'.$src.'" alt="image de profil" style="width: 45px; height: 45px; margin: 5px;">';
+                        }else if(file_exists("../assets/uploads/pp/".$idAmis.".jpg")){
+                            $src = "../../assets/uploads/pp/".$idAmis.".jpg";
+                            echo '<img src="'.$src.'" alt="image de profil" style="width: 45px; height: 45px; margin: 5px;">';
+                        }else{
+                            echo '<img src="../../assets/images/inconnu-pp.png" alt="">';
+                        }
+                        echo <<<HTML
+                                
                             </div>
                             <div class="user-details">
-                                <h2>'.$loginHTML.'</h2>
-                                <h2>'.$nbAmisCommunHtml.' amis en commun</h2>
+                                <h2>$loginHTML</h2>
+                                <h2>$nbAmisCommunHtml amis en commun</h2>
                             </div>
                         </div>
                         <div class="friend-request-actions">
-                            <a class="nav-link button" href="?controleur=friends&action=supprimerAmis&idAmis='.$idAmis.'" id="button-primary">Supprimer</a>
-                            <a class="nav-link button" href="?controleur=general&action=afficherProfil&idUser='.$idUserUrl.'&login='.$loginUrl.'" id="button-secondary">Voir profil</a>
+                            <a class="nav-link button" href="?controleur=friends&action=supprimerAmis&idAmis=$idAmis" id="button-primary">Supprimer</a>
+                            <a class="nav-link button" href="?controleur=general&action=afficherProfil&idUser=$idUserUrl&login=$loginUrl" id="button-secondary">Voir profil</a>
                         </div>
                     </div>';
+HTML;
                     } else {
                         $loginHTML = htmlspecialchars($login);
                         echo '<h2>'.$loginHTML.'</h2>';
