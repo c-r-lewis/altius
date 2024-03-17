@@ -24,11 +24,11 @@
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton<?=$publication->getID() ?>" data-bs-toggle="dropdown" aria-expanded="false">
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton<?= $publication->getID() ?>">
-                                    <li>
+                                    <!--<li>
                                         <a class="dropdown-item" href="#">
                                             Modifier
                                         </a>
-                                    </li>
+                                    </li>-->
                                     <li>
                                         <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('deleteForm<?= $publication->getID() ?>').submit();">
                                             Supprimer
