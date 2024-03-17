@@ -12,8 +12,13 @@ use App\Altius\Modele\Repository\UtilisateurRepository;
 class ControleurCommentaire extends ControleurGeneral
 {
     public static function addComment() : void {
-        if ((isset($_POST["message"]) && $_POST['message'] != "")  || (isset($_FILES["image"]) && is_uploaded_file($_FILES['image']['tmp_name'])) && isset($_POST["forumID"]) && isset($_POST["userID"])
-                && $_POST["userID"] == ConnexionUtilisateur::getLoginUtilisateurConnecte()) {
+        if (isset($_POST["message"]) && $_POST['message'] != "") $messageVerif = true;
+        else $messageVerif = false;
+        if (isset($_FILES["image"]) && is_uploaded_file($_FILES['image']['tmp_name'])) $imageVerif = true;
+        else $imageVerif = false;
+
+        if ($messageVerif  || $imageVerif && isset($_POST["forumID"]) && isset($_POST["userID"])
+                && (new UtilisateurRepository())->recupererParClePrimaire(["idUser"=>$_POST["userID"]])->getLogin()== ConnexionUtilisateur::getLoginUtilisateurConnecte()) {
             if (ConnexionUtilisateur::getLoginUtilisateurConnecte() != "") {
                 $idCom = CommentRepository::addComment($_POST);
                 $uploadedFileName = $_FILES['image']['name'];
