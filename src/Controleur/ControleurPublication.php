@@ -49,13 +49,18 @@ class ControleurPublication extends ControleurGenerique
             $mime_type = $finfo->buffer($binaryData);
 
             // TODO: redirect error with flash message
-            // Create a suitable file extension based on the MIME type
-            $extension = match ($mime_type) {
-                'image/jpeg' => 'jpg',
-                'image/png' => 'png',
-                'image/gif' => 'gif',
-                default => throw new Exception('Unsupported image type'),
-            };
+            try {
+                // Create a suitable file extension based on the MIME type
+                $extension = match ($mime_type) {
+                    'image/jpeg' => 'jpg',
+                    'image/png' => 'png',
+                    'image/gif' => 'gif',
+                    default => throw new Exception('Unsupported image type'),
+                };
+            } catch (Exception) {
+                MessageFlash::ajouter("danger", "Format d'image non supporté.");
+                ControleurGeneral::afficherDefaultPage();
+            }
 
             // Generate a unique file name and set the target path
             $filename = uniqid() . '.' . $extension;
